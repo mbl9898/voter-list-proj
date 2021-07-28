@@ -1,0 +1,37 @@
+const mongoose = require('mongoose');
+
+const Vote = new mongoose.Schema({
+  Address: { type: String },
+  Age: Number,
+  'Block Code': Number,
+  'Book No': { type: String },
+  'Boulevard|Avenue': { type: String },
+  City: { type: String },
+  Constituency: { type: String },
+  'Constituency Name': { type: String },
+  Count: Number,
+  Dehya: { type: String },
+  District: { type: String },
+  'Family No': { type: String },
+  'Father|Husband Name': { type: String },
+  Gender: { type: String },
+  'House No': { type: String },
+  Lane: { type: String },
+  'Marital Status': { type: String },
+  Moza: { type: String },
+  NIC: { type: String },
+  Name: { type: String },
+  'Other Area': { type: String },
+  'Patwar Halka': { type: String },
+  Phase: { type: String },
+  'S No': Number,
+  Sector: { type: String },
+  Street: { type: String | Number },
+  Talka: { type: String },
+  Tapaydar: { type: String },
+  Tehseel: { type: String },
+  'Union Council': { type: String },
+  'Vote S No': { type: String },
+});
+
+export const VoteSchema = mongoose.model('Vote', Vote);

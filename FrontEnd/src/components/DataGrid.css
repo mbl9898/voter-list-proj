@@ -1,0 +1,20 @@
+.e-grid {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 700;
+}
+.e-grid .e-headercell {
+  color: #0d6efd;
+  margin: 0 3px;
+  padding: 0 3px !important;
+}
+
+.e-grid .e-headercelldiv {
+  padding: 0 0 0 5px !important;
+}
+.e-grid .e-filtermenudiv {
+  padding: 7px 0 !important;
+  margin-right: 1px;
+}
+.e-grid .e-rowcell {
+  padding: 3px !important;
+}

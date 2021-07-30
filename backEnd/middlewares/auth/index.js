@@ -28,7 +28,9 @@ export const auth = async (req, res, next) => {
 
     const validate = jwt.verify(accessToken, process.env.JWT_SECRET);
 
-    req.user = validate.user;
+    console.log(validate, "validate");
+
+    req.user = validate.userData;
     next();
   } catch (e) {
     //Log in case of any abnormal crash

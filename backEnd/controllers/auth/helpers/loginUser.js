@@ -52,7 +52,7 @@ export const loginUser = async (req, res) => {
     //Generating the access token
     const access_token = jwt.sign(
       {
-        user: { ...isExisting._doc },
+        userData: { ...isExisting._doc },
       },
       process.env.JWT_SECRET,
       {
@@ -112,10 +112,11 @@ export const loginUser = async (req, res) => {
         remember_me,
         userData: {
           uid: isExisting._id,
-          email: isExisting._id,
+          email: isExisting.email,
           role: isExisting.role,
           username: isExisting.username,
           isApproved: isExisting.isApproved,
+          rate: isExisting.rate,
         },
       },
     });

@@ -37,17 +37,13 @@
 </template>
 
 <script lang="ts">
-import { useQuasar } from "quasar";
+import useGeneral from "@/composables/useGeneral";
 import { ref, defineComponent } from "vue";
-import { useRouter } from "vue-router";
-import { useStore } from "vuex";
 import { UserService } from "./UserService";
 
 export default defineComponent({
   setup() {
-    const router = useRouter();
-    const $q = useQuasar();
-    const store = useStore();
+    const { store, $q } = useGeneral()
     const user = ref({
       email: "",
       password: "",
@@ -56,16 +52,16 @@ export default defineComponent({
     const onSubmit = async () => {
       try {
         const res = await UserService.loginUser(user.value);
-        console.log(res, "Login Res");
         if (!res.success) {
           $q.notify({
             message: res.error.message,
           });
-          store.dispatch("setUser", res.data.user);
         }
-        console.log(res.data.access_token);
-        await localStorage.setItem("token", res.data.access_token);
-        router.push("/");
+          $q.notify({
+            message: `This user has been successfully "loggedIn :) (:"`,
+          });
+        store.dispatch("setUser", res.data.userData);
+        localStorage.setItem("token", res.data.access_token);
       } catch (error) {
         console.log(error);
       }

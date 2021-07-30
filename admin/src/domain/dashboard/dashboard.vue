@@ -1,9 +1,9 @@
 <template>
-  <p>Dashboard</p>
   <div v-if="isLoading">
+  <p>Dashboard</p>
     <h1>Loading...</h1>
   </div>
-  <div v-else-if="userData && user">
+  <div v-else>
     <div class="row justify-center">
       <h5>Accuracy Rate: 100%</h5>
     </div>
@@ -27,7 +27,7 @@
       <div>
         <q-btn
           :label="
-            `Estimated Withdrawl Amount - Rs: ${user.rate * userData.approved}`
+            `Estimated Withdrawl Amount - Rs: ${userData.rate * userData.approved ? userData.approved : 0 }`
           "
           color="primary"
         />
@@ -37,43 +37,19 @@
 </template>
 
 <script lang="ts">
-// import router from "@/router";
-import { defineComponent, onMounted, ref, watch } from "vue";
-import { useStore } from "vuex";
-import { UserService } from "../user/UserService";
+import { defineComponent, onMounted, ref} from "vue";
 import dashboardService from "./dashboardService";
 export default defineComponent({
   setup() {
     const userData = ref({});
     const isLoading = ref(false);
-    const store = useStore();
-    const user = ref(null);
-    // const user = store.getters.getUser;
-    // const state = reactive({ count: 0 });
-    watch(
-      () => store.getters.getUser,
-      (newUser) => {
-        user.value = newUser;
-      }
-    );
+
     onMounted(async () => {
       console.log("Dashboard Component");
 
       try {
         isLoading.value = true;
-        // const token=localStorage.getItem("token")
-        // if(token){
-
-        //   }
         userData.value = await dashboardService.getUserData();
-        const res = await UserService.validateToken();
-
-        if (res.data) {
-          store.dispatch("setUser", res.data.user);
-          user.value = store.getters.getUser;
-          console.log(user, "user");
-          console.log(userData, "userData");
-        }
         isLoading.value = false;
       } catch (error) {
         console.log(error);
@@ -83,7 +59,6 @@ export default defineComponent({
     return {
       userData,
       isLoading,
-      user,
     };
   },
 });

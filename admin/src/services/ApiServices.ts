@@ -1,7 +1,6 @@
 import _axios from "axios";
 
 export class ApiService {
-  private token = localStorage.getItem("token");
 
   private static axios = _axios.create({
     baseURL: "http://localhost:4000/api/v1/",

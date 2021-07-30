@@ -61,7 +61,6 @@
 </template>
 
 <script lang="ts">
-import router from "@/router";
 import { ref, defineComponent } from "vue";
 import { useStore } from "vuex";
 
@@ -70,12 +69,10 @@ export default defineComponent({
     const token = ref(true);
     const store = useStore();
 
-    const logout = async () => {
+    const logout = () => {
       try {
-        await localStorage.removeItem("token");
-        await store.dispatch("setUser", null);
-        console.log(store.getters.getUser, "userAfterLogout");
-        router.push("/login");
+        localStorage.removeItem("token");
+        store.dispatch("setUser", null);
       } catch (error) {
         console.log(error);
       } finally {

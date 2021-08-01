@@ -1,5 +1,5 @@
 export * from './User';
 export * from './UnAuthorized';
-export * from './Authorized';
+export * from './authorized';
 export * from './LoginSession';
 export * from './Vote';

@@ -10,7 +10,11 @@
     "format": "prettier --write \"./**/*.js\"",
     "lint": "eslint \"./**/*.js\"",
     "test": "mocha --timeout 10000",
+<<<<<<< Updated upstream
     "prod-build-all": "git pull && cd ../FrontEnd && yarn prod-build && cd ../admin-react && yarn prod-build"
+=======
+    "prod-build-all": "git pull && yarn prod-build ../FrontEnd && mv ./build ./dist && mv ./dist ../backEnd"
+>>>>>>> Stashed changes
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.4",

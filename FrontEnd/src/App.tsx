@@ -21,6 +21,7 @@ import {
 } from "./store";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import AppLoading from "./components/AppLoading";
+import { Alert } from "react-bootstrap";
 // import axios from "axios";
 // import ChooseFile from "./components/ChooseFile";
 // import Login from "./components/Login";
@@ -32,6 +33,7 @@ const App = () => {
   const data = useAppSelector((state) => state.app.data);
   const currentUser = useAppSelector((state) => state.app.currentUser);
   const isListDisplay = useAppSelector((state) => state.app.isListDisplay);
+  const alert = useAppSelector((state) => state.app.alert);
   const isSignUpFormDisplay = useAppSelector(
     (state) => state.app.isSignUpFormDisplay
   );
@@ -49,20 +51,20 @@ const App = () => {
   errorSetter = setError;
 
   useEffect(() => {
-    console.log(currentUser);
+    console.log(currentUser, "currentUser");
     if (currentUser !== null) {
-      const filteredUid = uids.filter((uid) => uid === currentUser.uid);
-      if (filteredUid.length > 0) {
-        dispatch(setIsListDisplay(true));
-        dispatch(setIsDataLoading(true));
-        getSortedFilteredVotes(dispatch);
-        dispatch(setIsLogInFormDisplay(false));
-      }
-      if (filteredUid.length === 0) {
-        dispatch(setIsLogInFormDisplay(false));
-        dispatch(setIsAccessDeniedDisplay(true));
-        console.log("You Are Not Allowed To Access Data");
-      }
+      // const filteredUid = uids.filter((uid) => uid === currentUser.uid);
+      // if (filteredUid.length > 0) {
+      dispatch(setIsListDisplay(true));
+      dispatch(setIsDataLoading(true));
+      getSortedFilteredVotes(dispatch, currentUser);
+      dispatch(setIsLogInFormDisplay(false));
+      // }
+      // if (filteredUid.length === 0) {
+      // dispatch(setIsLogInFormDisplay(false));
+      // dispatch(setIsAccessDeniedDisplay(true));
+      // console.log("You Are Not Allowed To Access Data");
+      // }
     }
     // auth.onAuthStateChanged((user: any) => {
     //   if (user) {
@@ -88,6 +90,7 @@ const App = () => {
   }, [dispatch, currentUser]);
   return (
     <>
+      {alert && <Alert variant="danger">{alert}</Alert>}
       {loading && <AppLoading />}
       {!loading && (
         <>

@@ -9,7 +9,8 @@
     "server": "nodemon --exec babel-node index.js",
     "format": "prettier --write \"./**/*.js\"",
     "lint": "eslint \"./**/*.js\"",
-    "test": "mocha --timeout 10000"
+    "test": "mocha --timeout 10000",
+    "prod-build-all": "git pull && cd ../frontEnd && yarn build && mv ./build ./dist && mv ./dist ../backEnd"
   },
   "dependencies": {
     "@sendgrid/mail": "^7.4.4",

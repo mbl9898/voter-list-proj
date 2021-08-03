@@ -11,6 +11,7 @@ export const {
   setHeadings,
   setCurrentUser,
   setError,
+  setAlert,
   setIsAccessDeniedDisplay,
   setIsListDisplay,
   setIsDataLoading,

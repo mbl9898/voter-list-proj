@@ -11,6 +11,7 @@ const initialState: any = {
   isLogInFormDisplay: true,
   isAccessDeniedDisplay: false,
   error: "",
+  alert: "",
 };
 
 export const appSlice = createSlice({
@@ -47,6 +48,9 @@ export const appSlice = createSlice({
     },
     setError(state, action: PayloadAction<any>) {
       state.error = action.payload;
+    },
+    setAlert(state, action: PayloadAction<any>) {
+      state.alert = action.payload;
     },
   },
 });

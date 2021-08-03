@@ -9,57 +9,30 @@ import {
 } from "../store";
 import Loading from "./Loading";
 import { useAppSelector } from "../store/hooks";
+import { login } from "../services/appService";
 // import { auth } from "../firebase";
 // import firebase from "firebase";
 
 const Login2 = () => {
   //   const { login } = useAuth();
   // const currentUser = useAppSelector((state) => state.app.currentUser);
-  const emailRef = useRef<any>();
+  const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const login = async () => {
-    const auth = axios.create({
-      baseURL: "http://localhost:4000/api/v1/auth/",
-      timeout: 5000,
-      headers: { "x-api-key": "SG.cpdcjwepcjio" },
-    });
-    const authRes = await auth
-      .post("login", {
-        email: emailRef.current.value,
-        password: passwordRef.current.value,
-        remember_me: false,
-      })
-      .catch((err) => console.log(err));
-    setLoading(false);
-    if (authRes) {
-      console.log(authRes, "LoginRes");
-      try {
-        if (authRes.data.success) {
-          await localStorage.setItem("token", authRes.data.data.access_token);
-          await dispatch(
-            setCurrentUser({
-              ...authRes.data.data.userData,
-            })
-          );
-          dispatch(setIsLogInFormDisplay(false));
-        } else {
-          throw error;
-        }
-      } catch (err) {
-        if (authRes.data.error) setError(authRes.data.error.message);
-      }
-    } else {
-      console.log(authRes, "Login Res Error");
-    }
-  };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    await login();
+    await login(
+      emailRef.current.value,
+      passwordRef.current.value,
+      dispatch,
+      setLoading,
+      error,
+      setError
+    );
   };
 
   return (

@@ -2,17 +2,21 @@ import axios from "axios";
 import { Dispatch } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
 import {
+  setAlert,
   setCurrentUser,
   setData,
   setError,
   setHeadings,
   setIsAccessDeniedDisplay,
   setIsDataLoading,
+  setIsLogInFormDisplay,
   setIsSignUpFormDisplay,
 } from "../store";
 // import { auth, db } from "../firebase";
 
 export const uids = ["60fc2d09e269a2374ca5e82a"];
+
+const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
 const heading = [
   "S No",
@@ -74,70 +78,56 @@ const createAddress = (d: VotesModel[]) => {
 };
 
 export const getSortedFilteredVotes = async (
-  // collectionName: string,
-  dispatch: Dispatch<{ payload: any; type: string }>
+  dispatch: Dispatch<{ payload: any; type: string }>,
+  currentUser: any
 ) => {
   const currentToken = localStorage.getItem("token");
 
   const vote = axios.create({
-    baseURL: "http://localhost:4000/api/v1/votesData",
+    baseURL: apiBaseUrl + "votesData",
     timeout: 500000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",
       authorization: `bearer ${currentToken}`,
     },
   });
-  await vote.get("/").then(async (voteRes) => {
-    console.log(voteRes, "voteRes");
-    if (voteRes.data.success) {
-      const dataSnap = voteRes.data.votesData;
-      const newData = createAddress(dataSnap);
-      if (newData) {
-        let inCompleteDataFilter = newData.filter((data) => data.Name !== "-");
-        inCompleteDataFilter.splice(1237, 75);
+  if (currentUser.role === "dataViewer") {
+    await vote.get("/").then(async (voteRes) => {
+      console.log(voteRes, "voteRes");
+      if (voteRes.data.success) {
+        const dataSnap = voteRes.data.votesData;
+        const newData = createAddress(dataSnap);
+        if (newData) {
+          let inCompleteDataFilter = newData.filter(
+            (data) => data.Name !== "-"
+          );
+          inCompleteDataFilter.splice(1237, 75);
 
-        await dispatch(setData(inCompleteDataFilter));
-        const headings: string[] = Object.keys(newData[0]);
-        headings.sort((a, b) => heading.indexOf(a) - heading.indexOf(b));
-        const filteredHeadings1 = headings.filter(
-          (heading) => heading !== "S No"
-        );
-        const filteredHeadings2 = filteredHeadings1.filter(
-          (heading) => heading !== "Count"
-        );
-        const filteredHeadings3 = filteredHeadings2.filter(
-          (heading) => heading !== "_id"
-        );
-        dispatch(setHeadings(filteredHeadings3));
-        dispatch(setIsDataLoading(false));
+          await dispatch(setData(inCompleteDataFilter));
+          const headings: string[] = Object.keys(newData[0]);
+          headings.sort((a, b) => heading.indexOf(a) - heading.indexOf(b));
+          const filteredHeadings1 = headings.filter(
+            (heading) => heading !== "S No"
+          );
+          const filteredHeadings2 = filteredHeadings1.filter(
+            (heading) => heading !== "Count"
+          );
+          const filteredHeadings3 = filteredHeadings2.filter(
+            (heading) => heading !== "_id"
+          );
+          dispatch(setHeadings(filteredHeadings3));
+          dispatch(setIsDataLoading(false));
+        }
       }
-    }
-  });
-  // const votes = db.ref(collectionName);
-  // await votes.on("value", async (snapshot: any) => {
-  //   const dataSnap = snapshot.val();
-  //   const newData = createAddress(dataSnap);
-  //   if (newData) {
-  //     let inCompleteDataFilter = newData.filter((data) => data.Name !== "-");
-  //     inCompleteDataFilter.splice(1237, 75);
-  //     // console.log(inCompleteDataFilter[1315]);
-
-  //     await dispatch(setData(inCompleteDataFilter));
-  //     const headings: string[] = Object.keys(newData[0]);
-  //     headings.sort((a, b) => heading.indexOf(a) - heading.indexOf(b));
-  //     const filteredHeadings = headings.filter((heading) => heading !== "S No");
-  //     const againFilteredHeadings = filteredHeadings.filter(
-  //       (heading) => heading !== "Count"
-  //     );
-  //     dispatch(setHeadings(againFilteredHeadings));
-  //     dispatch(setIsListDisplay(true));
-  //   }
-  // });
+    });
+  } else {
+    dispatch(setIsLogInFormDisplay(false));
+    dispatch(setIsAccessDeniedDisplay(true));
+    console.log("You Are Not Allowed To Access Data");
+    dispatch(setIsDataLoading(false));
+  }
 };
 
-// export const signup = (email: any, password: any) => {
-//   return auth.createUserWithEmailAndPassword(email, password);
-// };
 export const signUp = async (
   userNameRef: any,
   emailRef: any,
@@ -147,8 +137,9 @@ export const signUp = async (
   setError: any
 ) => {
   setError("");
+  console.log(apiBaseUrl);
   const auth = axios.create({
-    baseURL: "http://localhost:4000/api/v1/auth/",
+    baseURL: apiBaseUrl + "auth",
     timeout: 5000,
     headers: { "x-api-key": "SG.cpdcjwepcjio" },
   });
@@ -208,6 +199,48 @@ export const signUp = async (
     console.log(authRes, "SignUp Res Error");
   }
 };
+export const login = async (
+  emailRef: any,
+  passwordRef: any,
+  dispatch: Dispatch<{ payload: any; type: string }>,
+  setLoading: any,
+  error: any,
+  setError: any
+) => {
+  const auth = axios.create({
+    baseURL: apiBaseUrl + "auth/",
+    timeout: 5000,
+    headers: { "x-api-key": "SG.cpdcjwepcjio" },
+  });
+  const authRes = await auth
+    .post("login", {
+      email: emailRef,
+      password: passwordRef,
+      remember_me: false,
+    })
+    .catch((err) => console.log(err));
+  setLoading(false);
+  if (authRes) {
+    console.log(authRes, "LoginRes");
+    try {
+      if (authRes.data.success) {
+        await localStorage.setItem("token", authRes.data.data.access_token);
+        await dispatch(
+          setCurrentUser({
+            ...authRes.data.data.userData,
+          })
+        );
+        dispatch(setIsLogInFormDisplay(false));
+      } else {
+        throw error;
+      }
+    } catch (err) {
+      if (authRes.data.error) setError(authRes.data.error.message);
+    }
+  } else {
+    console.log(authRes, "Login Res Error");
+  }
+};
 
 export const logout = async (
   uid: string,
@@ -217,7 +250,7 @@ export const logout = async (
   // return auth.signOut();
   setError("");
   const auth = axios.create({
-    baseURL: "http://localhost:4000/api/v1/logout",
+    baseURL: apiBaseUrl + "logout",
     timeout: 5000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",
@@ -234,6 +267,12 @@ export const logout = async (
     if (authRes.data.success) {
       dispatch(setCurrentUser(null));
       dispatch(setIsAccessDeniedDisplay(false));
+      dispatch(setIsLogInFormDisplay(true));
+    } else {
+      dispatch(setAlert("Failed to log out"));
+      setTimeout(() => {
+        dispatch(setAlert(""));
+      }, 5000);
     }
   } catch {
     setError("Failed to log out");

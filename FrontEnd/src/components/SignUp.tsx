@@ -71,7 +71,12 @@ export default function SignUp({
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" ref={passwordRef} required />
+                  <Form.Control
+                    type="password"
+                    ref={passwordRef}
+                    required
+                    autoComplete="true"
+                  />
                 </Form.Group>
                 <Form.Group id="password-confirm">
                   <Form.Label>Password Confirmation</Form.Label>

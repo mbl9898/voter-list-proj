@@ -1,18 +1,15 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { logout } from "../services/appService";
-import { setIsLogInFormDisplay } from "../store";
 import { useAppSelector } from "../store/hooks";
 
 const ProfileDropDown = () => {
   const dispatch = useDispatch();
   const currentUser = useAppSelector((state) => state.app.currentUser);
 
-  const handleLogoutOpenLogInForm = async () => {
-    await logout(currentUser.uid, dispatch);
-    console.log(currentUser, "currentUser");
-    await dispatch(setIsLogInFormDisplay(true));
-  };
+  // const handleLogoutOpenLogInForm = async () => {
+  //   await logout(currentUser.uid, dispatch);
+  // };
   return (
     <>
       {currentUser !== null && (
@@ -47,7 +44,7 @@ const ProfileDropDown = () => {
                 <button
                   className="btn btn-danger"
                   onClick={() => {
-                    currentUser !== null && handleLogoutOpenLogInForm();
+                    currentUser !== null && logout(currentUser.uid, dispatch);
                   }}
                 >
                   Logout

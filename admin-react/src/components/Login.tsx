@@ -11,13 +11,7 @@ import { useAppSelector } from "../store/hooks";
 import { UserService } from "../services/UserService";
 import { useHistory } from "react-router-dom";
 
-// import axios from "axios";
-// import { auth } from "../firebase";
-// import firebase from "firebase";
-
 const Login = () => {
-  //   const { login } = useAuth();
-  // const currentUser = useAppSelector((state) => state.app.currentUser);
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
   const [error, setError] = useState("");
@@ -25,7 +19,7 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const history = useHistory();
-  
+
   const onSubmit = async (e: any) => {
     e.preventDefault();
     setAlert("");

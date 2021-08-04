@@ -1,10 +1,11 @@
 import React from "react";
+import DataEntryForm from "./DataEntryForm";
 
 const DataEntry = () => {
   return (
     <>
       <div className="container">
-        <h1>Data Entry</h1>
+        <DataEntryForm />
       </div>
     </>
   );

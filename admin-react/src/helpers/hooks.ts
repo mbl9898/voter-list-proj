@@ -1,9 +1,11 @@
 import { useState } from "react";
 
 export const useForm = (callback: any, initialState = {}) => {
-  const [values, setValues] = useState(initialState);
+  const [data, setData] = useState<any>(initialState);
   const onChange = (event: any) => {
-    setValues({ ...values, [event.target.name]: event.target.value });
+    console.log("onchange");
+    setData({ ...data, [event.target.name]: event.target.value });
+    console.log(data);
   };
 
   const onSubmit = (event: any) => {
@@ -14,6 +16,6 @@ export const useForm = (callback: any, initialState = {}) => {
   return {
     onChange,
     onSubmit,
-    values,
+    data,
   };
 };

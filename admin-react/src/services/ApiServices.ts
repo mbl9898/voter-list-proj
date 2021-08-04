@@ -1,9 +1,8 @@
 import _axios from "axios";
 
 export class ApiService {
-
   private static axios = _axios.create({
-    baseURL: "http://localhost:4000/api/v1/",
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     headers: {
       Authorization: `Bearer ${localStorage.getItem("token")}`,
       "x-api-key": "SG.cpdcjwepcjio",

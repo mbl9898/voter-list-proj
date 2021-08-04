@@ -14,7 +14,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(false);
   const getUserData = async () => {
     const dataReq = axios.create({
-      baseURL: "http://localhost:4000/api/v1/",
+      baseURL: process.env.REACT_APP_API_BASE_URL,
       timeout: 5000,
       headers: {
         "x-api-key": "SG.cpdcjwepcjio",

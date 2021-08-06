@@ -5,9 +5,8 @@ import {
   toolbarClick,
   printComplete,
   getUniqueData,
-  onActionBegin
+  onActionBegin,
 } from "./dataGridService";
-import { readExcel } from "./chooseFileService";
 
 export {
   getSortedFilteredVotes,
@@ -15,7 +14,6 @@ export {
   filterSettings,
   toolbarClick,
   printComplete,
-  readExcel,
   getUniqueData,
-  onActionBegin
+  onActionBegin,
 };

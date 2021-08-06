@@ -8,13 +8,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import DataGrid from "./components/DataGrid";
 import { getSortedFilteredVotes } from "./services";
-import { uids } from "./services/appService";
-// import { auth } from "./firebase";
 import {
-  // setCurrentUser,
-  // setData,
   setError,
-  setIsAccessDeniedDisplay,
   setIsDataLoading,
   setIsListDisplay,
   setIsLogInFormDisplay,
@@ -22,9 +17,6 @@ import {
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import AppLoading from "./components/AppLoading";
 import { Alert } from "react-bootstrap";
-// import axios from "axios";
-// import ChooseFile from "./components/ChooseFile";
-// import Login from "./components/Login";
 
 let dataArr: any[] = [];
 let errorSetter: any;
@@ -43,9 +35,8 @@ const App = () => {
   const isAccessDeniedDisplay = useAppSelector(
     (state) => state.app.isAccessDeniedDisplay
   );
-  // const error = useAppSelector((state) => state.app.error);
+
   const dispatch = useAppDispatch();
-  // console.log(error);
 
   dataArr = data;
   errorSetter = setError;
@@ -53,40 +44,12 @@ const App = () => {
   useEffect(() => {
     console.log(currentUser, "currentUser");
     if (currentUser !== null) {
-      // const filteredUid = uids.filter((uid) => uid === currentUser.uid);
-      // if (filteredUid.length > 0) {
       dispatch(setIsListDisplay(true));
       dispatch(setIsDataLoading(true));
       getSortedFilteredVotes(dispatch, currentUser);
       dispatch(setIsLogInFormDisplay(false));
-      // }
-      // if (filteredUid.length === 0) {
-      // dispatch(setIsLogInFormDisplay(false));
-      // dispatch(setIsAccessDeniedDisplay(true));
-      // console.log("You Are Not Allowed To Access Data");
-      // }
     }
-    // auth.onAuthStateChanged((user: any) => {
-    //   if (user) {
-    //     const filteredUid = uids.filter((uid) => uid === user.uid);
-    //     if (filteredUid.length > 0) {
-    //       getSortedFilteredVotes("votes/", dispatch);
-    //       dispatch(setIsLogInFormDisplay(false));
-    //     }
-    //     if (filteredUid.length === 0) {
-    //       dispatch(setIsLogInFormDisplay(false));
-    //       dispatch(setIsAccessDeniedDisplay(true));
-    //       console.log("You Are Not Allowed To Access Data");
-    //     }
-    //     dispatch(
-    //       setCurrentUser({
-    //         uid: user.uid,
-    //         email: user.email,
-    //       })
-    //     );
-    //   }
     setLoading(false);
-    // });
   }, [dispatch, currentUser]);
   return (
     <>
@@ -115,7 +78,6 @@ const App = () => {
                 <>
                   {isListDisplay && (
                     <>
-                      {/* <ChooseFile /> */}
                       <DataGrid />
                     </>
                   )}

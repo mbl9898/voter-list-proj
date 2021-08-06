@@ -12,9 +12,6 @@ import {
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,
 } from "../store";
-// import { auth, db } from "../firebase";
-
-export const uids = ["60fc2d09e269a2374ca5e82a"];
 
 const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -70,9 +67,6 @@ const createAddress = (d: VotesModel[]) => {
         ${data["Other Area"] === "-" ? "" : data["Other Area"]}
         ${data.City === "-" ? "" : data.City}`;
     });
-
-    // ${data.Phase == "-" ? "" : "Phase:"}
-    // ${data["Boulevard/Avenue"] == "-" ? "" : "Boulevard/Avenue:"}
     return actualData;
   }
 };

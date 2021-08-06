@@ -1,21 +1,11 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import axios from "axios";
 import { useDispatch } from "react-redux";
-import {
-  setCurrentUser,
-  setIsLogInFormDisplay,
-  setIsSignUpFormDisplay,
-} from "../store";
+import { setIsLogInFormDisplay, setIsSignUpFormDisplay } from "../store";
 import Loading from "./Loading";
-import { useAppSelector } from "../store/hooks";
 import { login } from "../services/appService";
-// import { auth } from "../firebase";
-// import firebase from "firebase";
 
 const Login2 = () => {
-  //   const { login } = useAuth();
-  // const currentUser = useAppSelector((state) => state.app.currentUser);
   const emailRef = useRef<any>(null);
   const passwordRef = useRef<any>();
   const [error, setError] = useState("");

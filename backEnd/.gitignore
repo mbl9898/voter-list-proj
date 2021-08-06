@@ -67,5 +67,3 @@ typings/
 
 # parcel-bundler cache (https://parceljs.org/)
 .cache
-
-.env

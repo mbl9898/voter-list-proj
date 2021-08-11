@@ -86,33 +86,6 @@ const AdminProtal = () => {
                             </>
                           )}
                         </div>
-
-                        {/* {user.isModified ? (
-                          <Form.Control
-                            className="mx-2"
-                            type="number"
-                            name="rate"
-                            required
-                            onChange={(e: any) => {
-                              setRate(e.target.value);
-                            }}
-                          />
-                        ) : (
-                          <p
-                            onClick={() => {
-                              let newArr = [...users];
-                              newArr[index] = {
-                                ...user,
-                                isModified: !user.isModified,
-                              };
-                              setUsers(newArr);
-                            }}
-                          >
-                            {user.isModified
-                              ? user.rate
-                              : `Rs: ${user.rate} - Click here to change User Rate`}
-                          </p>
-                        )} */}
                         {!isRateChanging && (
                           <p
                             onClick={() => {

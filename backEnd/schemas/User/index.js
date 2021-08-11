@@ -13,6 +13,10 @@ const User = new mongoose.Schema({
   isApproved: {
     type: Boolean,
   },
+  isRejected: {
+    type: Boolean,
+    default: false,
+  },
   rate: {
     type: Number,
     default: 0,

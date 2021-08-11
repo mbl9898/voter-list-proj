@@ -7,6 +7,11 @@ import { roles } from '~/constants';
 const router = express.Router();
 
 router.get('/', isAuthorized(roles.admin), unAuthorized.getData);
+router.get(
+  '/rejectedVotes',
+  isAuthorized(roles.dataEntry),
+  unAuthorized.getRejectedVotes,
+);
 
 router.get(
   '/:id',

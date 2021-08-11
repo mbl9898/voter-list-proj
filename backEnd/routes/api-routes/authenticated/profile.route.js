@@ -1,6 +1,8 @@
 import express from 'express';
+import { roles } from 'constants/roles';
 import { profile } from '~/controllers';
 import { validate as validation } from '~/middlewares';
+import { isAuthorized } from 'middlewares/roles';
 
 const router = express.Router();
 
@@ -30,5 +32,45 @@ router.patch(
 );
 
 router.get('/', profile.userData);
+router.put(
+  '/changeRole',
+  isAuthorized(roles.admin),
+  (req, res, next) => {
+    validation(
+      req,
+      res,
+      next,
+      {
+        userId: req.body.userId,
+        role: req.body.role,
+      },
+      {
+        userId: 'required|string',
+        role: 'required|string',
+      },
+    );
+  },
+  profile.changeRole,
+);
+router.put(
+  '/changeRate',
+  isAuthorized(roles.admin),
+  (req, res, next) => {
+    validation(
+      req,
+      res,
+      next,
+      {
+        userId: req.body.userId,
+        rate: req.body.rate,
+      },
+      {
+        userId: 'required|string',
+        rate: 'required|integer',
+      },
+    );
+  },
+  profile.changeRate,
+);
 
 module.exports = router;

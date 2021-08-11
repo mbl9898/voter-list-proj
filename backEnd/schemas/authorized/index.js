@@ -88,9 +88,6 @@ const Authorized = new mongoose.Schema({
   address: {
     type: String,
   },
-  status: {
-    type: String,
-  },
   enteredBy: {
     type: Object,
   },

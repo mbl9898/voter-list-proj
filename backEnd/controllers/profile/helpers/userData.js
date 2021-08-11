@@ -15,10 +15,17 @@ export const userData = async (req, res) => {
 
     let pendingApprovals = [];
     let approvedData = [];
+    let rejectedData = [];
 
     if (UnAuthorizedData || UnAuthorizedData.length > 0) {
-      pendingApprovals = UnAuthorizedData.filter(
+      pendingApprovals = UnAuthorizedData.filter((x) => x.status === 'pending');
+    }
+    if (UnAuthorizedData || UnAuthorizedData.length > 0) {
+      const unAuthorizedDataByEmail = UnAuthorizedData.filter(
         (x) => x.enteredBy.email === user.email,
+      );
+      rejectedData = unAuthorizedDataByEmail.filter(
+        (x) => x.status === 'rejected',
       );
     }
 
@@ -29,11 +36,13 @@ export const userData = async (req, res) => {
     }
     console.log(pendingApprovals, 'pendingApprovals');
     console.log(approvedData, 'approvedData');
+    console.log(rejectedData, 'rejectedData');
     return res.json({
       success: true,
       data: {
         pending: pendingApprovals ? pendingApprovals.length : [],
         approved: approvedData ? approvedData.length : [],
+        rejected: rejectedData ? rejectedData.length : [],
       },
     });
   } catch (e) {

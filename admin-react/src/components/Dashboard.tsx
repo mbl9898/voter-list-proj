@@ -36,42 +36,39 @@ const Dashboard = () => {
       {!loading && (
         <div className="container">
           <div className="d-flex justify-content-center">
-            <h5>Accuracy Rate: 100%</h5>
+            <h5>
+              Accuracy Rate:{" "}
+              {(dashboardData.approved /
+                (dashboardData.approved + dashboardData.rejected)) *
+                100}
+              %
+            </h5>
           </div>
           <hr />
           <div className="d-flex justify-content-evenly">
             <div>
-              {/* <q-btn
-          :label="`Pending For Approval - ${userData.pending}`"
-          color="primary"
-        /> */}
               <button className="btn btn-primary">{`Unapproved - ${
                 dashboardData ? dashboardData.pending : "0"
               }`}</button>
             </div>
             <div>
-              {/* <q-btn :label="`Approved - ${userData.approved}`" color="primary" /> */}
               <button className="btn btn-primary">{`Approved - ${
                 dashboardData ? dashboardData.approved : 0
               }`}</button>
             </div>
             <div>
-              {/* <q-btn color="red" label="Rejected" /> */}
-              <button className="btn btn-danger">Rejected</button>
+              <button className="btn btn-danger">{`Rejected - ${
+                dashboardData ? dashboardData.rejected : 0
+              }`}</button>
             </div>
           </div>
           <hr />
           <div className="d-flex justify-content-evenly">
             <div>
-              {/* <q-btn
-          :label="
-            `Estimated Withdrawl Amount - Rs: ${userData.rate * userData.approved ? userData.approved : 0 }`
-          "
-          color="primary"
-        /> */}
               <button className="btn btn-primary">
                 {`Estimated Withdrawl Amount - Rs: ${
-                  currentUser.rate * dashboardData ? dashboardData.approved : 0
+                  (dashboardData ? dashboardData.approved : 0) *
+                  currentUser.rate
                 }`}
               </button>
             </div>

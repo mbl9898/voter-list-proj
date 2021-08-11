@@ -11,6 +11,16 @@ export default class UnAuthorized {
       console.log(error);
     }
   }
+  static async getRejectedVotes() {
+    try {
+      const res = await ApiService.get(
+        `${UnAuthorized.baseUrl[0]}/rejectedVotes`
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async addNewUnauthorizedData(newUnAuthorizedData: UnAuthorizedModel) {
     try {
       const data = await ApiService.post(
@@ -64,7 +74,10 @@ export default class UnAuthorized {
   static async rejectVote(id: string) {
     try {
       console.log(id);
-      const data = await ApiService.put(`${UnAuthorized.baseUrl[0]}/rejectVote`, { id: id });
+      const data = await ApiService.put(
+        `${UnAuthorized.baseUrl[0]}/rejectVote`,
+        { id: id }
+      );
       return data;
     } catch (error) {
       console.log(error);

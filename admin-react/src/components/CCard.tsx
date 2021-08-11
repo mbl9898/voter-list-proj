@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { getUnAuthorizedList } from '../helpers/authorizeHelper';
-import UnAuthorizedModel from '../services/UnAuthorizedModel';
-import UnAuthorizedService from '../services/unAuthorizedService';
-import { setUnauthorizedData } from '../store';
-import VoteDisplayModal from './VoteDisplayModal';
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { getUnAuthorizedList } from "../helpers/authorizeHelper";
+import UnAuthorizedModel from "../services/UnAuthorizedModel";
+import UnAuthorizedService from "../services/unAuthorizedService";
+import VoteDisplayModal from "./VoteDisplayModal";
 
 interface Props {
   title?: string;
@@ -26,35 +26,32 @@ const CCard = ({ title, body, unauthorizedData }: Props) => {
     const res = await UnAuthorizedService.rejectVote(id);
     console.log(res);
   };
+  useEffect(() => {}, []);
   return (
     <>
       {!unauthorizedData && (
-        <div className='cpage-content'>
-          <div className='ccard'>
-            <div className='ccontent'>
-              {title && <h2 className='ctitle'>{title}</h2>}
-              {body && <p className='cbody'>{body}</p>}
-              <button className='cbtn'>View Trips</button>
+        <div className="cpage-content">
+          <div className="ccard">
+            <div className="ccontent">
+              {title && <h2 className="ctitle">{title}</h2>}
+              {body && <p className="cbody">{body}</p>}
+              <button className="cbtn">View Trips</button>
             </div>
           </div>
         </div>
       )}
       {unauthorizedData && (
-        <div className='cpage-content'>
+        <div className="cpage-content">
           {unauthorizedData.map((unauthorizedVote, index) => {
-            // console.log(unauthorizedVote.status === 'rejected');
-            // if (unauthorizedVote.status === 'rejected') {
-            //   setIsRejectedKey(index);
-            // }
             return (
-              <div key={index} className='ccard'>
-                <div className='ccontent'>
-                  {title && <h2 className='ctitle'>{title}</h2>}
-                  <h2 className='ctitle'>{unauthorizedVote.name}</h2>
-                  {body && <p className='cbody'>{body}</p>}
+              <div key={index} className="ccard">
+                <div className="ccontent">
+                  {title && <h2 className="ctitle">{title}</h2>}
+                  <h2 className="ctitle">{unauthorizedVote.name}</h2>
+                  {body && <p className="cbody">{body}</p>}
                   {unauthorizedVote && (
                     <div
-                      className='cbody'
+                      className="cbody"
                       onClick={() => {
                         setShowModalProp(index);
                       }}
@@ -65,7 +62,7 @@ const CCard = ({ title, body, unauthorizedData }: Props) => {
                     </div>
                   )}
                   <button
-                    className='btn btn-primary'
+                    className="btn btn-primary"
                     disabled={isApprovedKey === index ? true : false}
                     onClick={async () => {
                       const success = await approveVote(unauthorizedVote);
@@ -76,10 +73,16 @@ const CCard = ({ title, body, unauthorizedData }: Props) => {
                       }
                     }}
                   >
-                    {isApprovedKey === index ? 'Approved' : 'Approve'}
+                    {isApprovedKey === index ? "Approved" : "Approve"}
                   </button>
                   <button
-                    className='btn btn-danger'
+                    className="btn btn-danger"
+                    disabled={
+                      isRejectedKey === index ||
+                      unauthorizedVote.status === "rejected"
+                        ? true
+                        : false
+                    }
                     onClick={() => {
                       if (unauthorizedVote._id) {
                         rejectVote(unauthorizedVote._id);
@@ -88,7 +91,10 @@ const CCard = ({ title, body, unauthorizedData }: Props) => {
                       }
                     }}
                   >
-                    {isRejectedKey === index ? 'Rejected' : 'Reject'}
+                    {isRejectedKey === index ||
+                    unauthorizedVote.status === "rejected"
+                      ? "Rejected"
+                      : "Reject"}
                   </button>
                 </div>
 

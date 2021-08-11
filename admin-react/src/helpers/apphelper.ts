@@ -145,7 +145,7 @@ export const signUp = async (
 ) => {
   setError("");
   const auth = axios.create({
-    baseURL: "http://localhost:4000/api/v1/auth/",
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     timeout: 5000,
     headers: { "x-api-key": "SG.cpdcjwepcjio" },
   });
@@ -157,7 +157,7 @@ export const signUp = async (
     }
   }
   const authRes = await auth
-    .post("register", {
+    .post("auth/register", {
       username: userNameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -214,7 +214,7 @@ export const logout = async (
   // return auth.signOut();
   setError("");
   const auth = axios.create({
-    baseURL: "http://localhost:4000/api/v1/logout",
+    baseURL: process.env.REACT_APP_API_BASE_URL,
     timeout: 5000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",
@@ -223,7 +223,7 @@ export const logout = async (
   });
 
   try {
-    const authRes = await auth.post("/", {
+    const authRes = await auth.post("logout/", {
       userId: uid,
       accessToken: `bearer ${currentToken}`,
     });

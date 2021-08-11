@@ -1,9 +1,9 @@
-import React, { useEffect } from 'react';
-import CCard from './CCard';
-import UnAuthorizedModel from '../services/UnAuthorizedModel';
-import { useAppSelector } from '../store/hooks';
-import { useDispatch } from 'react-redux';
-import { getUnAuthorizedList } from '../helpers/authorizeHelper';
+import React, { useEffect } from "react";
+import CCard from "./CCard";
+import UnAuthorizedModel from "../services/UnAuthorizedModel";
+import { useAppSelector } from "../store/hooks";
+import { useDispatch } from "react-redux";
+import { getUnAuthorizedList } from "../helpers/authorizeHelper";
 
 const Authorize = () => {
   const dispatch = useDispatch();

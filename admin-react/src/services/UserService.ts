@@ -1,7 +1,7 @@
 import { ApiService } from "./ApiServices";
 import UserModel from "./UserModel";
 export class UserService {
-  static baseUrl = ["auth", "userDashboard"];
+  static baseUrl = ["auth", "profile-settings"];
 
   static async registerUser(registerUser: UserModel) {
     try {
@@ -58,6 +58,31 @@ export class UserService {
         rate,
       });
       return data.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async changeRole(
+    userId: string,
+    role: "admin" | "dataEntry" | "dataViewer"
+  ) {
+    try {
+      const res = await ApiService.put(`${UserService.baseUrl[1]}/changeRole`, {
+        userId,
+        role,
+      });
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async changeRate(userId: string, rate: number) {
+    try {
+      const res = await ApiService.put(`${UserService.baseUrl[1]}/changeRate`, {
+        userId,
+        rate,
+      });
+      return res.data;
     } catch (error) {
       console.log(error);
     }

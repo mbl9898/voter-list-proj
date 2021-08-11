@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 const NavLinks = () => {
   // const [active, setActive] = useState(0);
   const navLinkActive = useAppSelector((state) => state.app.navLinkActive);
+  const currentUser = useAppSelector((state) => state.app.currentUser);
   const dispatch = useAppDispatch();
   return (
     <>
@@ -33,28 +34,36 @@ const NavLinks = () => {
               Data Entry
             </Link>
           </li>
-          <li className="nav-item">
-            <Link
-              className={`nav-link btn ${navLinkActive === 2 ? "active" : ""}`}
-              to="/authorize"
-              onClick={() => {
-                dispatch(setNavLinkActive(2));
-              }}
-            >
-              Authorize
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link
-              className={`nav-link btn ${navLinkActive === 3 ? "active" : ""}`}
-              onClick={() => {
-                dispatch(setNavLinkActive(3));
-              }}
-              to="/adminPortal"
-            >
-              Admin Portal
-            </Link>
-          </li>
+          {currentUser.role === "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`nav-link btn ${
+                  navLinkActive === 2 ? "active" : ""
+                }`}
+                to="/authorize"
+                onClick={() => {
+                  dispatch(setNavLinkActive(2));
+                }}
+              >
+                Authorize
+              </Link>
+            </li>
+          )}
+          {currentUser.role === "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`nav-link btn ${
+                  navLinkActive === 3 ? "active" : ""
+                }`}
+                onClick={() => {
+                  dispatch(setNavLinkActive(3));
+                }}
+                to="/adminPortal"
+              >
+                Admin Portal
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </>

@@ -1,4 +1,7 @@
+import { Dispatch } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
+import { setRejectedVotes } from "../store";
+import unAuthorizedService from "../services/unAuthorizedService";
 
 export const dataEntryFormInitial: VotesModel = {
   blockCode: null,
@@ -29,4 +32,14 @@ export const dataEntryFormInitial: VotesModel = {
   lane: "",
   boulevardAvenue: "",
   otherArea: "",
+};
+
+export const getRejectedVotes = async (
+  dispatch: Dispatch<{ payload: any; type: string }>
+) => {
+  try {
+    dispatch(setRejectedVotes(await unAuthorizedService.getRejectedVotes()));
+  } catch (error) {
+    console.log(error);
+  }
 };

@@ -7,6 +7,7 @@ const initialState: any = {
   currentUser: null,
   dashboardData: { pending: 0, approved: 0 },
   unauthorizedData: [],
+  rejectedVotes: [],
   //   loading: true,
   //   isListDisplay: false,
   //   isDataLoading: false,
@@ -38,6 +39,9 @@ export const appSlice = createSlice({
     },
     setUnauthorizedData(state, action: PayloadAction<any>) {
       state.unauthorizedData = action.payload;
+    },
+    setRejectedVotes(state, action: PayloadAction<any>) {
+      state.rejectedVotes = action.payload;
     },
     setLoading(state, action: PayloadAction<any>) {
       state.loading = action.payload;

@@ -13,6 +13,7 @@ export const {
   setCurrentUser,
   setDashboardData,
   setUnauthorizedData,
+  setRejectedVotes,
   setError,
   setIsAccessDeniedDisplay,
   setIsListDisplay,

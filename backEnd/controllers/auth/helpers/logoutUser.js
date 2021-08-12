@@ -6,7 +6,6 @@ export const logoutUser = async (req, res) => {
   const { accessToken, userId } = req.body;
 
   try {
-    console.log('logout user initialized');
     const response = await LoginSessionSchema.deleteMany({
       user_id: mongoose.Types.ObjectId(userId),
     });

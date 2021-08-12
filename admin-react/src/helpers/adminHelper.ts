@@ -13,7 +13,7 @@ export const getUsers = async (setUsers: Dispatch<SetStateAction<User[]>>) => {
 
 export const changeRole = async (
   userId: string,
-  role: "admin" | "dataEntry" | "dataViewer",
+  role: User["role"],
   setUsers: Dispatch<SetStateAction<User[]>>
 ) => {
   try {
@@ -48,7 +48,7 @@ export const changeRate = async (
   }
 };
 
-export const approvedUser = async (
+export const approveUser = async (
   setUsers: Dispatch<SetStateAction<User[]>>,
   userId: string,
   rate: number

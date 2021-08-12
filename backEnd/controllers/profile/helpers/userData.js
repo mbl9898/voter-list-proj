@@ -34,9 +34,6 @@ export const userData = async (req, res) => {
         (x) => x.enteredBy.email === user.email,
       );
     }
-    console.log(pendingApprovals, 'pendingApprovals');
-    console.log(approvedData, 'approvedData');
-    console.log(rejectedData, 'rejectedData');
     return res.json({
       success: true,
       data: {

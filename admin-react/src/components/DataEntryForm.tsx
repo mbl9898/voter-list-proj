@@ -1,35 +1,38 @@
 import React from "react";
+import { useEffect } from "react";
 import { Form } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import { getUserProgressData } from "../helpers/dashboardHelper";
-import { dataEntryFormInitial } from "../helpers/dataEntryHelper";
+import {
+  dataEntryFormInitial,
+  submitVote,
+  updateRejectedVote,
+} from "../helpers/dataEntryHelper";
 import { useForm } from "../helpers/hooks";
-import UnAuthorizedService from "../services/unAuthorizedService";
 import { setDashboardData } from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import CModal from "./CModal";
 
 const DataEntryForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+  const currentRejectedVote = useAppSelector(
+    (state) => state.app.currentRejectedVote
+  );
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
     dataEntryFormInitial
   );
-  const submitVote = async (data: any) => {
-    try {
-      const res = await UnAuthorizedService.addNewUnauthorizedData(data);
-      console.log(res);
-      if (res.success) {
-        setData(dataEntryFormInitial);
-      }
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
   function submitVoteCallback(data: any) {
-    submitVote(data);
+    !currentRejectedVote && submitVote(data, setData);
+    currentRejectedVote && updateRejectedVote(data, setData, dispatch);
     getUserProgressData(dispatch, setDashboardData);
   }
+
+  useEffect(() => {
+    setData(dataEntryFormInitial);
+    currentRejectedVote && setData({ ...currentRejectedVote });
+    console.log(currentRejectedVote);
+  }, [currentRejectedVote, setData]);
 
   return (
     <>

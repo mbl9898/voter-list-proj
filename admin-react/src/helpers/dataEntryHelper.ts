@@ -1,6 +1,6 @@
-import { Dispatch } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
-import { setRejectedVotes } from "../store";
+import { setCurrentRejectedVote, setRejectedVotes } from "../store";
 import unAuthorizedService from "../services/unAuthorizedService";
 
 export const dataEntryFormInitial: VotesModel = {
@@ -39,6 +39,40 @@ export const getRejectedVotes = async (
 ) => {
   try {
     dispatch(setRejectedVotes(await unAuthorizedService.getRejectedVotes()));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const submitVote = async (
+  data: any,
+  setData: Dispatch<SetStateAction<VotesModel>>
+) => {
+  try {
+    const res = await unAuthorizedService.addNewUnauthorizedData(data);
+    console.log(res);
+    if (res.success) {
+      setData(dataEntryFormInitial);
+    }
+    return res.data;
+  } catch (error) {
+    console.log(error);
+  }
+};
+export const updateRejectedVote = async (
+  data: any,
+  setData: Dispatch<SetStateAction<VotesModel>>,
+  dispatch: Dispatch<{ payload: any; type: string }>
+) => {
+  try {
+    const res = await unAuthorizedService.updateRejectedVote(data);
+    console.log(res);
+    if (res.success) {
+      setData(dataEntryFormInitial);
+      dispatch(setCurrentRejectedVote(null));
+      getRejectedVotes(dispatch);
+    }
+    return res.data;
   } catch (error) {
     console.log(error);
   }

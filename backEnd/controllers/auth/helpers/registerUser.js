@@ -35,7 +35,7 @@ export const registerUser = async (req, res) => {
       username,
       email,
       password: passHash,
-      role: 'dataEntry',
+      role: 'user',
       isApproved: false,
       createdAt: new Date().toISOString(),
     });

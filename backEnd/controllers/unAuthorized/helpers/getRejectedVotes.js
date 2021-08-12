@@ -6,7 +6,6 @@ export const getRejectedVotes = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
     const userEmail = req.user.email;
-    console.log(userEmail);
     let data = await UnAuthorizedSchema.find();
     data = data.filter((x) => x.enteredBy.email === userEmail);
     data = data.filter((x) => x.status === 'rejected');

@@ -32,6 +32,17 @@ export default class UnAuthorized {
       console.log(error);
     }
   }
+  static async updateRejectedVote(rejectedVoteData: UnAuthorizedModel) {
+    try {
+      const data = await ApiService.put(
+        `${UnAuthorized.baseUrl[0]}/updateRejectedVote`,
+        rejectedVoteData
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async deleteRecord(id: string) {
     try {
       const data = await ApiService.delete(`${UnAuthorized.baseUrl[0]}/${id}`);

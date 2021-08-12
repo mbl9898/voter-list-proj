@@ -1,36 +1,29 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { SetStateAction, useState } from "react";
+import { Dispatch } from "react";
 import { Form } from "react-bootstrap";
 import {
-  approvedUser,
+  approveUser,
   changeRate,
   changeRole,
-  getUsers,
   rejectUser,
 } from "../helpers/adminHelper";
 import { User } from "../interfaces/User";
 
-const AdminProtal = () => {
-  const [users, setUsers] = useState<User[]>([]);
+interface Props {
+  users: User[];
+  setUsers: Dispatch<SetStateAction<User[]>>;
+}
+
+const AdminUsersCard = ({ users, setUsers }: Props) => {
   const [rate, setRate] = useState(0);
-  const [role, setRole] = useState<"admin" | "dataEntry" | "dataViewer">(
-    "dataEntry"
-  );
   const [isRoleChanging, setIsRoleChanging] = useState(false);
   const [isRateChanging, setIsRateChanging] = useState(false);
-
-  useEffect(() => {
-    try {
-      getUsers(setUsers);
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+  const [role, setRole] = useState<User["role"]>("dataEntry");
   return (
     <>
       <div style={{ maxWidth: 1400 + "px" }} className="cpage-content">
         {users &&
-          users.map((user: User, index: number) => {
+          users.map((user: User) => {
             console.log(user);
 
             return (
@@ -70,6 +63,7 @@ const AdminProtal = () => {
                                 // required
                               >
                                 <option>Select Role</option>
+                                <option value="user">User</option>
                                 <option value="admin">Admin</option>
                                 <option value="dataEntry">Data Entry</option>
                                 <option value="dataViewer">Data Viewer</option>
@@ -129,7 +123,7 @@ const AdminProtal = () => {
                       <div className="d-flex">
                         <button
                           className="btn btn-primary mx-2"
-                          onClick={() => approvedUser(setUsers, user._id, rate)}
+                          onClick={() => approveUser(setUsers, user._id, rate)}
                         >
                           {user.isApproved ? " Approved" : "Approve"}
                         </button>
@@ -151,4 +145,4 @@ const AdminProtal = () => {
   );
 };
 
-export default AdminProtal;
+export default AdminUsersCard;

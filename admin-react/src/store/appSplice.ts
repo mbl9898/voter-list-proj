@@ -1,33 +1,39 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { User } from "../interfaces/User";
+import UnAuthorizedModel from "../services/UnAuthorizedModel";
 
-const initialState: any = {
-  //   data: [],
-  //   headings: [],
+interface InitialState {
+  navLinkActive: number;
+  currentUser: User | null;
+  dashboardData: { pending: number; rejected: number; approved: number };
+  unauthorizedData: UnAuthorizedModel[];
+  rejectedVotes: UnAuthorizedModel[];
+  currentRejectedVote: UnAuthorizedModel | null;
+  isLoggedIn: boolean;
+  isSignUpFormDisplay: boolean;
+  isLogInFormDisplay: boolean;
+  isAccessDeniedDisplay: boolean;
+  error: string;
+}
+
+const initialState: InitialState = {
   navLinkActive: 0,
   currentUser: null,
-  dashboardData: { pending: 0, approved: 0 },
+  dashboardData: { rejected: 0, pending: 0, approved: 0 },
   unauthorizedData: [],
   rejectedVotes: [],
-  //   loading: true,
-  //   isListDisplay: false,
-  //   isDataLoading: false,
+  currentRejectedVote: null,
   isLoggedIn: false,
   isSignUpFormDisplay: false,
   isLogInFormDisplay: true,
-  //   isAccessDeniedDisplay: false,
-  //   error: "",
+  isAccessDeniedDisplay: false,
+  error: "",
 };
 
 export const appSlice = createSlice({
   name: "app",
   initialState,
   reducers: {
-    setData(state, action: PayloadAction<any>) {
-      state.data = action.payload;
-    },
-    setHeadings(state, action: PayloadAction<any>) {
-      state.headings = action.payload;
-    },
     setNavLinkActive(state, action: PayloadAction<any>) {
       state.navLinkActive = action.payload;
     },
@@ -43,14 +49,8 @@ export const appSlice = createSlice({
     setRejectedVotes(state, action: PayloadAction<any>) {
       state.rejectedVotes = action.payload;
     },
-    setLoading(state, action: PayloadAction<any>) {
-      state.loading = action.payload;
-    },
-    setIsListDisplay(state, action: PayloadAction<any>) {
-      state.isListDisplay = action.payload;
-    },
-    setIsDataLoading(state, action: PayloadAction<any>) {
-      state.isDataLoading = action.payload;
+    setCurrentRejectedVote(state, action: PayloadAction<any>) {
+      state.currentRejectedVote = action.payload;
     },
     setIsLoggedIn(state, action: PayloadAction<any>) {
       state.isLoggedIn = action.payload;

@@ -1,6 +1,5 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
-import { useDispatch } from "react-redux";
 import {
   setIsLoggedIn,
   setIsLogInFormDisplay,
@@ -9,6 +8,7 @@ import {
 import Loading from "./Loading";
 import { signUp } from "../helpers/apphelper";
 import { useHistory } from "react-router-dom";
+import { useAppDispatch } from "../store/hooks";
 
 const SignUp = () => {
   const userNameRef = useRef<any>();
@@ -17,7 +17,7 @@ const SignUp = () => {
   const passwordConfirmRef = useRef<any>();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
   const handleSubmit = async (e: any) => {

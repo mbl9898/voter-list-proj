@@ -5,6 +5,6 @@ export interface User {
   isApproved: boolean;
   isModified: boolean;
   isRejected: boolean;
-  role: string;
+  role: "user" | "admin" | "dataEntry" | "dataViewer";
   rate: number;
 }

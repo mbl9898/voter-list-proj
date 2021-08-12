@@ -19,7 +19,6 @@ export const validatorToken = async (req, res) => {
     if (!validate) {
       throw new Error('Invalid Token');
     }
-    console.log(validate);
     return res.json({
       data: validate,
     });

@@ -7,7 +7,6 @@ const router = express.Router();
 router.post(
   '/register',
   (req, res, next) => {
-    console.log('In Register Route');
     validation(
       req,
       res,

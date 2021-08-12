@@ -7,21 +7,17 @@ export const store: any = configureStore({
 });
 
 export const {
-  setData,
-  setHeadings,
   setNavLinkActive,
   setCurrentUser,
   setDashboardData,
   setUnauthorizedData,
   setRejectedVotes,
-  setError,
-  setIsAccessDeniedDisplay,
-  setIsListDisplay,
-  setIsDataLoading,
+  setCurrentRejectedVote,
   setIsLoggedIn,
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,
-  setLoading,
+  setIsAccessDeniedDisplay,
+  setError,
 } = appSlice.actions;
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;

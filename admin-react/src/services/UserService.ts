@@ -1,3 +1,4 @@
+import { User } from "../interfaces/User";
 import { ApiService } from "./ApiServices";
 import UserModel from "./UserModel";
 export class UserService {
@@ -62,10 +63,7 @@ export class UserService {
       console.log(error);
     }
   }
-  static async changeRole(
-    userId: string,
-    role: "admin" | "dataEntry" | "dataViewer"
-  ) {
+  static async changeRole(userId: string, role: User["role"]) {
     try {
       const res = await ApiService.put(`${UserService.baseUrl[1]}/changeRole`, {
         userId,

@@ -11,6 +11,7 @@ export const {
   setCurrentUser,
   setDashboardData,
   setUnauthorizedData,
+  setPendingUnauthorizedData,
   setRejectedVotes,
   setCurrentRejectedVote,
   setIsLoggedIn,

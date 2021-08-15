@@ -3,7 +3,9 @@ import React, { useEffect, useState } from "react";
 import { getUserProgressData } from "../helpers/dashboardHelper";
 import { setDashboardData } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import RejectedVotesModal from "./RejectedVotesModal";
 const Dashboard = () => {
+  const [rejectedVoteModal, setRejectedVoteModal] = useState(false);
   const dashboardData = useAppSelector((state) => state.app.dashboardData);
   const currentUser = useAppSelector((state) => state.app.currentUser);
   const dispatch = useAppDispatch();
@@ -36,11 +38,13 @@ const Dashboard = () => {
       {!loading && (
         <div className="container">
           <div className="d-flex justify-content-center">
-            <h5>
+            <h5 className="mt-3">
               Accuracy Rate:{" "}
-              {(dashboardData.approved /
-                (dashboardData.approved + dashboardData.rejected)) *
-                100}
+              {Math.floor(
+                (dashboardData.approved /
+                  (dashboardData.approved + dashboardData.rejected)) *
+                  100
+              )}
               %
             </h5>
           </div>
@@ -57,9 +61,18 @@ const Dashboard = () => {
               }`}</button>
             </div>
             <div>
-              <button className="btn btn-danger">{`Rejected - ${
+              <button
+                className="btn btn-danger"
+                onClick={() => {
+                  setRejectedVoteModal(true);
+                }}
+              >{`Rejected - ${
                 dashboardData ? dashboardData.rejected : 0
               }`}</button>
+              <RejectedVotesModal
+                rejectedVoteModal={rejectedVoteModal}
+                setRejectedVoteModal={setRejectedVoteModal}
+              />
             </div>
           </div>
           <hr />

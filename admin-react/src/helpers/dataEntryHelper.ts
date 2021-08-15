@@ -38,7 +38,10 @@ export const getRejectedVotes = async (
   dispatch: Dispatch<{ payload: any; type: string }>
 ) => {
   try {
-    dispatch(setRejectedVotes(await unAuthorizedService.getRejectedVotes()));
+    const res = await unAuthorizedService.getRejectedVotes();
+    dispatch(setRejectedVotes(res));
+    dispatch(setCurrentRejectedVote(res[0]));
+    console.log(res);
   } catch (error) {
     console.log(error);
   }
@@ -50,11 +53,9 @@ export const submitVote = async (
 ) => {
   try {
     const res = await unAuthorizedService.addNewUnauthorizedData(data);
+    setData(dataEntryFormInitial);
     console.log(res);
-    if (res.success) {
-      setData(dataEntryFormInitial);
-    }
-    return res.data;
+    return res;
   } catch (error) {
     console.log(error);
   }
@@ -67,12 +68,12 @@ export const updateRejectedVote = async (
   try {
     const res = await unAuthorizedService.updateRejectedVote(data);
     console.log(res);
-    if (res.success) {
-      setData(dataEntryFormInitial);
-      dispatch(setCurrentRejectedVote(null));
-      getRejectedVotes(dispatch);
-    }
-    return res.data;
+    // if (res.success) {
+    //   setData(dataEntryFormInitial);
+    //   dispatch(setCurrentRejectedVote(null));
+    //   getRejectedVotes(dispatch);
+    // }
+    return res;
   } catch (error) {
     console.log(error);
   }

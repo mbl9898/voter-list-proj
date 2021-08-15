@@ -1,3 +1,4 @@
+import { VoteRejection } from "../interfaces/VoteRejection";
 import { ApiService } from "./ApiServices";
 import UnAuthorizedModel from "./UnAuthorizedModel";
 
@@ -82,12 +83,12 @@ export default class UnAuthorized {
       console.log(error);
     }
   }
-  static async rejectVote(id: string) {
+  static async rejectVote(id: string, rejections?: VoteRejection) {
     try {
       console.log(id);
       const data = await ApiService.put(
         `${UnAuthorized.baseUrl[0]}/rejectVote`,
-        { id: id }
+        { id, rejections }
       );
       return data;
     } catch (error) {

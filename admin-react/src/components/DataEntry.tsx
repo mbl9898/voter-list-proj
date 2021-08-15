@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from "react";
-import { getRejectedVotes } from "../helpers/dataEntryHelper";
+import React, { useState } from "react";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { useAppSelector } from "../store/hooks";
 import CCard from "./CCard";
 import DataEntryForm from "./DataEntryForm";
 
 const DataEntry = () => {
-  const dispatch = useAppDispatch();
+  // const dispatch = useAppDispatch();
   const [isVoteFormDisplay, setIsVoteFormDisplay] = useState(false);
   const rejectedVotes: UnAuthorizedModel[] | [] = useAppSelector(
     (state) => state.app.rejectedVotes
   );
-  useEffect(() => {
-    getRejectedVotes(dispatch);
-  }, []);
+  // useEffect(() => {
+  //   // getRejectedVotes(dispatch);
+  // }, []);
   return (
     <>
       <div className="container">

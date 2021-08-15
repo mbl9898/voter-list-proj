@@ -1,36 +1,70 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
 import { Form } from "react-bootstrap";
+import { voteRejectInitial } from "../helpers/authorizeHelper";
 import { getUserProgressData } from "../helpers/dashboardHelper";
 import {
   dataEntryFormInitial,
+  getRejectedVotes,
   submitVote,
   updateRejectedVote,
 } from "../helpers/dataEntryHelper";
-import { useForm } from "../helpers/hooks";
-import { setDashboardData } from "../store";
+import { useForm } from "../helpers/useForm";
+import { useVoteReject } from "../helpers/useVoteReject";
+import { setCurrentRejectedVote, setDashboardData } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import CModal from "./CModal";
 
-const DataEntryForm = () => {
+interface Props {
+  forRejectedVotes?: boolean;
+  setRejectedVoteIndex?: Dispatch<SetStateAction<number>>;
+  setRejectedVoteModal?: Dispatch<SetStateAction<boolean>>;
+  // rejectedVoteIndex?: number;
+}
+
+const DataEntryForm = ({
+  forRejectedVotes,
+  setRejectedVoteIndex,
+  setRejectedVoteModal,
+}: Props) => {
   const dispatch = useAppDispatch();
   const currentRejectedVote = useAppSelector(
     (state) => state.app.currentRejectedVote
   );
+  const rejectedVotes = useAppSelector((state) => state.app.rejectedVotes);
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
     dataEntryFormInitial
   );
 
-  function submitVoteCallback(data: any) {
+  const { dataVoteReject, onChangeVoteReject, setDataVoteReject } =
+    useVoteReject(voteRejectInitial);
+
+  async function submitVoteCallback(data: any) {
     !currentRejectedVote && submitVote(data, setData);
-    currentRejectedVote && updateRejectedVote(data, setData, dispatch);
-    getUserProgressData(dispatch, setDashboardData);
+
+    const res =
+      currentRejectedVote &&
+      (await updateRejectedVote(data, setData, dispatch));
+    if (res && res.success) {
+      setData(dataEntryFormInitial);
+      dispatch(setCurrentRejectedVote(null));
+      getRejectedVotes(dispatch);
+      setDataVoteReject(voteRejectInitial);
+      setRejectedVoteIndex && setRejectedVoteIndex(0);
+      console.log(rejectedVotes.length);
+      rejectedVotes.length === 0 &&
+        setRejectedVoteModal &&
+        setRejectedVoteModal(false);
+      getUserProgressData(dispatch, setDashboardData);
+    }
   }
 
   useEffect(() => {
-    setData(dataEntryFormInitial);
+    // setData(dataEntryFormInitial);
     currentRejectedVote && setData({ ...currentRejectedVote });
+    currentRejectedVote &&
+      setDataVoteReject({ ...currentRejectedVote.rejections });
     console.log(currentRejectedVote);
   }, [currentRejectedVote, setData]);
 
@@ -38,8 +72,12 @@ const DataEntryForm = () => {
     <>
       <Form>
         <div className="row">
-          <h3 className="text-center p-5">Add Vote</h3>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          {!forRejectedVotes && <h3 className="text-center p-5">Add Vote</h3>}
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.blockCode && "bg-danger"
+            }`}
+          >
             <Form.Group id="blockCode">
               <Form.Label>Block Code</Form.Label>
               <Form.Control
@@ -51,7 +89,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.constituencyName && "bg-danger"
+            }`}
+          >
             <Form.Group id="constituencyName">
               <Form.Label>Constituency Name</Form.Label>
               <Form.Control
@@ -62,7 +104,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.moza && "bg-danger"
+            }`}
+          >
             <Form.Group id="moza">
               <Form.Label>Moza</Form.Label>
               <Form.Control
@@ -73,7 +119,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.dehya && "bg-danger"
+            }`}
+          >
             <Form.Group id="dehya">
               <Form.Label>Dehya</Form.Label>
               <Form.Control
@@ -84,7 +134,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.city && "bg-danger"
+            }`}
+          >
             <Form.Group id="city">
               <Form.Label>City</Form.Label>
               <Form.Control
@@ -95,7 +149,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.patwarHalka && "bg-danger"
+            }`}
+          >
             <Form.Group id="patwarHalka">
               <Form.Label>Patwar Halka</Form.Label>
               <Form.Control
@@ -106,7 +164,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.tapaydar && "bg-danger"
+            }`}
+          >
             <Form.Group id="tapaydar">
               <Form.Label>Tapaydar</Form.Label>
               <Form.Control
@@ -117,7 +179,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.tehseel && "bg-danger"
+            }`}
+          >
             <Form.Group id="tehseel">
               <Form.Label>Tehseel</Form.Label>
               <Form.Control
@@ -128,7 +194,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.talka && "bg-danger"
+            }`}
+          >
             <Form.Group id="talka">
               <Form.Label>Talka</Form.Label>
               <Form.Control
@@ -139,7 +209,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.district && "bg-danger"
+            }`}
+          >
             <Form.Group id="district">
               <Form.Label>District</Form.Label>
               <Form.Control
@@ -150,7 +224,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.unionCouncil && "bg-danger"
+            }`}
+          >
             <Form.Group id="unionCouncil">
               <Form.Label>Union Council</Form.Label>
               <Form.Control
@@ -160,7 +238,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.bookNo && "bg-danger"
+            }`}
+          >
             <Form.Group id="bookNo">
               <Form.Label>Book No</Form.Label>
               <Form.Control
@@ -171,7 +253,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.constituency && "bg-danger"
+            }`}
+          >
             <Form.Group id="constituency">
               <Form.Label>Constituency</Form.Label>
               <Form.Control
@@ -182,7 +268,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.gender && "bg-danger"
+            }`}
+          >
             <Form.Group id="gender">
               <Form.Label>Gender</Form.Label>
               <Form.Select
@@ -191,20 +281,22 @@ const DataEntryForm = () => {
                 onChange={onChange}
                 required
               >
-                <option>Select Gender</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-                <option value="Others">Others</option>
+                <option>
+                  {data.gender
+                    ? `Current: ${data.gender} select the correct`
+                    : `Select Gender`}
+                </option>
+                <option value="MALE">Male</option>
+                <option value="FEMALE">Female</option>
+                <option value="OTHERS">Others</option>
               </Form.Select>
-              {/* <Form.Control
-                name="gender"
-                value={data.gender}
-                onChange={onChange}
-                required
-              /> */}
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.voteSNo && "bg-danger"
+            }`}
+          >
             <Form.Group id="voteSNo">
               <Form.Label>Vote S No</Form.Label>
               <Form.Control
@@ -215,7 +307,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.familyNo && "bg-danger"
+            }`}
+          >
             <Form.Group id="familyNo">
               <Form.Label>Family No</Form.Label>
               <Form.Control
@@ -226,7 +322,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.name && "bg-danger"
+            }`}
+          >
             <Form.Group id="name">
               <Form.Label>Name</Form.Label>
               <Form.Control
@@ -237,8 +337,12 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
-            <Form.Group id="mMaritalStatus">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.maritalStatus && "bg-danger"
+            }`}
+          >
+            <Form.Group id="maritalStatus">
               <Form.Label>Marital Status</Form.Label>
               <Form.Select
                 name="maritalStatus"
@@ -246,9 +350,13 @@ const DataEntryForm = () => {
                 onChange={onChange}
                 required
               >
-                <option>Select Marital Status</option>
-                <option value="Married">Married</option>
-                <option value="Unmarried">Unmarried</option>
+                <option>
+                  {data.maritalStatus
+                    ? `Current: ${data.maritalStatus} select the correct`
+                    : `Select Marital Status`}
+                </option>
+                <option value="MARRIED">Married</option>
+                <option value="UNMARRIED">Unmarried</option>
                 <option value="-">-</option>
               </Form.Select>
               {/* <Form.Control
@@ -258,7 +366,11 @@ const DataEntryForm = () => {
               /> */}
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.fatherHusbandName && "bg-danger"
+            }`}
+          >
             <Form.Group id="fatherHusbandName">
               <Form.Label>Father|Husband Name</Form.Label>
               <Form.Control
@@ -269,7 +381,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.cnic && "bg-danger"
+            }`}
+          >
             <Form.Group id="cnic">
               <Form.Label>CNIC</Form.Label>
               <Form.Control
@@ -280,7 +396,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.Age && "bg-danger"
+            }`}
+          >
             <Form.Group id="Age">
               <Form.Label>Age</Form.Label>
               <Form.Control
@@ -291,7 +411,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.houseNo && "bg-danger"
+            }`}
+          >
             <Form.Group id="houseNo">
               <Form.Label>House No</Form.Label>
               <Form.Control
@@ -301,7 +425,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.street && "bg-danger"
+            }`}
+          >
             <Form.Group id="street">
               <Form.Label>Street</Form.Label>
               <Form.Control
@@ -311,7 +439,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.phase && "bg-danger"
+            }`}
+          >
             <Form.Group id="phase">
               <Form.Label>Phase</Form.Label>
               <Form.Control
@@ -321,7 +453,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.sector && "bg-danger"
+            }`}
+          >
             <Form.Group id="sector">
               <Form.Label>Sector</Form.Label>
               <Form.Control
@@ -331,13 +467,21 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.unionCouncil && "bg-danger"
+            }`}
+          >
             <Form.Group id="unionCouncil">
               <Form.Label>Lane</Form.Label>
               <Form.Control name="lane" value={data.lane} onChange={onChange} />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.boulevardAvenue && "bg-danger"
+            }`}
+          >
             <Form.Group id="boulevardAvenue">
               <Form.Label>Boulevard|Avenue</Form.Label>
               <Form.Control
@@ -347,7 +491,11 @@ const DataEntryForm = () => {
               />
             </Form.Group>
           </div>
-          <div className="col col-xs-12 col-sm-4 q-pa-sm">
+          <div
+            className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+              dataVoteReject.otherArea && "bg-danger"
+            }`}
+          >
             <Form.Group id="otherArea">
               <Form.Label>Other Area</Form.Label>
               <Form.Control

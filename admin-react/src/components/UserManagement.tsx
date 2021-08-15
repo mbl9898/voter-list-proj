@@ -14,13 +14,14 @@ interface Props {
   setUsers: Dispatch<SetStateAction<User[]>>;
 }
 
-const AdminUsersCard = ({ users, setUsers }: Props) => {
+const UserManagement = ({ users, setUsers }: Props) => {
   const [rate, setRate] = useState(0);
   const [isRoleChanging, setIsRoleChanging] = useState(false);
   const [isRateChanging, setIsRateChanging] = useState(false);
   const [role, setRole] = useState<User["role"]>("dataEntry");
   return (
     <>
+      <h4 className="text-center">User Management</h4>
       <div style={{ maxWidth: 1400 + "px" }} className="cpage-content">
         {users &&
           users.map((user: User) => {
@@ -141,8 +142,9 @@ const AdminUsersCard = ({ users, setUsers }: Props) => {
             );
           })}
       </div>
+      <hr className="mx-5" />
     </>
   );
 };
 
-export default AdminUsersCard;
+export default UserManagement;

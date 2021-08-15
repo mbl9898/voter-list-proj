@@ -7,6 +7,7 @@ interface InitialState {
   currentUser: User | null;
   dashboardData: { pending: number; rejected: number; approved: number };
   unauthorizedData: UnAuthorizedModel[];
+  pendingUnauthorizedData: UnAuthorizedModel[];
   rejectedVotes: UnAuthorizedModel[];
   currentRejectedVote: UnAuthorizedModel | null;
   isLoggedIn: boolean;
@@ -21,6 +22,7 @@ const initialState: InitialState = {
   currentUser: null,
   dashboardData: { rejected: 0, pending: 0, approved: 0 },
   unauthorizedData: [],
+  pendingUnauthorizedData: [],
   rejectedVotes: [],
   currentRejectedVote: null,
   isLoggedIn: false,
@@ -45,6 +47,9 @@ export const appSlice = createSlice({
     },
     setUnauthorizedData(state, action: PayloadAction<any>) {
       state.unauthorizedData = action.payload;
+    },
+    setPendingUnauthorizedData(state, action: PayloadAction<any>) {
+      state.pendingUnauthorizedData = action.payload;
     },
     setRejectedVotes(state, action: PayloadAction<any>) {
       state.rejectedVotes = action.payload;

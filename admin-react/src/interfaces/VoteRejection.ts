@@ -1,0 +1,30 @@
+export interface VoteRejection {
+  blockCode: boolean;
+  constituencyName: boolean;
+  moza: boolean;
+  dehya: boolean;
+  city: boolean;
+  patwarHalka: boolean;
+  tapaydar: boolean;
+  tehseel: boolean;
+  talka: boolean;
+  district: boolean;
+  unionCouncil: boolean;
+  bookNo: boolean;
+  constituency: boolean;
+  gender: boolean;
+  voteSNo: boolean;
+  familyNo: boolean;
+  name: boolean;
+  maritalStatus: boolean;
+  fatherHusbandName: boolean;
+  cnic: boolean;
+  age: boolean;
+  houseNo: boolean;
+  street: boolean;
+  phase: boolean;
+  sector: boolean;
+  lane: boolean;
+  boulevardAvenue: boolean;
+  otherArea: boolean;
+}

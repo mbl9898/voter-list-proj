@@ -1,7 +1,11 @@
 import React, { SetStateAction, useState } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
-import { getUnAuthorizedList } from "../helpers/authorizeHelper";
+import {
+  approveVote,
+  getUnAuthorizedList,
+  rejectVote,
+} from "../helpers/authorizeHelper";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import UnAuthorizedService from "../services/unAuthorizedService";
 import { setCurrentRejectedVote } from "../store";
@@ -27,15 +31,7 @@ const CCard = ({
   const [showModalProp, setShowModalProp] = useState<null | number>(null);
   const [isApprovedKey, setIsApprovedKey] = useState<null | number>(null);
   const [isRejectedKey, setIsRejectedKey] = useState<null | number>(null);
-  const approveVote = async (vote: UnAuthorizedModel) => {
-    const res = await UnAuthorizedService.addNewAuthorizedData(vote);
-    console.log(res);
-    return res.success;
-  };
-  const rejectVote = async (id: string) => {
-    const res = await UnAuthorizedService.rejectVote(id);
-    console.log(res);
-  };
+
   useEffect(() => {}, []);
   return (
     <>
@@ -105,9 +101,8 @@ const CCard = ({
                       : "Reject"}
                   </button>
                 </div>
-
                 <VoteDisplayModal
-                  voteIndex={index}
+                  index={index}
                   showModalProp={showModalProp}
                   setShowModalProp={setShowModalProp}
                   unauthorizedVote={unauthorizedVote}

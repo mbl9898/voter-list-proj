@@ -3,6 +3,7 @@ import profileRoutes from './profile.route';
 import unAuthorizedRoutes from './unAuthorized.route';
 import authorizedRoutes from './authorized.route';
 import authRoutes from './auth.route';
+import blockCodeRoutes from './blockCode.route';
 import votesDataRoutes from './votesData.route';
 import logoutRoutes from './logout.route';
 
@@ -37,6 +38,10 @@ const authenticatedRoutes = [
   {
     path: '/votesData',
     route: votesDataRoutes,
+  },
+  {
+    path: '/blockCode',
+    route: blockCodeRoutes,
   },
 ];
 

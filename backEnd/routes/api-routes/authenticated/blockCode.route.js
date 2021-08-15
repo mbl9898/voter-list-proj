@@ -9,8 +9,26 @@ import { validate as validation } from '~/middlewares';
 import { roles } from '~/constants';
 
 const router = express.Router();
-
 router.get('/', isAuthorized(roles.dataEntry), blockCode.getData);
+router.get(
+  '/:id',
+  (req, res, next) => {
+    console.log(req);
+    validation(
+      req,
+      res,
+      next,
+      {
+        id: req.params.id,
+      },
+      {
+        id: 'required|string',
+      },
+    );
+  },
+  isAuthorized(roles.dataEntry),
+  blockCode.getDataById,
+);
 
 router.put(
   '/',
@@ -24,7 +42,13 @@ router.put(
 router.post(
   '/',
   (req, res, next) => {
-    validation(req, res, next, getBlockCodeReqData(req), getBlockCodeTypes());
+    validation(
+      req,
+      res,
+      next,
+      { ...getBlockCodeReqData(req) },
+      { ...getBlockCodeTypes() },
+    );
   },
   isAuthorized(roles.admin),
   blockCode.postData,

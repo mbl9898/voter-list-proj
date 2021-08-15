@@ -44,12 +44,14 @@ router.post(
 router.put(
   '/rejectVote',
   (req, res, next) => {
+    console.log(req.body.rejections);
     validation(
       req,
       res,
       next,
       {
         id: req.body.id,
+        rejections: req.body.rejections,
       },
       {
         id: 'required|string',

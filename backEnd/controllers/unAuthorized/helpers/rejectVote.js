@@ -5,10 +5,11 @@ import { UnAuthorizedSchema } from '~/schemas';
 export const rejectVote = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
-    const id = req.body.id;
+    const { id, rejections } = req.body;
     const voteUpdate = await UnAuthorizedSchema.findByIdAndUpdate(
       { _id: id },
-      { status: 'rejected' },
+      { status: 'rejected', rejections: rejections },
+      { new: true },
     );
 
     return res.json({

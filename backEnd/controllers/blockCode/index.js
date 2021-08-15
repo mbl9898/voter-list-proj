@@ -13,7 +13,7 @@ export const blockCode = {
 
 export const getBlockCodeReqData = (req) => {
   const {
-    blockCode,
+    blockCodeNo,
     constituencyName,
     moza,
     dehya,
@@ -28,7 +28,7 @@ export const getBlockCodeReqData = (req) => {
     constituency,
   } = req.body;
   return {
-    blockCode,
+    blockCodeNo,
     constituencyName,
     moza,
     dehya,
@@ -45,7 +45,7 @@ export const getBlockCodeReqData = (req) => {
 };
 export const getBlockCodeTypes = () => {
   const blockCodeType = {
-    blockCode: 'required|integer',
+    blockCodeNo: 'required|integer',
     constituencyName: 'required|string',
     moza: 'required|string',
     dehya: 'required|string',

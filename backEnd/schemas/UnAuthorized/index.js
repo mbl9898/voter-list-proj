@@ -89,6 +89,9 @@ const UnAuthorized = new mongoose.Schema({
     type: String,
     default: 'pending',
   },
+  rejections: {
+    type: Object,
+  },
   enteredBy: {
     type: Object,
   },

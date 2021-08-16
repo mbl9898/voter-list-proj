@@ -1,49 +1,34 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
+import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
 import BlockCodeEntryForm from "./BlockCodeEntryForm";
+import CModal from "./CModal";
 import VoteDisplayModal from "./VoteDisplayModal";
 
 const BlockCodeManagement = () => {
-  const [createBlockCode, setCreateBlockCode] = useState(false);
-  const [showModalProp, setShowModalProp] = useState<null | number>(null);
+  const [blockCodeEntryForm, setBlockCodeEntryForm] = useState(false);
+  const [updateBlockCodeData, setUpdateBlockCodeData] =
+    useState<null | BlockCode>(null);
+  // const [showModalProp, setShowModalProp] = useState<null | number>(null);
   const [blockCodes, setBlockCodes] = useState<BlockCode[]>([]);
   const [filteredBlockCodeHeadings, setFilteredBlockCodeHeadings] = useState<
     string[]
   >([]);
 
-  const getBlockCodes = async () => {
-    const res = await BlockCodeService.getBlockCodes();
-    if (res) {
-      let resHeadings = Object.keys(res[0]);
-      let sentenceCaseHeadings: string[] = [];
-      resHeadings.unshift("Sr");
-      resHeadings = resHeadings.filter(
-        (heading: string) =>
-          heading !== "status" &&
-          heading !== "_id" &&
-          heading !== "enteredBy" &&
-          heading !== "createdAt" &&
-          heading !== "__v"
-      );
-      resHeadings.forEach((heading) => {
-        const result = heading.replace(/([A-Z])/g, " $1");
-        sentenceCaseHeadings.push(
-          result.charAt(0).toUpperCase() + result.slice(1)
-        );
-      });
-      setFilteredBlockCodeHeadings(sentenceCaseHeadings);
-      setBlockCodes(res);
-    }
-  };
   const deleteBlockCode = async (id: string) => {
     const res = await BlockCodeService.deleteBlockCode(id);
     console.log(res);
+    getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
+  };
+
+  const onSubmit = (blockCode: BlockCode) => {
+    blockCode._id && deleteBlockCode(blockCode._id);
   };
   useEffect(() => {
-    getBlockCodes();
+    getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
   }, []);
 
   return (
@@ -57,7 +42,7 @@ const BlockCodeManagement = () => {
           <button
             className="btn btn-primary mx-2"
             onClick={() => {
-              setCreateBlockCode(!createBlockCode);
+              setBlockCodeEntryForm(!blockCodeEntryForm);
             }}
           >
             Create
@@ -92,33 +77,44 @@ const BlockCodeManagement = () => {
                   <td className="text-center">{blockCode.unionCouncil}</td>
                   <td className="text-center">{blockCode.bookNo}</td>
                   <td className="text-center">{blockCode.constituency}</td>
-                  <button
-                    className="btn btn-danger ms-2 bg-danger"
-                    onClick={() => {
-                      setShowModalProp(index);
-                    }}
-                  >
-                    delete
-                  </button>
-
-                  <div>
-                    <VoteDisplayModal
-                      heading={"Delete BlockCode"}
-                      body={"Are You Sure You Want To Delete This Block Code?"}
-                      showModalProp={showModalProp}
-                      setShowModalProp={setShowModalProp}
-                      index={index}
+                  <td className="text-center">
+                    <button
+                      className="btn btn-primary"
+                      onClick={() => {
+                        setUpdateBlockCodeData(
+                          !blockCodeEntryForm ? blockCode : null
+                        );
+                        setBlockCodeEntryForm(!blockCodeEntryForm);
+                      }}
+                    >
+                      update
+                    </button>
+                  </td>
+                  <td>
+                    <CModal
+                      heading={
+                        "Are you sure you want to delete this Block Code?"
+                      }
+                      triggerButtonContent="delete"
+                      triggerButtonVarient="danger"
                       onSubmit={() => {
-                        blockCode._id && deleteBlockCode(blockCode._id);
+                        onSubmit(blockCode);
                       }}
                     />
-                  </div>
+                  </td>
                 </tr>
               );
             })}
           </tbody>
         </table>
-        {createBlockCode && <BlockCodeEntryForm />}
+        {blockCodeEntryForm && (
+          <BlockCodeEntryForm
+            updateBlockCodeData={updateBlockCodeData}
+            setFilteredBlockCodeHeadings={setFilteredBlockCodeHeadings}
+            setBlockCodes={setBlockCodes}
+            setBlockCodeEntryForm={setBlockCodeEntryForm}
+          />
+        )}
       </Container>
       <hr className="mx-5" />
     </>

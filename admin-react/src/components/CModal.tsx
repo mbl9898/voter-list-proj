@@ -10,6 +10,8 @@ interface Props {
   unauthorizedVote?: VotesModel;
   externalButton?: boolean;
   showModalProp?: boolean;
+  triggerButtonContent?: string;
+  triggerButtonVarient?: "primary" | "danger";
 }
 
 const CModal = ({
@@ -19,6 +21,8 @@ const CModal = ({
   unauthorizedVote,
   externalButton,
   showModalProp,
+  triggerButtonContent,
+  triggerButtonVarient,
 }: Props) => {
   const [show, setShow] = useState<boolean | undefined>(false);
   const handleClose = () => setShow(false);
@@ -31,12 +35,12 @@ const CModal = ({
     <>
       {!externalButton && (
         <Button
-          className="mt-5"
-          style={{ width: 50 + "%" }}
-          variant="primary"
+          className={triggerButtonVarient ? "" : "mt-5"}
+          style={triggerButtonVarient ? undefined : { width: 50 + "%" }}
+          variant={triggerButtonVarient ? triggerButtonVarient : "primary"}
           onClick={handleShow}
         >
-          Submit
+          {triggerButtonContent ? triggerButtonContent : "Submit"}
         </Button>
       )}
 

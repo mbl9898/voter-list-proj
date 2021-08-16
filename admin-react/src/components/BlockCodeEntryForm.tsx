@@ -1,11 +1,24 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
+import { useEffect } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
+import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
 import { useForm } from "../helpers/useForm";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
 import Loading from "./Loading";
+interface Props {
+  updateBlockCodeData: null | BlockCode;
+  setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>;
+  setBlockCodes: Dispatch<SetStateAction<BlockCode[]>>;
+  setBlockCodeEntryForm: Dispatch<SetStateAction<boolean>>;
+}
 
-const BlockCodeEntryForm = () => {
+const BlockCodeEntryForm = ({
+  updateBlockCodeData,
+  setFilteredBlockCodeHeadings,
+  setBlockCodes,
+  setBlockCodeEntryForm,
+}: Props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const blockCodeFormInitial: BlockCode = {
@@ -31,20 +44,34 @@ const BlockCodeEntryForm = () => {
   async function submitBlockCodeCallback(data: any) {
     setLoading(true);
     setError("");
-    const res = await BlockCodeService.postBlockCode(data);
-    console.log(res);
-    res.error &&
-      setError(`${res.error.message}
+    if (!updateBlockCodeData) {
+      const res = await BlockCodeService.postBlockCode(data);
+      console.log(res);
+      res.error &&
+        setError(`${res.error.message}
     `);
+      res.success && setData(blockCodeFormInitial);
+    }
+    if (updateBlockCodeData) {
+      const res = await BlockCodeService.updateBlockCode(data);
+      console.log(res);
+      res.success && setData(blockCodeFormInitial);
+      getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
+      setBlockCodeEntryForm(false);
+    }
     setLoading(false);
-    res.success && setData(blockCodeFormInitial);
   }
+  useEffect(() => {
+    updateBlockCodeData && setData(updateBlockCodeData);
+  }, []);
   return (
     <div>
       <div>
         <Card>
           <Card.Body>
-            <h4 className="text-center mb-4">Create Block Code</h4>
+            <h4 className="text-center mb-4">
+              {updateBlockCodeData ? "Update Block Code" : "Create Block Code"}
+            </h4>
             {error && (
               <div className="d-flex justify-content-center">
                 <Alert

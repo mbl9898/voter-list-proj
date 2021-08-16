@@ -398,7 +398,7 @@ const DataEntryForm = ({
           </div>
           <div
             className={`col col-xs-12 col-sm-4 p-1 br-5 ${
-              dataVoteReject.Age && "bg-danger"
+              dataVoteReject.age && "bg-danger"
             }`}
           >
             <Form.Group id="Age">
@@ -469,10 +469,10 @@ const DataEntryForm = ({
           </div>
           <div
             className={`col col-xs-12 col-sm-4 p-1 br-5 ${
-              dataVoteReject.unionCouncil && "bg-danger"
+              dataVoteReject.lane && "bg-danger"
             }`}
           >
-            <Form.Group id="unionCouncil">
+            <Form.Group id="lane">
               <Form.Label>Lane</Form.Label>
               <Form.Control name="lane" value={data.lane} onChange={onChange} />
             </Form.Group>

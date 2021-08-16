@@ -26,7 +26,7 @@ export class BlockCodeService {
         `${BlockCodeService.baseUrl[0]}`,
         blockCodeData
       );
-      return res.data;
+      return res;
     } catch (error) {
       console.log(error);
     }

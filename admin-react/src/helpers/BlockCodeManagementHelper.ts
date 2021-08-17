@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
-import { setBlockCodes } from "../store";
+import { setBlockCodes, setFilteredBlockCodeHeadings } from "../store";
 
 export const blockCodeFormInitial: BlockCode = {
   blockCodeNo: null,
@@ -20,7 +20,7 @@ export const blockCodeFormInitial: BlockCode = {
 };
 
 export const getBlockCodes = async (
-  setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
+  // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
   dispatch: any
 ) => {
   const res = await BlockCodeService.getBlockCodes();
@@ -42,7 +42,7 @@ export const getBlockCodes = async (
         result.charAt(0).toUpperCase() + result.slice(1)
       );
     });
-    setFilteredBlockCodeHeadings(sentenceCaseHeadings);
+    dispatch(setFilteredBlockCodeHeadings(sentenceCaseHeadings));
     dispatch(setBlockCodes(res));
   }
 };

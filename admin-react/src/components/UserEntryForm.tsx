@@ -1,6 +1,7 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useEffect } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
+import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
 import { useForm } from "../helpers/useForm";
 import {
   getUsers,
@@ -8,6 +9,7 @@ import {
 } from "../helpers/userManagementHelper";
 import { User } from "../interfaces/User";
 import { UserService } from "../services/UserService";
+import { useAppDispatch } from "../store/hooks";
 import Loading from "./Loading";
 import TagInput from "./TagInput";
 interface Props {
@@ -21,6 +23,7 @@ const BlockCodeEntryForm = ({
   setUsers,
   setUserEntryForm,
 }: Props) => {
+  const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
@@ -42,6 +45,7 @@ const BlockCodeEntryForm = ({
   }
   useEffect(() => {
     updateUserData && setData({ ...data, ...updateUserData });
+    getBlockCodes(dispatch);
   }, [updateUserData]);
   return (
     <div>

@@ -15,6 +15,7 @@ export const {
   setRejectedVotes,
   setCurrentRejectedVote,
   setBlockCodes,
+  setFilteredBlockCodeHeadings,
   setDefaultBlockCodeData,
   setIsLoggedIn,
   setIsLogInFormDisplay,

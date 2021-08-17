@@ -12,13 +12,13 @@ import { useAppDispatch } from "../store/hooks";
 import Loading from "./Loading";
 interface Props {
   updateBlockCodeData: null | BlockCode;
-  setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>;
+  // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>;
   setBlockCodeEntryForm: Dispatch<SetStateAction<boolean>>;
 }
 
 const BlockCodeEntryForm = ({
   updateBlockCodeData,
-  setFilteredBlockCodeHeadings,
+  // setFilteredBlockCodeHeadings,
   setBlockCodeEntryForm,
 }: Props) => {
   const [loading, setLoading] = useState(false);
@@ -43,7 +43,7 @@ const BlockCodeEntryForm = ({
     if (updateBlockCodeData) {
       const res = await BlockCodeService.updateBlockCode(data);
       res.success && setData(blockCodeFormInitial);
-      getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
+      getBlockCodes(dispatch);
       setBlockCodeEntryForm(false);
     }
     setLoading(false);

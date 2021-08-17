@@ -70,6 +70,7 @@ const DataEntryForm = ({
     defaultBlockCode: number
   ) => {
     const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
+    getDefaultBlockCodeData(defaultBlockCode);
   };
   const getDefaultBlockCodeData = async (defaultBlockCode: number) => {
     const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);

@@ -14,5 +14,6 @@ export const getUserProgressData = async (
     },
   });
   const res = await dataReq.get("profile-settings", { cancelToken: source });
+  console.log(res);
   dispatch(setDashboardData(res && res.data && res.data.data));
 };

@@ -14,21 +14,24 @@ const BlockCodeManagement = () => {
   const [blockCodeEntryForm, setBlockCodeEntryForm] = useState(false);
   const [updateBlockCodeData, setUpdateBlockCodeData] =
     useState<null | BlockCode>(null);
-  const [filteredBlockCodeHeadings, setFilteredBlockCodeHeadings] = useState<
-    string[]
-  >([]);
+  const filteredBlockCodeHeadings = useAppSelector(
+    (state) => state.app.filteredBlockCodeHeadings
+  );
+  // const [filteredBlockCodeHeadings, setFilteredBlockCodeHeadings] = useState<
+  //   string[]
+  // >([]);
   // const [showModalProp, setShowModalProp] = useState<null | number>(null);
 
   const deleteBlockCode = async (id: string) => {
     const res = await BlockCodeService.deleteBlockCode(id);
-    getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
+    getBlockCodes(dispatch);
   };
 
   const onSubmit = (blockCode: BlockCode) => {
     blockCode._id && deleteBlockCode(blockCode._id);
   };
   useEffect(() => {
-    getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
+    getBlockCodes(dispatch);
   }, []);
 
   return (
@@ -52,11 +55,13 @@ const BlockCodeManagement = () => {
         <table className="table">
           <thead>
             <tr>
-              {filteredBlockCodeHeadings.map((heading, index) => (
-                <th key={index} scope="col">
-                  {heading}
-                </th>
-              ))}
+              {filteredBlockCodeHeadings.map(
+                (heading: string, index: number) => (
+                  <th key={index} scope="col">
+                    {heading}
+                  </th>
+                )
+              )}
             </tr>
           </thead>
           <tbody>
@@ -110,7 +115,6 @@ const BlockCodeManagement = () => {
         {blockCodeEntryForm && (
           <BlockCodeEntryForm
             updateBlockCodeData={updateBlockCodeData}
-            setFilteredBlockCodeHeadings={setFilteredBlockCodeHeadings}
             setBlockCodeEntryForm={setBlockCodeEntryForm}
           />
         )}

@@ -12,6 +12,7 @@ interface InitialState {
   rejectedVotes: UnAuthorizedModel[];
   currentRejectedVote: UnAuthorizedModel | null;
   blockCodes: BlockCode[];
+  filteredBlockCodeHeadings: string[];
   defaultBlockCodeData: BlockCode | null;
   isLoggedIn: boolean;
   isSignUpFormDisplay: boolean;
@@ -29,6 +30,7 @@ const initialState: InitialState = {
   rejectedVotes: [],
   currentRejectedVote: null,
   blockCodes: [],
+  filteredBlockCodeHeadings: [],
   defaultBlockCodeData: null,
   isLoggedIn: false,
   isSignUpFormDisplay: false,
@@ -64,6 +66,9 @@ export const appSlice = createSlice({
     },
     setBlockCodes(state, action: PayloadAction<any>) {
       state.blockCodes = action.payload;
+    },
+    setFilteredBlockCodeHeadings(state, action: PayloadAction<any>) {
+      state.filteredBlockCodeHeadings = action.payload;
     },
     setDefaultBlockCodeData(state, action: PayloadAction<any>) {
       state.defaultBlockCodeData = action.payload;

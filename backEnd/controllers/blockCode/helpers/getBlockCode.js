@@ -23,11 +23,11 @@ export const getData = async (_, res) => {
   }
 };
 
-export const getDataById = async (req, res) => {
+export const getDataByBlockCodeNo = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
-  const { id } = req.params;
+  const { blockCodeNo } = req.params;
   try {
-    const data = await BlockCodeSchema.findById(id);
+    const data = await BlockCodeSchema.findOne({ blockCodeNo });
     if (!data) {
       throw new Error('Invalid Request');
     }

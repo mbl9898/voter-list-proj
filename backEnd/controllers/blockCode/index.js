@@ -1,11 +1,11 @@
-import { getData, getDataById } from './helpers/getBlockCode';
+import { getData, getDataByBlockCodeNo } from './helpers/getBlockCode';
 import { updateBlockCode } from './helpers/putBlockCode';
 import { postData } from './helpers/postBlockCode';
 import { deleteRecord } from './helpers/deleteBlockCode';
 
 export const blockCode = {
   getData,
-  getDataById,
+  getDataByBlockCodeNo,
   updateBlockCode,
   postData,
   deleteRecord,

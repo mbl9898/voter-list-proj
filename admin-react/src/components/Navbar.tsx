@@ -30,7 +30,6 @@ const Navbar = () => {
     dispatch(setCurrentUser(null));
     // history.push("/login")
     // await logout(currentUser.uid, dispatch);
-    console.log(currentUser, "currentUser");
     await dispatch(setIsLogInFormDisplay(true));
   };
   return (

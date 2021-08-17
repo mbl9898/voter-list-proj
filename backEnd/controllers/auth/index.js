@@ -3,10 +3,10 @@ import { loginUser } from './helpers/loginUser';
 import { logoutUser } from './helpers/logoutUser';
 import { refreshSession } from './helpers/refreshSession';
 import { sendCodePasswordRecovery } from './helpers/sendCodePasswordRecovery';
+import { setDefaultBlockCode } from './helpers/setDefaultBlockCode';
 import { resetPassword } from './helpers/resetPassword';
 import { validatorToken } from './helpers/tokenValidator';
-import { userRole } from './helpers/userRole';
-import { approveAccount } from './helpers/approveAccount';
+import { updateUser } from './helpers/updateUser';
 import { getAllUsers } from './helpers/getAllUsers';
 
 export const auth = {
@@ -15,9 +15,9 @@ export const auth = {
   logoutUser,
   refreshSession,
   sendCodePasswordRecovery,
+  setDefaultBlockCode,
   resetPassword,
   validatorToken,
-  userRole,
-  approveAccount,
   getAllUsers,
+  updateUser,
 };

@@ -14,6 +14,8 @@ export const {
   setPendingUnauthorizedData,
   setRejectedVotes,
   setCurrentRejectedVote,
+  setBlockCodes,
+  setDefaultBlockCodeData,
   setIsLoggedIn,
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,

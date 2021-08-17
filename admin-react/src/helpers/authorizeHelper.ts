@@ -48,7 +48,6 @@ export const getUnAuthorizedList = async (
 
 export const approveVote = async (vote: UnAuthorizedModel) => {
   const res = await UnAuthorizedService.addNewAuthorizedData(vote);
-  console.log(res);
   return res.success;
 };
 export const rejectVote = async (id: string, rejections?: VoteRejection) => {

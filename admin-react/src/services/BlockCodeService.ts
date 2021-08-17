@@ -12,9 +12,11 @@ export class BlockCodeService {
       console.log(error);
     }
   }
-  static async getBlockCodeById(id: string) {
+  static async getBlockCodeByNumber(blockCodeNumber: number) {
     try {
-      const res = await ApiService.get(`${BlockCodeService.baseUrl[0]}/${id}`);
+      const res = await ApiService.get(
+        `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`
+      );
       return res.data;
     } catch (error) {
       console.log(error);

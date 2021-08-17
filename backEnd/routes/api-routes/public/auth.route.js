@@ -133,22 +133,22 @@ router.get(
   auth.validatorToken,
 );
 
-router.put(
-  '/updateRole',
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        role: req.body.role,
-      },
-      {
-        role: 'required|string',
-      },
-    );
-  },
-  auth.userRole,
-);
+// router.put(
+//   '/updateRole',
+//   (req, res, next) => {
+//     validation(
+//       req,
+//       res,
+//       next,
+//       {
+//         role: req.body.role,
+//       },
+//       {
+//         role: 'required|string',
+//       },
+//     );
+//   },
+//   auth.userRole,
+// );
 
 module.exports = router;

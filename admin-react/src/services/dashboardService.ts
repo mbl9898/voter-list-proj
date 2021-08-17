@@ -6,7 +6,6 @@ export default class UnAuthorized {
   static async getUserData() {
     try {
       const data = await ApiService.get(UnAuthorized.baseUrl);
-      console.log(data);
       return data.data;
     } catch (error) {
       console.log(error);
@@ -16,7 +15,6 @@ export default class UnAuthorized {
   static async changePassword() {
     try {
       const data = await ApiService.put(`${UnAuthorized.baseUrl}`, {});
-      console.log(data);
       return data.data;
     } catch (error) {
       console.log(error);

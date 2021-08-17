@@ -2,16 +2,16 @@ import { logger } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 
-export const approveAccount = async (req, res) => {
+export const setDefaultBlockCode = async (req, res) => {
   //Codes that we might return coming from status
   const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   //Destructuring email, remember_me & password from body
-  const { userId, rate, isApproved } = req.body;
+  const { _id, defaultBlockCode } = req.body;
 
   try {
     //Making sure that the user exists
-    const isExisting = await UserSchema.findOne({ _id: userId });
+    const isExisting = await UserSchema.findOne({ _id });
     if (!isExisting) {
       return res.json({
         success: false,
@@ -22,14 +22,12 @@ export const approveAccount = async (req, res) => {
       });
     }
 
-    const updatedUser = await UserSchema.updateOne(
-      { _id: userId },
+    const updatedUser = await UserSchema.findByIdAndUpdate(
+      { _id },
       {
-        $set: {
-          rate,
-          isApproved,
-        },
+        defaultBlockCode,
       },
+      { new: true },
     );
 
     //Sending response in case everything went well!

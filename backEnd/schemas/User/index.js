@@ -10,18 +10,18 @@ const User = new mongoose.Schema({
   password: {
     type: String,
   },
-  isApproved: {
-    type: Boolean,
-  },
-  isRejected: {
-    type: Boolean,
-    default: false,
-  },
   rate: {
     type: Number,
     default: 0,
   },
   role: {
+    type: String,
+  },
+  assignedBlockCodes: {
+    type: [Number],
+    default: [],
+  },
+  defaultBlockCode: {
     type: String,
   },
   createdAt: {

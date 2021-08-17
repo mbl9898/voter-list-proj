@@ -7,7 +7,6 @@ import {
   rejectVote,
 } from "../helpers/authorizeHelper";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
-import UnAuthorizedService from "../services/unAuthorizedService";
 import { setCurrentRejectedVote } from "../store";
 import { useAppDispatch } from "../store/hooks";
 import VoteDisplayModal from "./VoteDisplayModal";

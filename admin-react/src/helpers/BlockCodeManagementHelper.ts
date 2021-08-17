@@ -1,10 +1,27 @@
 import { Dispatch, SetStateAction } from "react";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
+import { setBlockCodes } from "../store";
+
+export const blockCodeFormInitial: BlockCode = {
+  blockCodeNo: null,
+  constituencyName: "",
+  moza: "",
+  dehya: "",
+  city: "",
+  patwarHalka: "",
+  tapaydar: "",
+  tehseel: "",
+  talka: "",
+  district: "",
+  unionCouncil: "",
+  bookNo: "",
+  constituency: "",
+};
 
 export const getBlockCodes = async (
   setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
-  setBlockCodes: Dispatch<SetStateAction<BlockCode[]>>
+  dispatch: any
 ) => {
   const res = await BlockCodeService.getBlockCodes();
   if (res) {
@@ -26,6 +43,6 @@ export const getBlockCodes = async (
       );
     });
     setFilteredBlockCodeHeadings(sentenceCaseHeadings);
-    setBlockCodes(res);
+    dispatch(setBlockCodes(res));
   }
 };

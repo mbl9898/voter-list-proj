@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { BlockCode } from "../interfaces/BlockCode";
 import { User } from "../interfaces/User";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 
@@ -10,6 +11,8 @@ interface InitialState {
   pendingUnauthorizedData: UnAuthorizedModel[];
   rejectedVotes: UnAuthorizedModel[];
   currentRejectedVote: UnAuthorizedModel | null;
+  blockCodes: BlockCode[];
+  defaultBlockCodeData: BlockCode | null;
   isLoggedIn: boolean;
   isSignUpFormDisplay: boolean;
   isLogInFormDisplay: boolean;
@@ -25,6 +28,8 @@ const initialState: InitialState = {
   pendingUnauthorizedData: [],
   rejectedVotes: [],
   currentRejectedVote: null,
+  blockCodes: [],
+  defaultBlockCodeData: null,
   isLoggedIn: false,
   isSignUpFormDisplay: false,
   isLogInFormDisplay: true,
@@ -56,6 +61,12 @@ export const appSlice = createSlice({
     },
     setCurrentRejectedVote(state, action: PayloadAction<any>) {
       state.currentRejectedVote = action.payload;
+    },
+    setBlockCodes(state, action: PayloadAction<any>) {
+      state.blockCodes = action.payload;
+    },
+    setDefaultBlockCodeData(state, action: PayloadAction<any>) {
+      state.defaultBlockCodeData = action.payload;
     },
     setIsLoggedIn(state, action: PayloadAction<any>) {
       state.isLoggedIn = action.payload;

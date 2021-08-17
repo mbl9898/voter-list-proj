@@ -111,12 +111,13 @@ export const loginUser = async (req, res) => {
         refresh_token,
         remember_me,
         userData: {
-          uid: isExisting._id,
+          _id: isExisting._id,
           email: isExisting.email,
           role: isExisting.role,
           username: isExisting.username,
-          isApproved: isExisting.isApproved,
           rate: isExisting.rate,
+          defaultBlockCode: isExisting.defaultBlockCode,
+          assignedBlockCodes: isExisting.assignedBlockCodes,
         },
       },
     });

@@ -11,23 +11,22 @@ import { roles } from '~/constants';
 const router = express.Router();
 router.get('/', isAuthorized(roles.dataEntry), blockCode.getData);
 router.get(
-  '/:id',
+  '/:blockCodeNo',
   (req, res, next) => {
-    console.log(req);
     validation(
       req,
       res,
       next,
       {
-        id: req.params.id,
+        blockCodeNo: req.params.blockCodeNo,
       },
       {
-        id: 'required|string',
+        blockCodeNo: 'required|integer',
       },
     );
   },
   isAuthorized(roles.dataEntry),
-  blockCode.getDataById,
+  blockCode.getDataByBlockCodeNo,
 );
 
 router.put(

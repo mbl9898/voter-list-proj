@@ -4,31 +4,31 @@ import { Container } from "react-bootstrap";
 import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import BlockCodeEntryForm from "./BlockCodeEntryForm";
 import CModal from "./CModal";
-import VoteDisplayModal from "./VoteDisplayModal";
 
 const BlockCodeManagement = () => {
+  const dispatch = useAppDispatch();
+  const blockCodes = useAppSelector((state) => state.app.blockCodes);
   const [blockCodeEntryForm, setBlockCodeEntryForm] = useState(false);
   const [updateBlockCodeData, setUpdateBlockCodeData] =
     useState<null | BlockCode>(null);
-  // const [showModalProp, setShowModalProp] = useState<null | number>(null);
-  const [blockCodes, setBlockCodes] = useState<BlockCode[]>([]);
   const [filteredBlockCodeHeadings, setFilteredBlockCodeHeadings] = useState<
     string[]
   >([]);
+  // const [showModalProp, setShowModalProp] = useState<null | number>(null);
 
   const deleteBlockCode = async (id: string) => {
     const res = await BlockCodeService.deleteBlockCode(id);
-    console.log(res);
-    getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
+    getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
   };
 
   const onSubmit = (blockCode: BlockCode) => {
     blockCode._id && deleteBlockCode(blockCode._id);
   };
   useEffect(() => {
-    getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
+    getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
   }, []);
 
   return (
@@ -60,7 +60,7 @@ const BlockCodeManagement = () => {
             </tr>
           </thead>
           <tbody>
-            {blockCodes.map((blockCode, index) => {
+            {blockCodes.map((blockCode: BlockCode, index: number) => {
               return (
                 <tr key={index}>
                   <th scope="row">{index}</th>
@@ -111,7 +111,6 @@ const BlockCodeManagement = () => {
           <BlockCodeEntryForm
             updateBlockCodeData={updateBlockCodeData}
             setFilteredBlockCodeHeadings={setFilteredBlockCodeHeadings}
-            setBlockCodes={setBlockCodes}
             setBlockCodeEntryForm={setBlockCodeEntryForm}
           />
         )}

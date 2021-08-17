@@ -40,10 +40,6 @@ const BlockCode = new mongoose.Schema({
   constituency: {
     type: String,
   },
-  status: {
-    type: String,
-    default: 'pending',
-  },
   enteredBy: {
     type: Object,
   },

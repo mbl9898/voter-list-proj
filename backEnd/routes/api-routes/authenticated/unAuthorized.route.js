@@ -44,7 +44,6 @@ router.post(
 router.put(
   '/rejectVote',
   (req, res, next) => {
-    console.log(req.body.rejections);
     validation(
       req,
       res,

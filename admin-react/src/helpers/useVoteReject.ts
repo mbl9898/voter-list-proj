@@ -7,18 +7,11 @@ export const useVoteReject = (initialState: any) => {
       ...dataVoteReject,
       [event.target.id]: !dataVoteReject[event.target.id],
     });
-    console.log(dataVoteReject);
   };
-
-  // const onSubmit = (event: any) => {
-  //   event && event.preventDefault();
-  //   callback(data);
-  // };
 
   return {
     onChangeVoteReject,
     dataVoteReject,
     setDataVoteReject,
-    // onSubmit,
   };
 };

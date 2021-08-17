@@ -11,7 +11,14 @@ import {
 } from "../helpers/dataEntryHelper";
 import { useForm } from "../helpers/useForm";
 import { useVoteReject } from "../helpers/useVoteReject";
-import { setCurrentRejectedVote, setDashboardData } from "../store";
+import { User } from "../interfaces/User";
+import { BlockCodeService } from "../services/BlockCodeService";
+import { UserService } from "../services/UserService";
+import {
+  setCurrentRejectedVote,
+  setDashboardData,
+  setDefaultBlockCodeData,
+} from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import CModal from "./CModal";
 
@@ -31,28 +38,26 @@ const DataEntryForm = ({
   const currentRejectedVote = useAppSelector(
     (state) => state.app.currentRejectedVote
   );
+  const currentUser: User = useAppSelector((state) => state.app.currentUser);
   const rejectedVotes = useAppSelector((state) => state.app.rejectedVotes);
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
     dataEntryFormInitial
   );
 
-  const { dataVoteReject, onChangeVoteReject, setDataVoteReject } =
+  const { dataVoteReject, setDataVoteReject } =
     useVoteReject(voteRejectInitial);
 
   async function submitVoteCallback(data: any) {
     !currentRejectedVote && submitVote(data, setData);
 
-    const res =
-      currentRejectedVote &&
-      (await updateRejectedVote(data, setData, dispatch));
+    const res = currentRejectedVote && (await updateRejectedVote(data));
     if (res && res.success) {
       setData(dataEntryFormInitial);
       dispatch(setCurrentRejectedVote(null));
       getRejectedVotes(dispatch);
       setDataVoteReject(voteRejectInitial);
       setRejectedVoteIndex && setRejectedVoteIndex(0);
-      console.log(rejectedVotes.length);
       rejectedVotes.length === 0 &&
         setRejectedVoteModal &&
         setRejectedVoteModal(false);
@@ -60,12 +65,27 @@ const DataEntryForm = ({
     }
   }
 
+  const onBlockCodeSelect = async (
+    userId: string,
+    defaultBlockCode: number
+  ) => {
+    const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
+  };
+  const getDefaultBlockCodeData = async (defaultBlockCode: number) => {
+    const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
+    dispatch(setDefaultBlockCodeData(res));
+    setData({ ...res, blockCode: res.blockCodeNo });
+  };
+
   useEffect(() => {
-    // setData(dataEntryFormInitial);
-    currentRejectedVote && setData({ ...currentRejectedVote });
-    currentRejectedVote &&
+    !forRejectedVotes && setData(dataEntryFormInitial);
+    !forRejectedVotes && getDefaultBlockCodeData(currentUser.defaultBlockCode);
+    forRejectedVotes &&
+      currentRejectedVote &&
+      setData({ ...currentRejectedVote });
+    forRejectedVotes &&
+      currentRejectedVote &&
       setDataVoteReject({ ...currentRejectedVote.rejections });
-    console.log(currentRejectedVote);
   }, [currentRejectedVote, setData]);
 
   return (
@@ -80,13 +100,26 @@ const DataEntryForm = ({
           >
             <Form.Group id="blockCode">
               <Form.Label>Block Code</Form.Label>
-              <Form.Control
-                type="number"
+              <Form.Select
                 name="blockCode"
                 value={data.blockCode ? data.blockCode : ""}
-                onChange={onChange}
+                onChange={(e: any) => {
+                  onBlockCodeSelect(currentUser._id, e.target.value);
+                  onChange(e);
+                }}
                 required
-              />
+              >
+                <option>
+                  {data.blockCode
+                    ? `Current: ${data.blockCode}`
+                    : "Select Block Code"}
+                </option>
+                {currentUser.assignedBlockCodes.map((blockCode) => (
+                  <option key={blockCode} value={blockCode}>
+                    {blockCode}
+                  </option>
+                ))}
+              </Form.Select>
             </Form.Group>
           </div>
           <div

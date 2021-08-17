@@ -14,7 +14,6 @@ const Dashboard = () => {
   useEffect(() => {
     const cancelToken = axios.CancelToken;
     const source = cancelToken.source();
-    console.log("Dashboard Component");
     try {
       setLoading(true);
       getUserProgressData(dispatch, setDashboardData, source.token);

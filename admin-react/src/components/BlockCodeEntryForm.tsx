@@ -1,41 +1,30 @@
 import React, { Dispatch, SetStateAction, useState } from "react";
 import { useEffect } from "react";
 import { Alert, Button, Card, Form } from "react-bootstrap";
-import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
+import {
+  blockCodeFormInitial,
+  getBlockCodes,
+} from "../helpers/BlockCodeManagementHelper";
 import { useForm } from "../helpers/useForm";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
+import { useAppDispatch } from "../store/hooks";
 import Loading from "./Loading";
 interface Props {
   updateBlockCodeData: null | BlockCode;
   setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>;
-  setBlockCodes: Dispatch<SetStateAction<BlockCode[]>>;
   setBlockCodeEntryForm: Dispatch<SetStateAction<boolean>>;
 }
 
 const BlockCodeEntryForm = ({
   updateBlockCodeData,
   setFilteredBlockCodeHeadings,
-  setBlockCodes,
   setBlockCodeEntryForm,
 }: Props) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const blockCodeFormInitial: BlockCode = {
-    blockCodeNo: null,
-    constituencyName: "",
-    moza: "",
-    dehya: "",
-    city: "",
-    patwarHalka: "",
-    tapaydar: "",
-    tehseel: "",
-    talka: "",
-    district: "",
-    unionCouncil: "",
-    bookNo: "",
-    constituency: "",
-  };
+  const dispatch = useAppDispatch();
+
   const { onChange, onSubmit, data, setData } = useForm(
     submitBlockCodeCallback,
     blockCodeFormInitial
@@ -46,7 +35,6 @@ const BlockCodeEntryForm = ({
     setError("");
     if (!updateBlockCodeData) {
       const res = await BlockCodeService.postBlockCode(data);
-      console.log(res);
       res.error &&
         setError(`${res.error.message}
     `);
@@ -54,9 +42,8 @@ const BlockCodeEntryForm = ({
     }
     if (updateBlockCodeData) {
       const res = await BlockCodeService.updateBlockCode(data);
-      console.log(res);
       res.success && setData(blockCodeFormInitial);
-      getBlockCodes(setFilteredBlockCodeHeadings, setBlockCodes);
+      getBlockCodes(setFilteredBlockCodeHeadings, dispatch);
       setBlockCodeEntryForm(false);
     }
     setLoading(false);

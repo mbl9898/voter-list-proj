@@ -10,7 +10,6 @@ export class UserService {
         `${UserService.baseUrl[0]}/register`,
         registerUser
       );
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -23,7 +22,6 @@ export class UserService {
         `${UserService.baseUrl[0]}/login`,
         loginUser
       );
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -35,7 +33,6 @@ export class UserService {
       const data = await ApiService.get(
         `${UserService.baseUrl[0]}/validateToken`
       );
-      console.log(data);
       return data;
     } catch (error) {
       console.log(error);
@@ -50,37 +47,21 @@ export class UserService {
       console.log(error);
     }
   }
-
-  static async approval(userId: string, isApproved: boolean, rate: number) {
+  static async updateUser(userData: User) {
     try {
-      const data = await ApiService.put(`${UserService.baseUrl[0]}/approval`, {
-        userId,
-        isApproved,
-        rate,
-      });
-      return data.data;
+      const res = await ApiService.put(`${UserService.baseUrl[0]}`, userData);
+      return res;
     } catch (error) {
       console.log(error);
     }
   }
-  static async changeRole(userId: string, role: User["role"]) {
+  static async setDefaultBlockCode(_id: string, defaultBlockCode: number) {
     try {
-      const res = await ApiService.put(`${UserService.baseUrl[1]}/changeRole`, {
-        userId,
-        role,
-      });
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  static async changeRate(userId: string, rate: number) {
-    try {
-      const res = await ApiService.put(`${UserService.baseUrl[1]}/changeRate`, {
-        userId,
-        rate,
-      });
-      return res.data;
+      const res = await ApiService.put(
+        `${UserService.baseUrl[0]}/setDefaultBlockCode`,
+        { _id, defaultBlockCode }
+      );
+      return res;
     } catch (error) {
       console.log(error);
     }

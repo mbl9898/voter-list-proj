@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
+import { voteRejectInitial } from "../helpers/authorizeHelper";
 import { getRejectedVotes } from "../helpers/dataEntryHelper";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { setCurrentRejectedVote } from "../store";
@@ -22,6 +23,7 @@ const RejectedVotesModal = ({
   const rejectedVotes: UnAuthorizedModel[] | [] = useAppSelector(
     (state) => state.app.rejectedVotes
   );
+
   useEffect(() => {
     setLoading(true);
     getRejectedVotes(dispatch);
@@ -48,7 +50,6 @@ const RejectedVotesModal = ({
               forRejectedVotes={true}
               setRejectedVoteIndex={setRejectedVoteIndex}
               setRejectedVoteModal={setRejectedVoteModal}
-              //   rejectedVoteIndex={rejectedVoteIndex}
             />
           </Modal.Body>
           <Modal.Footer>

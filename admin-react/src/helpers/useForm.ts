@@ -3,7 +3,12 @@ import { useState } from "react";
 export const useForm = (callback: any, initialState: any) => {
   const [data, setData] = useState(initialState);
   const onChange = (event: any) => {
-    setData({ ...data, [event.target.name]: event.target.value.toUpperCase() });
+    setData({
+      ...data,
+      [event.target.name]: data.username
+        ? event.target.value
+        : event.target.value.toUpperCase(),
+    });
   };
 
   const onSubmit = (event: any) => {

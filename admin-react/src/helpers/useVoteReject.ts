@@ -1,17 +1,21 @@
 import { useState } from "react";
+import { setDataVoteReject } from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
-export const useVoteReject = (initialState: any) => {
-  const [dataVoteReject, setDataVoteReject] = useState(initialState);
+export const useVoteReject = () => {
+  const dispatch = useAppDispatch();
+  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
+  // dispatch(setDataVoteReject(initialState));
   const onChangeVoteReject = (event: any) => {
-    setDataVoteReject({
-      ...dataVoteReject,
-      [event.target.id]: !dataVoteReject[event.target.id],
-    });
+    dispatch(
+      setDataVoteReject({
+        ...dataVoteReject,
+        [event.target.id]: !dataVoteReject[event.target.id],
+      })
+    );
   };
 
   return {
     onChangeVoteReject,
-    dataVoteReject,
-    setDataVoteReject,
   };
 };

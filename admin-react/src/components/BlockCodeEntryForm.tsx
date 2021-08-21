@@ -73,12 +73,12 @@ const BlockCodeEntryForm = ({
             <Form onSubmit={onSubmit}>
               <div className="row">
                 <div className="col col-xs-12 col-sm-4 q-pa-sm">
-                  <Form.Group id="blockCodeNo">
+                  <Form.Group id="blockCode">
                     <Form.Label>Block Code</Form.Label>
                     <Form.Control
                       type="number"
-                      name="blockCodeNo"
-                      value={data.blockCodeNo ? data.blockCodeNo : ""}
+                      name="blockCode"
+                      value={data.blockCode ? data.blockCode : ""}
                       onChange={onChange}
                       required
                     />

@@ -47,13 +47,13 @@ export const getRejectedVotes = async (
 };
 
 export const submitVote = async (
-  data: any,
-  setData: Dispatch<SetStateAction<VotesModel>>
+  data: any
+  // setData: Dispatch<SetStateAction<VotesModel>>
 ) => {
   try {
     const res = await unAuthorizedService.addNewUnauthorizedData(data);
-    setData(dataEntryFormInitial);
     return res;
+    // setData(dataEntryFormInitial);
   } catch (error) {
     console.log(error);
   }

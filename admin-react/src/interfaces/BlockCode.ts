@@ -1,6 +1,6 @@
 export interface BlockCode {
   _id?: string;
-  blockCodeNo: number | null;
+  blockCode: number | null;
   constituencyName: string;
   moza: string;
   dehya: string;

@@ -83,6 +83,7 @@ const SignUp = () => {
               onClick={() => {
                 dispatch(setIsSignUpFormDisplay(false));
                 history.push("/login");
+                document.title = "Login - Voter List App";
                 dispatch(setIsLogInFormDisplay(true));
               }}
             >

@@ -9,8 +9,12 @@ import {
 } from "../helpers/authorizeHelper";
 import { useVoteReject } from "../helpers/useVoteReject";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
-import { setNavLinkActive } from "../store";
-import { useAppDispatch } from "../store/hooks";
+import {
+  setDataVoteReject,
+  setDataVoteRejectToUnauthorizedDataIndex,
+  setNavLinkActive,
+} from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 interface Props {
   heading?: string;
   body?: string;
@@ -35,9 +39,11 @@ const VoteDisplayModal = ({
 }: Props) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
   const handleClose = () => {
     dispatch(setNavLinkActive(0));
     history.push("/");
+    document.title = "Dashboard - Voter List App";
   };
   const readOnly: any = {
     WebkitUserSelect: "none",
@@ -45,8 +51,7 @@ const VoteDisplayModal = ({
     msUserSelect: "none",
     userSelect: "none",
   };
-  const { onChangeVoteReject, dataVoteReject, setDataVoteReject } =
-    useVoteReject(voteRejectInitial);
+  const { onChangeVoteReject } = useVoteReject();
 
   useEffect(() => {
     setShowModalProp && setShowModalProp(showModalProp);
@@ -60,12 +65,13 @@ const VoteDisplayModal = ({
           onHide={handleClose}
         >
           <Modal.Header closeButton>
+            {console.log(unauthorizedVote)}
             <Modal.Title>
               {heading ? heading : unauthorizedVote.name}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {body ? (
+            {dataVoteReject && body ? (
               <p>{body}</p>
             ) : (
               <div className="row">
@@ -404,8 +410,8 @@ const VoteDisplayModal = ({
                   variant="primary"
                   disabled={index === 0}
                   onClick={() => {
+                    dispatch(setDataVoteReject(voteRejectInitial));
                     setIndex(index - 1);
-                    setDataVoteReject(voteRejectInitial);
                   }}
                 >
                   {"< Prev"}
@@ -414,8 +420,8 @@ const VoteDisplayModal = ({
                   variant="primary"
                   disabled={index === unauthorizedVotesLength}
                   onClick={() => {
+                    dispatch(setDataVoteReject(voteRejectInitial));
                     setIndex(index + 1);
-                    setDataVoteReject(voteRejectInitial);
                   }}
                 >
                   {"Next >"}

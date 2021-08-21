@@ -5,10 +5,11 @@ export const useForm = (callback: any, initialState: any) => {
   const onChange = (event: any) => {
     setData({
       ...data,
-      [event.target.name]: data.username
-        ? event.target.value
-        : event.target.value.toUpperCase(),
+      [event.target.name]: data.blockCode
+        ? event.target.value.toUpperCase()
+        : event.target.value,
     });
+    console.log(data);
   };
 
   const onSubmit = (event: any) => {

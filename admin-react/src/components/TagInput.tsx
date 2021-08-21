@@ -64,7 +64,7 @@ const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
         <datalist id="brow">
           {blockCodes.map((blockCode: BlockCode) => {
             return (
-              <option key={blockCode._id} value={`${blockCode.blockCodeNo}`} />
+              <option key={blockCode._id} value={`${blockCode.blockCode}`} />
             );
           })}
         </datalist>

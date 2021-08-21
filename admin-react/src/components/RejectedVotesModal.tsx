@@ -53,11 +53,13 @@ const RejectedVotesModal = ({
             />
           </Modal.Body>
           <Modal.Footer>
-            <span>{`${
-              rejectedVotes.length !== 0
-                ? rejectedVoteIndex + 1
-                : rejectedVoteIndex
-            } of ${rejectedVotes.length}`}</span>
+            {rejectedVotes && (
+              <span>{`${
+                rejectedVotes.length !== 0
+                  ? rejectedVoteIndex + 1
+                  : rejectedVoteIndex
+              } of ${rejectedVotes.length}`}</span>
+            )}
             <Button
               variant="primary"
               disabled={rejectedVoteIndex === 0}
@@ -72,7 +74,9 @@ const RejectedVotesModal = ({
             </Button>
             <Button
               variant="primary"
-              disabled={rejectedVoteIndex === rejectedVotes.length - 1}
+              disabled={
+                rejectedVotes && rejectedVoteIndex === rejectedVotes.length - 1
+              }
               onClick={() => {
                 dispatch(
                   setCurrentRejectedVote(rejectedVotes[rejectedVoteIndex + 1])

@@ -1,14 +1,16 @@
-import { BlockCodeSchema } from '~/schemas';
+import { BlockCodeSchema, TaskSchema } from '~/schemas';
 import { logger } from '~/utils';
 import { status } from '~/constants';
 
-export const getData = async (_, res) => {
+export const getCurrentUserTasks = async (_, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
-    const data = await BlockCodeSchema.find();
+    const data = await TaskSchema.find();
     if (!data) {
       throw new Error('Invalid Request');
     }
+    const userEmail = req.user.email;
+    data = data.filter((x) => x.email === userEmail);
     return res.json({
       success: true,
       data,
@@ -23,11 +25,10 @@ export const getData = async (_, res) => {
   }
 };
 
-export const getDataByBlockCode = async (req, res) => {
+export const getAllTasks = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
-  const { blockCode } = req.params;
   try {
-    const data = await BlockCodeSchema.findOne({ blockCode });
+    const data = await TaskSchema.find();
     if (!data) {
       throw new Error('Invalid Request');
     }

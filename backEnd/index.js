@@ -5,11 +5,13 @@ import cors from 'cors';
 import { connection } from '~/config';
 import { logger } from '~/utils';
 import routes from '~/routes';
+import fileUpload from 'express-fileupload';
 
 dotenv.config();
 
 const port = process.env.PORT ?? 80;
 const app = express();
+app.use(fileUpload());
 app.use(express.json());
 app.use(cors());
 app.use(routes);

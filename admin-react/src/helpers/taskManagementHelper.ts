@@ -1,29 +1,20 @@
-import { Dispatch, SetStateAction } from "react";
-import { BlockCode } from "../interfaces/BlockCode";
-import { BlockCodeService } from "../services/BlockCodeService";
-import { setBlockCodes, setFilteredBlockCodeHeadings } from "../store";
+import { Task } from "../interfaces/TaskModel";
+import { TaskService } from "../services/TaskService";
+import { setFilteredTaskHeadings, setTasks } from "../store";
 
-export const blockCodeFormInitial: BlockCode = {
-  blockCode: null,
-  constituencyName: "",
-  moza: "",
-  dehya: "",
-  city: "",
-  patwarHalka: "",
-  tapaydar: "",
-  tehseel: "",
-  talka: "",
-  district: "",
-  unionCouncil: "",
-  bookNo: "",
-  constituency: "",
+export const taskFormInitial: Task = {
+  email: "",
+  title: "",
+  description: "",
 };
 
-export const getBlockCodes = async (
+export const getAllTasks = async (
   // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
   dispatch: any
 ) => {
-  const res = await BlockCodeService.getBlockCodes();
+  const res = await TaskService.getAllTasks();
+  console.log(res);
+
   if (res) {
     let resHeadings = res[0] && Object.keys(res[0]);
     let sentenceCaseHeadings: string[] = [];
@@ -31,7 +22,7 @@ export const getBlockCodes = async (
       resHeadings.unshift("Sr");
       resHeadings = resHeadings.filter(
         (heading: string) =>
-          heading !== "status" &&
+          heading !== "filePath" &&
           heading !== "_id" &&
           heading !== "enteredBy" &&
           heading !== "createdAt" &&
@@ -45,8 +36,8 @@ export const getBlockCodes = async (
           result.charAt(0).toUpperCase() + result.slice(1)
         );
       });
-      dispatch(setFilteredBlockCodeHeadings(sentenceCaseHeadings));
-      dispatch(setBlockCodes(res));
+      dispatch(setFilteredTaskHeadings(sentenceCaseHeadings));
+      dispatch(setTasks(res));
     }
   }
 };

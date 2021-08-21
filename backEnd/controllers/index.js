@@ -7,3 +7,4 @@ export * from './unAuthorized';
 export * from './authorized';
 export * from './blockCode';
 export * from './votesData';
+export * from './task';

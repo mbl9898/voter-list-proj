@@ -3,24 +3,26 @@ import { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { voteRejectInitial } from "../helpers/authorizeHelper";
 import { getUserProgressData } from "../helpers/dashboardHelper";
+import { useForm } from "../helpers/useForm";
+import { useVoteReject } from "../helpers/useVoteReject";
+import { User } from "../interfaces/User";
+import { BlockCodeService } from "../services/BlockCodeService";
+import { UserService } from "../services/UserService";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
+import CModal from "./CModal";
+import {
+  setCurrentRejectedVote,
+  setDashboardData,
+  setDataVoteReject,
+  setDefaultBlockCodeData,
+} from "../store";
 import {
   dataEntryFormInitial,
   getRejectedVotes,
   submitVote,
   updateRejectedVote,
 } from "../helpers/dataEntryHelper";
-import { useForm } from "../helpers/useForm";
-import { useVoteReject } from "../helpers/useVoteReject";
-import { User } from "../interfaces/User";
-import { BlockCodeService } from "../services/BlockCodeService";
-import { UserService } from "../services/UserService";
-import {
-  setCurrentRejectedVote,
-  setDashboardData,
-  setDefaultBlockCodeData,
-} from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import CModal from "./CModal";
+import { BlockCode } from "../interfaces/BlockCode";
 
 interface Props {
   forRejectedVotes?: boolean;
@@ -39,24 +41,25 @@ const DataEntryForm = ({
     (state) => state.app.currentRejectedVote
   );
   const currentUser: User = useAppSelector((state) => state.app.currentUser);
+  const defaultBlockCodeData: BlockCode = useAppSelector(
+    (state) => state.app.defaultBlockCodeData
+  );
   const rejectedVotes = useAppSelector((state) => state.app.rejectedVotes);
+  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
     dataEntryFormInitial
   );
 
-  const { dataVoteReject, setDataVoteReject } =
-    useVoteReject(voteRejectInitial);
-
   async function submitVoteCallback(data: any) {
-    !currentRejectedVote && submitVote(data, setData);
-
+    const resSubmitVote: any = !currentRejectedVote && (await submitVote(data));
+    resSubmitVote && getDefaultBlockCodeData(currentUser.defaultBlockCode);
     const res = currentRejectedVote && (await updateRejectedVote(data));
     if (res && res.success) {
       setData(dataEntryFormInitial);
       dispatch(setCurrentRejectedVote(null));
       getRejectedVotes(dispatch);
-      setDataVoteReject(voteRejectInitial);
+      dispatch(setDataVoteReject(voteRejectInitial));
       setRejectedVoteIndex && setRejectedVoteIndex(0);
       rejectedVotes.length === 0 &&
         setRejectedVoteModal &&
@@ -65,6 +68,54 @@ const DataEntryForm = ({
     }
   }
 
+  const getDefaultBlockCodeData = async (defaultBlockCode: number) => {
+    // if (
+    //   defaultBlockCodeData &&
+    //   defaultBlockCodeData.blockCode !== defaultBlockCode
+    // ) {
+    const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
+    console.log(res);
+    if (res.success) {
+      await dispatch(setDefaultBlockCodeData(res.data));
+      const dbcd = res.data;
+      setData({
+        ...dataEntryFormInitial,
+        blockCode: dbcd.blockCode,
+        constituencyName: dbcd.constituencyName,
+        moza: dbcd.moza,
+        dehya: dbcd.dehya,
+        city: dbcd.city,
+        patwarHalka: dbcd.patwarHalka,
+        tapaydar: dbcd.tapaydar,
+        tehseel: dbcd.tehseel,
+        talka: dbcd.talka,
+        district: dbcd.district,
+        unionCouncil: dbcd.unionCouncil,
+        bookNo: dbcd.bookNo,
+        constituency: dbcd.constituency,
+      });
+    }
+    // }
+    // else {
+    //   const dbcd: BlockCode = { ...defaultBlockCodeData };
+    //   setData({
+    //     blockCode: dbcd.blockCode,
+    //     constituencyName: dbcd.constituencyName,
+    //     moza: dbcd.moza,
+    //     dehya: dbcd.dehya,
+    //     city: dbcd.city,
+    //     patwarHalka: dbcd.patwarHalka,
+    //     tapaydar: dbcd.tapaydar,
+    //     tehseel: dbcd.tehseel,
+    //     talka: dbcd.talka,
+    //     district: dbcd.district,
+    //     unionCouncil: dbcd.unionCouncil,
+    //     bookNo: dbcd.bookNo,
+    //     constituency: dbcd.constituency,
+    //   });
+    // }
+  };
+
   const onBlockCodeSelect = async (
     userId: string,
     defaultBlockCode: number
@@ -72,13 +123,8 @@ const DataEntryForm = ({
     const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
     getDefaultBlockCodeData(defaultBlockCode);
   };
-  const getDefaultBlockCodeData = async (defaultBlockCode: number) => {
-    const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
-    dispatch(setDefaultBlockCodeData(res));
-    setData({ ...res, blockCode: res.blockCodeNo });
-  };
-
   useEffect(() => {
+    !forRejectedVotes && dispatch(setDataVoteReject(voteRejectInitial));
     !forRejectedVotes && setData(dataEntryFormInitial);
     !forRejectedVotes && getDefaultBlockCodeData(currentUser.defaultBlockCode);
     forRejectedVotes &&
@@ -86,8 +132,8 @@ const DataEntryForm = ({
       setData({ ...currentRejectedVote });
     forRejectedVotes &&
       currentRejectedVote &&
-      setDataVoteReject({ ...currentRejectedVote.rejections });
-  }, [currentRejectedVote, setData]);
+      dispatch(setDataVoteReject({ ...currentRejectedVote.rejections }));
+  }, [currentRejectedVote]);
 
   return (
     <>
@@ -106,7 +152,7 @@ const DataEntryForm = ({
                 value={data.blockCode ? data.blockCode : ""}
                 onChange={(e: any) => {
                   onBlockCodeSelect(currentUser._id, e.target.value);
-                  onChange(e);
+                  // onChange(e);
                 }}
                 required
               >
@@ -311,7 +357,7 @@ const DataEntryForm = ({
               <Form.Label>Gender</Form.Label>
               <Form.Select
                 name="gender"
-                value={data.gender}
+                value={data.gender ? data.gender : ""}
                 onChange={onChange}
                 required
               >
@@ -365,7 +411,7 @@ const DataEntryForm = ({
               <Form.Label>Name</Form.Label>
               <Form.Control
                 name="name"
-                value={data.name}
+                value={data.name ? data.name : ""}
                 onChange={onChange}
                 required
               />
@@ -380,7 +426,7 @@ const DataEntryForm = ({
               <Form.Label>Marital Status</Form.Label>
               <Form.Select
                 name="maritalStatus"
-                value={data.maritalStatus}
+                value={data.maritalStatus ? data.maritalStatus : ""}
                 onChange={onChange}
                 required
               >
@@ -409,7 +455,7 @@ const DataEntryForm = ({
               <Form.Label>Father|Husband Name</Form.Label>
               <Form.Control
                 name="fatherHusbandName"
-                value={data.fatherHusbandName}
+                value={data.fatherHusbandName ? data.fatherHusbandName : ""}
                 onChange={onChange}
                 required
               />
@@ -424,7 +470,7 @@ const DataEntryForm = ({
               <Form.Label>CNIC</Form.Label>
               <Form.Control
                 name="cnic"
-                value={data.cnic}
+                value={data.cnic ? data.cnic : ""}
                 onChange={onChange}
                 required
               />
@@ -454,7 +500,7 @@ const DataEntryForm = ({
               <Form.Label>House No</Form.Label>
               <Form.Control
                 name="houseNo"
-                value={data.houseNo}
+                value={data.houseNo ? data.houseNo : ""}
                 onChange={onChange}
               />
             </Form.Group>
@@ -468,7 +514,7 @@ const DataEntryForm = ({
               <Form.Label>Street</Form.Label>
               <Form.Control
                 name="street"
-                value={data.street}
+                value={data.street ? data.street : ""}
                 onChange={onChange}
               />
             </Form.Group>
@@ -482,7 +528,7 @@ const DataEntryForm = ({
               <Form.Label>Phase</Form.Label>
               <Form.Control
                 name="phase"
-                value={data.phase}
+                value={data.phase ? data.phase : ""}
                 onChange={onChange}
               />
             </Form.Group>
@@ -496,7 +542,7 @@ const DataEntryForm = ({
               <Form.Label>Sector</Form.Label>
               <Form.Control
                 name="sector"
-                value={data.sector}
+                value={data.sector ? data.sector : ""}
                 onChange={onChange}
               />
             </Form.Group>
@@ -508,7 +554,11 @@ const DataEntryForm = ({
           >
             <Form.Group id="lane">
               <Form.Label>Lane</Form.Label>
-              <Form.Control name="lane" value={data.lane} onChange={onChange} />
+              <Form.Control
+                name="lane"
+                value={data.lane ? data.lane : ""}
+                onChange={onChange}
+              />
             </Form.Group>
           </div>
           <div
@@ -520,7 +570,7 @@ const DataEntryForm = ({
               <Form.Label>Boulevard|Avenue</Form.Label>
               <Form.Control
                 name="boulevardAvenue"
-                value={data.boulevardAvenue}
+                value={data.boulevardAvenue ? data.boulevardAvenue : ""}
                 onChange={onChange}
               />
             </Form.Group>
@@ -534,7 +584,7 @@ const DataEntryForm = ({
               <Form.Label>Other Area</Form.Label>
               <Form.Control
                 name="otherArea"
-                value={data.otherArea}
+                value={data.otherArea ? data.otherArea : ""}
                 onChange={onChange}
               />
             </Form.Group>

@@ -9,19 +9,22 @@ import DataEntry from "./components/DataEntry";
 import Authorize from "./components/Authorize";
 import AdminPortal from "./components/AdminPortal";
 import "./App.scss";
-import { useAppSelector } from "./store/hooks";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
 } from "react-router-dom";
+import { getUnAuthorizedList } from "./helpers/authorizeHelper";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
+  const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.app.currentUser);
   useEffect(() => {
     setLoading(true);
+    getUnAuthorizedList(dispatch);
     setTimeout(() => {
       setLoading(false);
     }, 3000);

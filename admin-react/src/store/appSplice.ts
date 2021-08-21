@@ -1,5 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { voteRejectInitial } from "../helpers/authorizeHelper";
 import { BlockCode } from "../interfaces/BlockCode";
+import { Task } from "../interfaces/TaskModel";
 import { User } from "../interfaces/User";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 
@@ -10,10 +12,13 @@ interface InitialState {
   unauthorizedData: UnAuthorizedModel[];
   pendingUnauthorizedData: UnAuthorizedModel[];
   rejectedVotes: UnAuthorizedModel[];
+  dataVoteReject: any;
   currentRejectedVote: UnAuthorizedModel | null;
   blockCodes: BlockCode[];
   filteredBlockCodeHeadings: string[];
   defaultBlockCodeData: BlockCode | null;
+  tasks: Task[];
+  filteredTaskHeadings: string[];
   isLoggedIn: boolean;
   isSignUpFormDisplay: boolean;
   isLogInFormDisplay: boolean;
@@ -28,10 +33,13 @@ const initialState: InitialState = {
   unauthorizedData: [],
   pendingUnauthorizedData: [],
   rejectedVotes: [],
+  dataVoteReject: voteRejectInitial,
   currentRejectedVote: null,
   blockCodes: [],
   filteredBlockCodeHeadings: [],
   defaultBlockCodeData: null,
+  tasks: [],
+  filteredTaskHeadings: [],
   isLoggedIn: false,
   isSignUpFormDisplay: false,
   isLogInFormDisplay: true,
@@ -61,6 +69,20 @@ export const appSlice = createSlice({
     setRejectedVotes(state, action: PayloadAction<any>) {
       state.rejectedVotes = action.payload;
     },
+    setDataVoteReject(state, action: PayloadAction<any>) {
+      state.dataVoteReject = action.payload;
+    },
+    setDataVoteRejectToUnauthorizedDataIndex(
+      state,
+      action: PayloadAction<any>
+    ) {
+      console.log(action.payload, "index");
+
+      state.dataVoteReject = {
+        ...state.dataVoteReject,
+        ...state.unauthorizedData[action.payload].rejections,
+      };
+    },
     setCurrentRejectedVote(state, action: PayloadAction<any>) {
       state.currentRejectedVote = action.payload;
     },
@@ -72,6 +94,12 @@ export const appSlice = createSlice({
     },
     setDefaultBlockCodeData(state, action: PayloadAction<any>) {
       state.defaultBlockCodeData = action.payload;
+    },
+    setTasks(state, action: PayloadAction<any>) {
+      state.tasks = action.payload;
+    },
+    setFilteredTaskHeadings(state, action: PayloadAction<any>) {
+      state.filteredTaskHeadings = action.payload;
     },
     setIsLoggedIn(state, action: PayloadAction<any>) {
       state.isLoggedIn = action.payload;

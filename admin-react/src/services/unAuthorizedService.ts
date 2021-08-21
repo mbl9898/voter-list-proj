@@ -24,11 +24,11 @@ export default class UnAuthorized {
   }
   static async addNewUnauthorizedData(newUnAuthorizedData: UnAuthorizedModel) {
     try {
-      const data = await ApiService.post(
+      const res = await ApiService.post(
         UnAuthorized.baseUrl[0],
         newUnAuthorizedData
       );
-      return data;
+      return res;
     } catch (error) {
       console.log(error);
     }

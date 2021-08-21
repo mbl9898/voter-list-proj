@@ -43,6 +43,7 @@ const Login = () => {
         dispatch(setIsLogInFormDisplay(false));
         dispatch(setNavLinkActive(0));
         history.push("/");
+        document.title = "Dashboard - Voter List App";
       }
     } catch (error) {
       console.log(error);
@@ -87,6 +88,7 @@ const Login = () => {
               onClick={() => {
                 dispatch(setIsLogInFormDisplay(false));
                 history.push("/signup");
+                document.title = "SignUp - Voter List App";
                 dispatch(setIsSignUpFormDisplay(true));
               }}
             >

@@ -17,7 +17,7 @@ export class BlockCodeService {
       const res = await ApiService.get(
         `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`
       );
-      return res.data;
+      return res;
     } catch (error) {
       console.log(error);
     }

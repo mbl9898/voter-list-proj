@@ -60,6 +60,7 @@ router.put(
   isAuthorized(roles.admin),
   unAuthorized.rejectVote,
 );
+
 router.put(
   '/updateRejectedVote',
   (req, res, next) => {

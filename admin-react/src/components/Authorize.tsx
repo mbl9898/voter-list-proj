@@ -4,6 +4,7 @@ import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { getUnAuthorizedList } from "../helpers/authorizeHelper";
 import VoteDisplayModal from "./VoteDisplayModal";
+import { setDataVoteRejectToUnauthorizedDataIndex } from "../store";
 
 const Authorize = () => {
   const dispatch = useAppDispatch();
@@ -16,9 +17,9 @@ const Authorize = () => {
   );
 
   useEffect(() => {
-    getUnAuthorizedList(dispatch);
     setUnathorizedVote(unauthorizedData[unAthorizedVoteIndex]);
-  }, [unAthorizedVoteIndex, unauthorizedData]);
+    dispatch(setDataVoteRejectToUnauthorizedDataIndex(unAthorizedVoteIndex));
+  }, [unAthorizedVoteIndex]);
   return (
     <>
       {unAthorizedVote && (

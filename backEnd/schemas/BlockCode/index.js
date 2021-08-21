@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BlockCode = new mongoose.Schema({
-  blockCodeNo: {
+  blockCode: {
     type: Number,
   },
   constituencyName: {

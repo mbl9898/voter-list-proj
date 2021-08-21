@@ -18,7 +18,12 @@ export const userData = async (req, res) => {
     let rejectedData = [];
 
     if (UnAuthorizedData || UnAuthorizedData.length > 0) {
-      pendingApprovals = UnAuthorizedData.filter((x) => x.status === 'pending');
+      const unAuthorizedDataByEmail = UnAuthorizedData.filter(
+        (x) => x.enteredBy.email === user.email,
+      );
+      pendingApprovals = unAuthorizedDataByEmail.filter(
+        (x) => x.status === 'pending',
+      );
     }
     if (UnAuthorizedData || UnAuthorizedData.length > 0) {
       const unAuthorizedDataByEmail = UnAuthorizedData.filter(

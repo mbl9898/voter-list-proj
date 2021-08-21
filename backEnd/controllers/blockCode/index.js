@@ -1,11 +1,11 @@
-import { getData, getDataByBlockCodeNo } from './helpers/getBlockCode';
+import { getData, getDataByBlockCode } from './helpers/getBlockCode';
 import { updateBlockCode } from './helpers/putBlockCode';
 import { postData } from './helpers/postBlockCode';
 import { deleteRecord } from './helpers/deleteBlockCode';
 
 export const blockCode = {
   getData,
-  getDataByBlockCodeNo,
+  getDataByBlockCode,
   updateBlockCode,
   postData,
   deleteRecord,
@@ -13,7 +13,7 @@ export const blockCode = {
 
 export const getBlockCodeReqData = (req) => {
   const {
-    blockCodeNo,
+    blockCode,
     constituencyName,
     moza,
     dehya,
@@ -28,7 +28,7 @@ export const getBlockCodeReqData = (req) => {
     constituency,
   } = req.body;
   return {
-    blockCodeNo,
+    blockCode,
     constituencyName,
     moza,
     dehya,
@@ -45,7 +45,7 @@ export const getBlockCodeReqData = (req) => {
 };
 export const getBlockCodeTypes = () => {
   const blockCodeType = {
-    blockCodeNo: 'required|integer',
+    blockCode: 'required|integer',
     constituencyName: 'required|string',
     moza: 'required|string',
     dehya: 'required|string',

@@ -1,7 +1,7 @@
 import _axios from "axios";
 
 export class ApiService {
-  private static createAxios = () => {
+  static createAxios = () => {
     return _axios.create({
       baseURL: process.env.REACT_APP_API_BASE_URL,
       headers: {

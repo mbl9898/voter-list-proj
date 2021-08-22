@@ -17,6 +17,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import { getUnAuthorizedList } from "./helpers/authorizeHelper";
+import Routes from "./components/Routes";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -37,59 +38,7 @@ const App = () => {
           <>
             <Navbar />
             {currentUser !== null && <NavLinks />}
-            <Switch>
-              <Route path="/" exact>
-                {currentUser ? (
-                  <Dashboard />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                    }}
-                  />
-                )}
-              </Route>
-              <Route path="/dataEntry" exact>
-                {currentUser ? (
-                  <DataEntry />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                    }}
-                  />
-                )}
-              </Route>
-              <Route path="/authorize" exact>
-                {currentUser ? (
-                  <Authorize />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                    }}
-                  />
-                )}
-              </Route>
-              <Route path="/adminPortal" exact>
-                {currentUser ? (
-                  <AdminPortal />
-                ) : (
-                  <Redirect
-                    to={{
-                      pathname: "/login",
-                    }}
-                  />
-                )}
-              </Route>
-
-              <Route path="/signup" exact>
-                <SignUp />
-              </Route>
-              <Route path="/login" exact>
-                <Login />
-              </Route>
-            </Switch>
+            <Routes />
           </>
         )}
       </Router>

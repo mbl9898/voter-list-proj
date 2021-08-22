@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { Task } from "../interfaces/TaskModel";
 import { TaskService } from "../services/TaskService";
 import { setFilteredTaskHeadings, setTasks } from "../store";
@@ -15,6 +16,7 @@ export const getAllTasks = async (
   const res = await TaskService.getAllTasks();
   console.log(res);
 
+  !res[0] && dispatch(setTasks(res));
   if (res) {
     let resHeadings = res[0] && Object.keys(res[0]);
     let sentenceCaseHeadings: string[] = [];

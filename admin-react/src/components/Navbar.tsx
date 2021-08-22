@@ -6,6 +6,7 @@ import {
   setIsSignUpFormDisplay,
 } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import ProfileDropDown from "./ProfileDropDown";
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
@@ -47,7 +48,7 @@ const Navbar = () => {
                 {(currentUser.role === "admin" ||
                   currentUser.role === "dataEntry") && (
                   <>
-                    <button className="mx-2 btn btn-primary position-relative">
+                    <button className="mx-1 btn btn-primary position-relative">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -68,7 +69,7 @@ const Navbar = () => {
                         </span>
                       </span>
                     </button>
-                    <button className="mx-2 btn btn-primary position-relative">
+                    <button className="mx-3 btn btn-primary position-relative">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
@@ -89,22 +90,17 @@ const Navbar = () => {
                 )}
               </>
             )}
-            <button
-              className=" mx-2 btn btn-outline-primary"
-              onClick={() => {
-                currentUser !== null
-                  ? handleLogoutOpenLogInForm()
-                  : isLogInFormDisplay
-                  ? openSignUpForm()
-                  : openLogInForm();
-              }}
-            >
-              {currentUser !== null
-                ? "Logout"
-                : isLogInFormDisplay
-                ? "Sign Up"
-                : "Login"}
-            </button>
+            <ProfileDropDown />
+            {currentUser === null && (
+              <button
+                className=" mx-2 btn btn-outline-primary"
+                onClick={() => {
+                  isLogInFormDisplay ? openSignUpForm() : openLogInForm();
+                }}
+              >
+                {isLogInFormDisplay ? "Sign Up" : "Login"}
+              </button>
+            )}
           </div>
         </div>
       </nav>

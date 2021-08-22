@@ -42,6 +42,7 @@ const TaskManagement = () => {
       {taskEntryForm && (
         <CreateTask
           updateTaskData={updateTaskData}
+          taskEntryForm={taskEntryForm}
           setTaskEntryForm={setTaskEntryForm}
           users={users}
         />

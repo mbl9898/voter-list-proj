@@ -41,15 +41,32 @@ const NavLinks = () => {
               </Link>
             </li>
           )}
-          {currentUser.role === "admin" && (
+          {(currentUser.role === "admin" ||
+            currentUser.role === "dataEntry") && (
             <li className="nav-item">
               <Link
                 className={`nav-link btn ${
                   navLinkActive === 2 ? "active" : ""
                 }`}
-                to="/authorize"
+                to="/tasks"
                 onClick={() => {
                   dispatch(setNavLinkActive(2));
+                  document.title = "Tasks - Voter List App";
+                }}
+              >
+                Tasks
+              </Link>
+            </li>
+          )}
+          {currentUser.role === "admin" && (
+            <li className="nav-item">
+              <Link
+                className={`nav-link btn ${
+                  navLinkActive === 3 ? "active" : ""
+                }`}
+                to="/authorize"
+                onClick={() => {
+                  dispatch(setNavLinkActive(3));
                   document.title = "Autorize - Voter List App";
                 }}
               >
@@ -61,10 +78,10 @@ const NavLinks = () => {
             <li className="nav-item">
               <Link
                 className={`nav-link btn ${
-                  navLinkActive === 3 ? "active" : ""
+                  navLinkActive === 4 ? "active" : ""
                 }`}
                 onClick={() => {
-                  dispatch(setNavLinkActive(3));
+                  dispatch(setNavLinkActive(4));
                   document.title = "Admin Portal - Voter List App";
                 }}
                 to="/adminPortal"

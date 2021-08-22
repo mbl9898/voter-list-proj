@@ -31,6 +31,14 @@ export class TaskService {
       console.log(error);
     }
   }
+  static async getTaskFile(fileName: string) {
+    try {
+      const res = await ApiService.get(`${TaskService.baseUrl[0]}/${fileName}`);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async postTask(taskData: any) {
     try {
       const res = await ApiService.post(`${TaskService.baseUrl[0]}`, taskData);

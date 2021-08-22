@@ -1,6 +1,10 @@
-import React, { SetStateAction, useEffect, useState } from "react";
-import { Dispatch } from "react";
-import { useRef } from "react";
+import React, {
+  SetStateAction,
+  useEffect,
+  useState,
+  Dispatch,
+  useRef,
+} from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import { getAllTasks, taskFormInitial } from "../helpers/taskManagementHelper";
 import { useForm } from "../helpers/useForm";
@@ -15,9 +19,15 @@ interface Props {
   users: User[];
   updateTaskData: Task | null;
   setTaskEntryForm: Dispatch<SetStateAction<boolean>>;
+  taskEntryForm: boolean;
 }
 
-const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
+const CreateTask = ({
+  users,
+  setTaskEntryForm,
+  updateTaskData,
+  taskEntryForm,
+}: Props) => {
   const dispatch = useAppDispatch();
   const [file, setFile] = useState("");
   const [message, setMessage] = useState("");
@@ -42,7 +52,7 @@ const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
 
     try {
       const axios = ApiService.createAxios();
-      const resCreate =
+      const resCreate: any =
         !updateTaskData &&
         (await axios.post("/task", formData, {
           onUploadProgress: (progressEvent: any) => {
@@ -51,6 +61,7 @@ const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
             );
           },
         }));
+
       const resUpdate =
         updateTaskData &&
         (await axios.put(`/task/${data._id}`, formData, {
@@ -62,6 +73,9 @@ const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
         }));
       console.log(resUpdate);
       console.log(resCreate && resCreate.data);
+      if (resCreate && !resCreate.success) {
+        resCreate && setMessage(resCreate.message);
+      }
       if (
         (resCreate && resCreate.data.success) ||
         (resUpdate && resUpdate.data.success)
@@ -74,6 +88,7 @@ const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
         fileInputRef.current && (fileInputRef.current.value = "");
         setFile("");
         getAllTasks(dispatch);
+        setTaskEntryForm(false);
       }
     } catch (err) {
       console.log(err);
@@ -137,7 +152,6 @@ const CreateTask = ({ users, setTaskEntryForm, updateTaskData }: Props) => {
               onChange={onFileChange}
             />
           </Form.Group>
-
           <Progress percentage={uploadPercentage} />
           <div className="d-flex justify-content-center">
             <Button

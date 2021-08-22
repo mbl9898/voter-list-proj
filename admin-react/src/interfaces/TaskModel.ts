@@ -4,4 +4,5 @@ export interface Task {
   title: string;
   description: string;
   fileName?: string;
+  filePath?: string;
 }

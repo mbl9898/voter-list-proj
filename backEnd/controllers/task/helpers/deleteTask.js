@@ -1,3 +1,4 @@
+import { unlink } from 'fs';
 import { logger } from '~/utils';
 import { status } from '~/constants';
 import { TaskSchema } from '~/schemas';
@@ -8,9 +9,16 @@ export const deleteRecord = async (req, res) => {
   try {
     const data = await TaskSchema.findById(id);
     if (!data) {
-      throw new Error('Invalid Id');
+      const error = new Error('Invalid Id');
+      console.log(error);
+      return res.json({ success: false, message: 'Invalid Id' });
     }
+    unlink(data.filePath, (err) => {
+      if (err) throw new Error('Unxpected file delete Error');
+      console.log(`${data.filePath} was deleted`);
+    });
     const deleteRecord = await data.delete();
+
     if (!deleteRecord) {
       throw new Error('Unxpected Error');
     }

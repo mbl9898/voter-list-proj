@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('/', isAuthorized(roles.admin), task.getAllTasks);
 router.get('/current', isAuthorized(roles.dataEntry), task.getCurrentUserTasks);
-
+router.get('/:filename', isAuthorized(roles.dataEntry), task.downloadTaskFile);
 router.put(
   '/:id',
   (req, res, next) => {

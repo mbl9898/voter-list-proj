@@ -2,10 +2,10 @@ import { BlockCodeSchema, TaskSchema } from '~/schemas';
 import { logger } from '~/utils';
 import { status } from '~/constants';
 
-export const getCurrentUserTasks = async (_, res) => {
+export const getCurrentUserTasks = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
-    const data = await TaskSchema.find();
+    let data = await TaskSchema.find();
     if (!data) {
       throw new Error('Invalid Request');
     }

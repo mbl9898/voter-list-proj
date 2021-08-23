@@ -15,8 +15,8 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(cors());
 app.use(routes);
-app.use('/', express.static(__dirname + '/dist'));
-app.use('/admin', express.static(__dirname + '/dist-admin'));
+app.use('/*', express.static(__dirname + '/dist'));
+app.use('/admin/*', express.static(__dirname + '/dist-admin'));
 app.use('/uploads', express.static('uploads'));
 
 if (

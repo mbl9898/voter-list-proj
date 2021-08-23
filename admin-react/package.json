@@ -2,6 +2,7 @@
   "name": "voter-list-data-entry",
   "version": "0.1.0",
   "private": true,
+  "homepage": ".",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "@restart/hooks": "^0.4.0",

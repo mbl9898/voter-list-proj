@@ -17,7 +17,7 @@ const Tasks = () => {
   };
   const getTaskFile = async (fileName: string) => {
     const res = await TaskService.getTaskFile(fileName);
-    window.open(`http://localhost/${res.path}`);
+    window.open(`https://dataentry.alabrar.pk/${res.path}`);
     // window.open(`http://localhost/${res.path}`);
     console.log(res);
   };

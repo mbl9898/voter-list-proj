@@ -8,7 +8,7 @@ const Footer = () => {
           <span className="text-muted">
             © All Rights Reserved By alabrar.pk
           </span>
-          <a style={{ textDecoration: "none" }} href="/dataEntry">
+          <a style={{ textDecoration: "none" }} href="https://dataentry.alabrar.pk">
             Data Entry
           </a>
         </div>

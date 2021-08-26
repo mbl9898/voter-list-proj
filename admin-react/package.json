@@ -19,8 +19,8 @@
     "typescript": "^4.1.2"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
+    "start": "PORT=2001 react-scripts start",
+    "build": "react-scripts -max_old_space_size=4096 build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prod-build": "git pull && yarn build && rm -r ../backEnd/dist-admin && mv ./build ./dist-admin && mv ./dist-admin ../backEnd/"

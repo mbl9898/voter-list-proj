@@ -1,4 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import GridPrintHeader from "./GridPrintHeader";
+import GridPrintFooter from "./GridPrintFooter";
+import { useAppSelector } from "../store/hooks";
+import Loading from "./Loading";
+import "./DataGrid.css";
 import {
   dataBound,
   printComplete,
@@ -20,16 +26,6 @@ import {
   Toolbar,
   VirtualScroll,
 } from "@syncfusion/ej2-react-grids";
-import ReactDOM from "react-dom";
-import GridPrintHeader from "./GridPrintHeader";
-import GridPrintFooter from "./GridPrintFooter";
-import "./DataGrid.css";
-import { useAppSelector } from "../store/hooks";
-import { useEffect } from "react";
-import Loading from "./Loading";
-// import axios from "axios";
-// import { useSelector } from "react-redux";
-// import { RootState } from "../store";
 
 let headingsArr: string[];
 let grid: Grid | null = null;
@@ -39,14 +35,9 @@ const DataGrid = () => {
   const headings = useAppSelector((state) => state.app.headings);
   const isListDisplay = useAppSelector((state) => state.app.isListDisplay);
   const isDataLoading = useAppSelector((state) => state.app.isDataLoading);
-  // const [printMode, setPrintMode] = useState<"CurrentPage" | "AllPages">(
-  //   "CurrentPage"
-  // );
+
   headingsArr = headings;
-  // console.log(data[0]);
-  // function insertAfter(newNode: any, existingNode: any) {
-  //   existingNode.parentNode.insertBefore(newNode, existingNode.nextSibling);
-  // }
+
   const beforePrint = (e: any) => {
     const header = document.createElement("div");
     header.id = "header";
@@ -61,25 +52,7 @@ const DataGrid = () => {
 
     ReactDOM.render(<GridPrintFooter />, footer);
   };
-  useEffect(() => {
-    // const vote = axios.create({
-    //   baseURL: "http://localhost:4000/api/v1/votesData",
-    //   timeout: 500000,
-    //   headers: {
-    //     "x-api-key": "SG.cpdcjwepcjio",
-    //     authorization:
-    //       "bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJfaWQiOiI2MGYxOGUzYjQyNzg5MzI3YjAyNThhNDYiLCJlbWFpbCI6Im11aGFtbWFkYnV0dDcwQGdtYWlsLmNvbSJ9LCJpYXQiOjE2MjY0NDM0OTQsImV4cCI6MTYyNzA0ODI5NH0.7u-3mhsM7yGwQCEJfM5V-Y3wHQyAsG_uRc-z2t6E5eQ",
-    //   },
-    // });
-    // const noOfElements = 0;
-    // const dataPiece1 = data.slice();
-    // isListDisplay &&
-    //   vote.post("/", data[0]).catch((err) => {
-    //     console.log("IFERR", err);
-    //   });
-    // setTimeout(() => {
-    // }, 15000);
-  }, [data, isListDisplay]);
+  useEffect(() => {}, [data, isListDisplay]);
   return (
     <>
       {isDataLoading && <Loading />}
@@ -119,16 +92,6 @@ const DataGrid = () => {
               </svg>
               Print
             </button>
-            {/* <button
-              className="btn btn-primary"
-              onClick={() => {
-                printMode === "CurrentPage"
-                  ? setPrintMode("AllPages")
-                  : setPrintMode("CurrentPage");
-              }}
-            >
-              {printMode}
-            </button> */}
           </div>
           <GridComponent
             ref={(g) => (grid = g)}
@@ -144,8 +107,6 @@ const DataGrid = () => {
             pageSettings={{ pageSize: 180 }}
             toolbarClick={toolbarClick}
             printComplete={printComplete}
-            // toolbar={["Print"]}
-            // printMode={printMode}
           >
             <ColumnsDirective>
               {data[0]

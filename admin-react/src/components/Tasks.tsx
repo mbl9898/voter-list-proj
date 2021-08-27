@@ -17,8 +17,11 @@ const Tasks = () => {
   };
   const getTaskFile = async (fileName: string) => {
     const res = await TaskService.getTaskFile(fileName);
-    window.open(`https://dataentry.alabrar.pk/${res.path}`);
-    // window.open(`http://localhost/${res.path}`);
+    window.location.assign(
+      (process.env.REACT_APP_API_IS_DEV
+        ? "http://localhost:5000/"
+        : "https://dataentry.alabrar.pk/") + res.path
+    );
     console.log(res);
   };
   useEffect(() => {
@@ -26,11 +29,13 @@ const Tasks = () => {
   }, []);
   return (
     <div className="container">
-      {!tasks && <h4 className="my-4 text-center">No Task Assigned</h4>}
+      {tasks && !tasks[0] && (
+        <h4 className="my-4 text-center">No Task Assigned</h4>
+      )}
       <div className="cpage-content">
         {tasks?.map((task: Task, index: number) => {
           return (
-            <Card key={index} className="p-4">
+            <Card key={index} className="d-flex justify-content-center p-4">
               <p>Title: {task.title}</p>
               <p>Description: {task.description}</p>
               <p>FileName: {task.fileName}</p>

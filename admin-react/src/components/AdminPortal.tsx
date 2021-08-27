@@ -11,7 +11,7 @@ const AdminPortal = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center m-3">
+      <div className="d-flex justify-content-center m-4">
         <button
           className="btn btn-primary mx-2"
           onClick={() => {

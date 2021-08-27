@@ -6,9 +6,11 @@ export const getData = async (_, res) => {
   const { SERVER_ERROR } = status;
   try {
     const data = await AuthorizedSchema.find();
-    if (!data) {
-      throw new Error('Invalid Request');
+
+    if (!data[0]) {
+      throw new Error('Invalid Request Or No Data');
     }
+
     return res.json({
       success: true,
       data,

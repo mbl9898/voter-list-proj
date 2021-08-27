@@ -6,7 +6,7 @@ export const getVotesData = async (_, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
     const votesData = await VoteSchema.find();
-    if (!votesData) {
+    if (!votesData[0]) {
       throw new Error('Invalid Request');
     }
     return res.json({

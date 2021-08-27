@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 interface Props {
-  msg: string;
+  msg: string | null;
   variant:
     | "primary"
     | "secondary"
@@ -14,21 +14,27 @@ interface Props {
 }
 
 const Message = ({ msg, variant }: Props) => {
+  useEffect(() => {}, [msg]);
   return (
-    <div
-      className={`alert alert-${variant} alert-dismissible fade show`}
-      role="alert"
-    >
-      {msg}
-      <button
-        type="button"
-        className="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      >
-        {/* <span aria-hidden="true">&times;</span> */}
-      </button>
-    </div>
+    <>
+      {console.log(msg)}
+      {msg && (
+        <div
+          className={`alert alert-${variant} alert-dismissible fade show`}
+          role="alert"
+        >
+          {msg}
+          <button
+            type="button"
+            className="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          >
+            {/* <span aria-hidden="true">&times;</span> */}
+          </button>
+        </div>
+      )}
+    </>
   );
 };
 

@@ -11,6 +11,17 @@ export const updateTask = async (req, res) => {
     const filePath = file && `./uploads/${file.name}`;
     const fileName = file && file.name;
 
+    if (
+      file.mimetype !== 'application/pdf' &&
+      file.mimetype !== 'image/jpeg' &&
+      file.mimetype !== 'image/png' &&
+      file.mimetype !== 'image/jpeg'
+    ) {
+      const error = new Error('Invalid File Type');
+      console.log(error);
+      return res.json({ success: false, message: 'Invalid File Type' });
+    }
+
     const taskToUpdate = await TaskSchema.findById({ _id: req.params.id });
     if (fileName) {
       fs.unlinkSync(taskToUpdate.filePath);

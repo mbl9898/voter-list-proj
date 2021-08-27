@@ -6,7 +6,7 @@ import { roles } from '~/constants';
 
 const router = express.Router();
 
-router.get('/', isAuthorized(roles.admin), authorized.getData);
+router.get('/', isAuthorized(roles.dataViewer), authorized.getData);
 
 router.post(
   '/',

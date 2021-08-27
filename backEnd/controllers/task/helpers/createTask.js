@@ -27,12 +27,21 @@ export const createTask = async (req, res) => {
 
     const checkName = await TaskSchema.findOne({ fileName });
     if (checkName) {
-      throw new Error('Task file with this name already exist');
+      const error = new Error('Task file with this name already exist');
+      console.log(error);
+      return res.json({
+        success: false,
+        message: 'Task file with this name already exist',
+      });
     }
-    file.mv(filePath, (err) => {
+    file.mv(filePath, async (err) => {
       if (err) {
         console.error(err);
-        return res.status(500).send(err);
+        return res.json({
+          success: false,
+          error: err,
+          message: 'no such file or directory',
+        });
       }
     });
 

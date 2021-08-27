@@ -13,7 +13,9 @@ import {
   setIsSignUpFormDisplay,
 } from "../store";
 
-const apiBaseUrl = process.env.REACT_APP_API_BASE_URL;
+const apiBaseUrl = process.env.REACT_APP_API_IS_DEV
+  ? process.env.REACT_APP_API_BASE_URL_DEV
+  : process.env.REACT_APP_API_BASE_URL_STAGING;
 
 const heading = [
   "S No",
@@ -85,8 +87,8 @@ export const getSortedFilteredVotes = async (
       authorization: `bearer ${currentToken}`,
     },
   });
-  if (currentUser.role === "dataViewer") {
-    await vote.get("/").then(async (voteRes) => {
+  if (currentUser.role === "dataViewer" || currentUser.role === "admin") {
+    await vote.get("/").then(async (voteRes: any) => {
       console.log(voteRes, "voteRes");
       if (voteRes.data.success) {
         const dataSnap = voteRes.data.votesData;

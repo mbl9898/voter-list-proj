@@ -26,6 +26,7 @@ const TaskManagement = () => {
           className="btn btn-primary mx-2"
           onClick={() => {
             setTaskEntryForm(!taskEntryForm);
+            setUpdateTaskData(null);
           }}
         >
           Create Task

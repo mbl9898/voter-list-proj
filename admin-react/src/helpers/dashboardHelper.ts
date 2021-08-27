@@ -6,7 +6,9 @@ export const getUserProgressData = async (
   source?: any
 ) => {
   const dataReq = axios.create({
-    baseURL: process.env.REACT_APP_API_BASE_URL,
+    baseURL: process.env.REACT_APP_API_IS_DEV
+      ? process.env.REACT_APP_API_BASE_URL_DEV
+      : process.env.REACT_APP_API_BASE_URL_STAGING,
     timeout: 5000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",

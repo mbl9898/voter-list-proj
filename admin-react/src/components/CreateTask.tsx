@@ -30,8 +30,18 @@ const CreateTask = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const [file, setFile] = useState("");
-  const [message, setMessage] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
+  const [message, setMessage] = useState<null | string>(null);
+  const [messageVariant, setMessageVariant] = useState<
+    | "primary"
+    | "secondary"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "light"
+    | "dark"
+  >("info");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, onChange, onSubmit, setData } = useForm(
     onTaskSubmit,
@@ -62,7 +72,7 @@ const CreateTask = ({
           },
         }));
 
-      const resUpdate =
+      const resUpdate: any =
         updateTaskData &&
         (await axios.put(`/task/${data._id}`, formData, {
           onUploadProgress: (progressEvent: any) => {
@@ -71,24 +81,31 @@ const CreateTask = ({
             );
           },
         }));
-      console.log(resUpdate);
+      console.log(resUpdate && resUpdate.data);
       console.log(resCreate && resCreate.data);
       if (resCreate && !resCreate.success) {
-        resCreate && setMessage(resCreate.message);
+        resCreate && setMessageVariant("danger");
+        resCreate && setMessage(`Error: ${resCreate.data.message}`);
+      }
+      if (resUpdate && !resUpdate.success) {
+        resUpdate && setMessageVariant("danger");
+        resUpdate && setMessage(`Error: ${resUpdate.data.message}`);
       }
       if (
         (resCreate && resCreate.data.success) ||
         (resUpdate && resUpdate.data.success)
       ) {
         // Clear percentage
-        setTimeout(() => setUploadPercentage(0), 10000);
+        setTimeout(() => setUploadPercentage(0), 5000);
+        setMessageVariant("info");
+        setTimeout(() => setMessage(null), 5000);
         resCreate && setMessage("Task Created SuccessFully");
         resUpdate && setMessage("Task Updated SuccessFully");
         setData(taskFormInitial);
         fileInputRef.current && (fileInputRef.current.value = "");
         setFile("");
         getAllTasks(dispatch);
-        setTaskEntryForm(false);
+        // setTaskEntryForm(false);
       }
     } catch (err) {
       console.log(err);
@@ -99,8 +116,8 @@ const CreateTask = ({
   }, [updateTaskData]);
   return (
     <>
-      {message ? <Message msg={message} variant="info" /> : null}
       <Card className="m-4 p-4">
+        <Message msg={message} variant={messageVariant} />
         <h4 className="text-center">
           {updateTaskData ? "Update Task" : "Create Task"}
         </h4>

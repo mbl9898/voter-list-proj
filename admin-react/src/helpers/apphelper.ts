@@ -58,9 +58,10 @@ export const signUp = async (
 ) => {
   setError("");
   const auth = axios.create({
-    baseURL: process.env.REACT_APP_API_IS_DEV
-      ? process.env.REACT_APP_API_BASE_URL_DEV
-      : process.env.REACT_APP_API_BASE_URL_STAGING,
+    baseURL:
+      process.env.REACT_APP_API_IS_DEV === "true"
+        ? process.env.REACT_APP_API_BASE_URL_DEV
+        : process.env.REACT_APP_API_BASE_URL_STAGING,
     timeout: 5000,
     headers: { "x-api-key": "SG.cpdcjwepcjio" },
   });
@@ -128,9 +129,10 @@ export const logout = async (
   // return auth.signOut();
   setError("");
   const auth = axios.create({
-    baseURL: process.env.REACT_APP_API_IS_DEV
-      ? process.env.REACT_APP_API_BASE_URL_DEV
-      : process.env.REACT_APP_API_BASE_URL_STAGING,
+    baseURL:
+      process.env.REACT_APP_API_IS_DEV === "true"
+        ? process.env.REACT_APP_API_BASE_URL_DEV
+        : process.env.REACT_APP_API_BASE_URL_STAGING,
     timeout: 5000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",

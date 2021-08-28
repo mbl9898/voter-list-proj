@@ -4,9 +4,10 @@ import { logger } from '~/utils';
 
 dotenv.config();
 
-const Connection_String = process.env.IS_DEV
-  ? process.env.CONNECTION_STRING_DEVLOPMENT
-  : process.env.CONNECTION_STRING_STAGING;
+const Connection_String =
+  process.env.IS_DEV === 'true'
+    ? process.env.CONNECTION_STRING_DEVLOPMENT
+    : process.env.CONNECTION_STRING_STAGING;
 
 //Mongoose connection
 mongoose

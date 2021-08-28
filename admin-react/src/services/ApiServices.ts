@@ -3,9 +3,10 @@ import _axios from "axios";
 export class ApiService {
   static createAxios = () => {
     return _axios.create({
-      baseURL: process.env.REACT_APP_API_IS_DEV
-        ? process.env.REACT_APP_API_BASE_URL_DEV
-        : process.env.REACT_APP_API_BASE_URL_STAGING,
+      baseURL:
+        process.env.REACT_APP_API_IS_DEV === "true"
+          ? process.env.REACT_APP_API_BASE_URL_DEV
+          : process.env.REACT_APP_API_BASE_URL_STAGING,
       headers: {
         Authorization: `Bearer ${localStorage.getItem("token")}`,
         "x-api-key": "SG.cpdcjwepcjio",

@@ -42,5 +42,5 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: cd backEnd && yarn && yarn start && cd ../admin-react/ && yarn && yarn build && cd ../FrontEnd/ && yarn && yarn build
+      - run: forever stopall && cd backEnd && cp ../../env-backend .env && yarn && yarn start && cd ../admin-react && cp ../../env-admin-react .env && yarn && yarn build && cd ../FrontEnd/ && cp ../../env-frontend .env && yarn && yarn build
       #- run: rm -rf /var/www/reactapp && mv ./build reactapp && sudo mv ./reactapp /var/www/

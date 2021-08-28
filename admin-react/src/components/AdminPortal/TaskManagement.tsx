@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { Task } from "../interfaces/TaskModel";
-import { UserService } from "../services/UserService";
+import { Task } from "../../interfaces/TaskModel";
+import { UserService } from "../../services/UserService";
 import CreateTask from "./CreateTask";
 import TasksTable from "./TasksTable";
 

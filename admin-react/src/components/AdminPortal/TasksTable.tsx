@@ -1,12 +1,11 @@
 import React, { SetStateAction, useState } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
-import { getAllTasks } from "../helpers/taskManagementHelper";
-import { Task } from "../interfaces/TaskModel";
-import { TaskService } from "../services/TaskService";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import CModal from "./CModal";
-import Message from "./Message";
+import { getAllTasks } from "../../helpers/taskManagementHelper";
+import { Task } from "../../interfaces/TaskModel";
+import { TaskService } from "../../services/TaskService";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import CModal from "../CModal";
 
 interface Props {
   setUpdateTaskData: Dispatch<SetStateAction<Task | null>>;

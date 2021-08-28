@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import {
   getUsers,
   userEntryFormInitial,
-} from "../helpers/userManagementHelper";
-import { User } from "../interfaces/User";
+} from "../../helpers/userManagementHelper";
+import { User } from "../../interfaces/User";
 import UserDataTable from "./UserDataTable";
 import UserEntryForm from "./UserEntryForm";
 

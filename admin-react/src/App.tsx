@@ -7,7 +7,7 @@ import Dashboard from "./components/Dashboard";
 import SignUp from "./components/SignUp";
 import DataEntry from "./components/DataEntry";
 import Authorize from "./components/Authorize";
-import AdminPortal from "./components/AdminPortal";
+import AdminPortal from "./components/AdminPortal/AdminPortal";
 import "./App.scss";
 import { useAppDispatch, useAppSelector } from "./store/hooks";
 import {

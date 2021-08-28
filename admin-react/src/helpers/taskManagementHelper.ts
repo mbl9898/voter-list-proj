@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { Task } from "../interfaces/TaskModel";
 import { TaskService } from "../services/TaskService";
 import { setFilteredTaskHeadings, setTasks } from "../store";

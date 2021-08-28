@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { setDataVoteReject } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 

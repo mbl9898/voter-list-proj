@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
 import { setCurrentRejectedVote, setRejectedVotes } from "../store";
 import unAuthorizedService from "../services/unAuthorizedService";

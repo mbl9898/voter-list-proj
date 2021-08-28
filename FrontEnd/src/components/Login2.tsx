@@ -39,13 +39,13 @@ const Login2 = () => {
             <Card.Body>
               <h4>Use Our App</h4>
               <p>
-                Analyze Votes data And To more efficient Campaign
+                Analyze Votes data for more efficient Campaign
                 <br />
-                Get votes data of your area
+                Access votes data of your area from anywhere
+                <br />
+                Multiple sort and filter options on your area votes data
                 <br />
                 Descriptive Vote Details
-                <br />
-                Sort and Filter Votes
               </p>
             </Card.Body>
           </Card>

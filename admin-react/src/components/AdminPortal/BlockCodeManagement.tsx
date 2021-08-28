@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
 import { Container } from "react-bootstrap";
-import { getBlockCodes } from "../helpers/BlockCodeManagementHelper";
-import { BlockCode } from "../interfaces/BlockCode";
-import { BlockCodeService } from "../services/BlockCodeService";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { getBlockCodes } from "../../helpers/BlockCodeManagementHelper";
+import { BlockCode } from "../../interfaces/BlockCode";
+import { BlockCodeService } from "../../services/BlockCodeService";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import CModal from "../CModal";
 import BlockCodeEntryForm from "./BlockCodeEntryForm";
-import CModal from "./CModal";
 
 const BlockCodeManagement = () => {
   const dispatch = useAppDispatch();
@@ -17,10 +17,6 @@ const BlockCodeManagement = () => {
   const filteredBlockCodeHeadings = useAppSelector(
     (state) => state.app.filteredBlockCodeHeadings
   );
-  // const [filteredBlockCodeHeadings, setFilteredBlockCodeHeadings] = useState<
-  //   string[]
-  // >([]);
-  // const [showModalProp, setShowModalProp] = useState<null | number>(null);
 
   const deleteBlockCode = async (id: string) => {
     const res = await BlockCodeService.deleteBlockCode(id);

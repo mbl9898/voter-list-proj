@@ -2,8 +2,8 @@ import React from "react";
 import {
   headings,
   userEntryFormInitial,
-} from "../helpers/userManagementHelper";
-import { User } from "../interfaces/User";
+} from "../../helpers/userManagementHelper";
+import { User } from "../../interfaces/User";
 // import CModal from "./CModal";
 
 const UserDataTable = ({

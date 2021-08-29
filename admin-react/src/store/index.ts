@@ -21,6 +21,8 @@ export const {
   setDefaultBlockCodeData,
   setTasks,
   setFilteredTaskHeadings,
+  setPayments,
+  setFilteredPaymentHeadings,
   setIsLoggedIn,
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,

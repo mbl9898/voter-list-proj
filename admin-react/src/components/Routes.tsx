@@ -6,6 +6,7 @@ import Authorize from "./Authorize";
 import Dashboard from "./Dashboard";
 import DataEntry from "./DataEntry";
 import Login from "./Login";
+import Payments from "./Payments";
 import SignUp from "./SignUp";
 import Tasks from "./Tasks";
 
@@ -39,6 +40,17 @@ const Routes = () => {
         <Route path="/tasks" exact>
           {currentUser ? (
             <Tasks />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+              }}
+            />
+          )}
+        </Route>
+        <Route path="/payments" exact>
+          {currentUser ? (
+            <Payments />
           ) : (
             <Redirect
               to={{

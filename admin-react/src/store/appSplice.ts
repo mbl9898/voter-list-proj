@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { voteRejectInitial } from "../helpers/authorizeHelper";
 import { BlockCode } from "../interfaces/BlockCode";
+import { Payment } from "../interfaces/PaymentModel";
 import { Task } from "../interfaces/TaskModel";
 import { User } from "../interfaces/User";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
@@ -19,6 +20,8 @@ interface InitialState {
   defaultBlockCodeData: BlockCode | null;
   tasks: Task[];
   filteredTaskHeadings: string[];
+  payments: Payment[];
+  filteredPaymentHeadings: string[];
   isLoggedIn: boolean;
   isSignUpFormDisplay: boolean;
   isLogInFormDisplay: boolean;
@@ -40,6 +43,8 @@ const initialState: InitialState = {
   defaultBlockCodeData: null,
   tasks: [],
   filteredTaskHeadings: [],
+  payments: [],
+  filteredPaymentHeadings: [],
   isLoggedIn: false,
   isSignUpFormDisplay: false,
   isLogInFormDisplay: true,
@@ -100,6 +105,12 @@ export const appSlice = createSlice({
     },
     setFilteredTaskHeadings(state, action: PayloadAction<any>) {
       state.filteredTaskHeadings = action.payload;
+    },
+    setPayments(state, action: PayloadAction<any>) {
+      state.payments = action.payload;
+    },
+    setFilteredPaymentHeadings(state, action: PayloadAction<any>) {
+      state.filteredPaymentHeadings = action.payload;
     },
     setIsLoggedIn(state, action: PayloadAction<any>) {
       state.isLoggedIn = action.payload;

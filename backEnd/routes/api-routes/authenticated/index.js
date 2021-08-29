@@ -7,6 +7,7 @@ import blockCodeRoutes from './blockCode.route';
 import votesDataRoutes from './votesData.route';
 import logoutRoutes from './logout.route';
 import taskRoutes from './task.route';
+import paymentRoutes from './payment.route';
 
 //Private endpoints registered in List
 //List is iteratively registered in main index file
@@ -47,6 +48,10 @@ const authenticatedRoutes = [
   {
     path: '/task',
     route: taskRoutes,
+  },
+  {
+    path: '/payment',
+    route: paymentRoutes,
   },
 ];
 

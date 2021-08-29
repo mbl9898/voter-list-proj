@@ -1,5 +1,4 @@
-import React, { SetStateAction, useEffect } from "react";
-import { Dispatch } from "react";
+import { useState, SetStateAction, useEffect, Dispatch } from "react";
 import { BlockCode } from "../interfaces/BlockCode";
 import { useAppSelector } from "../store/hooks";
 
@@ -13,7 +12,7 @@ interface Props {
 
 const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
   const blockCodes = useAppSelector((state) => state.app.blockCodes);
-  const [tagData, setTagData] = React.useState<string[]>([]);
+  const [tagData, setTagData] = useState<string[]>([]);
   const removeTagData = (indexToRemove: number) => {
     const newtags: string[] = [
       ...tagData.filter((_: any, index: number) => index !== indexToRemove),

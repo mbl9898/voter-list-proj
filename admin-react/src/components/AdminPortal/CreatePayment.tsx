@@ -1,10 +1,4 @@
-import React, {
-  SetStateAction,
-  useEffect,
-  useState,
-  Dispatch,
-  useRef,
-} from "react";
+import { SetStateAction, useEffect, useState, Dispatch, useRef } from "react";
 import { Button, Card, Form } from "react-bootstrap";
 import {
   getAllPayments,

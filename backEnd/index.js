@@ -13,7 +13,11 @@ const port = 5000;
 const app = express();
 app.use(fileUpload());
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: 'https://dataentry.alabrar.pk/',
+  }),
+);
 app.use(routes);
 app.use('/uploads', express.static('uploads'));
 

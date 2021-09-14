@@ -5,6 +5,7 @@ import { setFilteredPaymentHeadings, setPayments } from "../store";
 export const paymentFormInitial: Payment = {
   email: "",
   title: "",
+  amount: 0,
   description: "",
 };
 

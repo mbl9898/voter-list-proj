@@ -147,6 +147,16 @@ const CreatePayment = ({
             />
           </Form.Group>
           <Form.Group className="mb-3">
+            <Form.Label>Amount</Form.Label>
+            <Form.Control
+              name="title"
+              placeholder="Amount"
+              value={data.amount}
+              onChange={onChange}
+              required
+            />
+          </Form.Group>
+          <Form.Group className="mb-3">
             <Form.Label>Payment Description</Form.Label>
             <Form.Control
               name="description"
@@ -159,7 +169,7 @@ const CreatePayment = ({
           </Form.Group>
 
           <Form.Group className="mb-2">
-            <Form.Label>Choose Payment File</Form.Label>
+            <Form.Label>Choose Payment Receipt File</Form.Label>
             <Form.Control
               type="file"
               ref={fileInputRef}

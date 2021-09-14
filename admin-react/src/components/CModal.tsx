@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { VotesModel } from "../interfaces/VotesModel";

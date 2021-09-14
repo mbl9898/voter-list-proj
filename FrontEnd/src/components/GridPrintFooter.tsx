@@ -1,5 +1,3 @@
-import React from "react";
-
 const GridPrintFooter = () => {
   return (
     <div className="d-flex justify-content-end align-items-center">

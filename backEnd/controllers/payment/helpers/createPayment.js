@@ -48,6 +48,7 @@ export const createPayment = async (req, res) => {
     const data = new PaymentSchema({
       email: req.body.email,
       title: req.body.title,
+      amount: req.body.amount,
       description: req.body.description,
       fileName: file.name,
       filePath: filePath,

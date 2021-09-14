@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { voteRejectInitial } from "../helpers/authorizeHelper";

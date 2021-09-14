@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getUserProgressData } from "../helpers/dashboardHelper";
 import { setDashboardData } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";

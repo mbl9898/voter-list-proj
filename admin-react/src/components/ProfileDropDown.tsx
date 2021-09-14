@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import { setCurrentUser, setIsLogInFormDisplay } from "../store";
 import { useAppSelector } from "../store/hooks";

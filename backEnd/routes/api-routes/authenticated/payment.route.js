@@ -28,12 +28,14 @@ router.put(
         id: req.params.id,
         email: req.body.email,
         title: req.body.title,
+        amount: req.body.amount,
         description: req.body.description,
       },
       {
         id: 'required|string',
         email: 'required|string|email',
         title: 'required|string',
+        amount: 'required|number',
         description: 'string',
       },
     );
@@ -52,11 +54,13 @@ router.post(
       {
         email: req.body.email,
         title: req.body.title,
+        amount: req.body.amount,
         description: req.body.description,
       },
       {
         email: 'required|string|email',
         title: 'required|string',
+        amount: 'required|number',
         description: 'required|string',
       },
     );

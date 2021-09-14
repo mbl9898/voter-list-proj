@@ -6,7 +6,7 @@ import { PaymentSchema } from 'schemas/Payment';
 export const updatePayment = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
-    const { email, title, description } = req.body;
+    const { email, title, amount, description } = req.body;
     const file = req.files && req.files.file;
     const filePath = file && `./uploads/${file.name}`;
     const fileName = file && file.name;
@@ -40,6 +40,9 @@ export const updatePayment = async (req, res) => {
     }
     if (title) {
       paymentToUpdate.title = title;
+    }
+    if (title) {
+      paymentToUpdate.amount = amount;
     }
     if (description) {
       paymentToUpdate.description = description;

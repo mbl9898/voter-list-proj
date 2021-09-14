@@ -1,4 +1,3 @@
-import React from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
 import { useAppSelector } from "../store/hooks";
 import AdminPortal from "./AdminPortal/AdminPortal";

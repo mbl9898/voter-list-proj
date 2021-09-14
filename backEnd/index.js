@@ -15,7 +15,7 @@ app.use(fileUpload());
 app.use(express.json());
 app.use(
   cors({
-    origin: 'https://dataentry.alabrar.pk/',
+    origin: 'https://alabrar.pk/',
   }),
 );
 app.use(routes);

@@ -18,11 +18,22 @@ import {
 } from "react-router-dom";
 import { getUnAuthorizedList } from "./helpers/authorizeHelper";
 import Routes from "./components/Routes";
+import Message from "./components/Message";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const currentUser = useAppSelector((state) => state.app.currentUser);
+  const message: null | string = useAppSelector((state) => state.app.message);
+  const messageVariant:
+    | "primary"
+    | "secondary"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "light"
+    | "dark" = useAppSelector((state) => state.app.messageVariant);
   useEffect(() => {
     setLoading(true);
     getUnAuthorizedList(dispatch);
@@ -38,6 +49,7 @@ const App = () => {
           <>
             <Navbar />
             {currentUser !== null && <NavLinks />}
+            <Message msg={message} variant={messageVariant} id="msg" />
             <Routes />
           </>
         )}

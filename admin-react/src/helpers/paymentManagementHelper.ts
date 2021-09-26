@@ -5,6 +5,12 @@ import { setFilteredPaymentHeadings, setPayments } from "../store";
 export const paymentFormInitial: Payment = {
   email: "",
   title: "",
+  amount: undefined,
+  description: "",
+};
+export const paymentFormReset: Payment = {
+  email: "",
+  title: "",
   amount: 0,
   description: "",
 };

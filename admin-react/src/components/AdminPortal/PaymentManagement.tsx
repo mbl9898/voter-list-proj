@@ -11,6 +11,7 @@ const TaskManagement = () => {
   const [updatePaymentData, setUpdatePaymentData] = useState<null | Payment>(
     null
   );
+
   const getAllUsers = async () => {
     const res = await UserService.allUsers();
     if (res) {

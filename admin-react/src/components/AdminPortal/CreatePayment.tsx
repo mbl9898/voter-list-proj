@@ -3,13 +3,14 @@ import { Button, Card, Form } from "react-bootstrap";
 import {
   getAllPayments,
   paymentFormInitial,
+  paymentFormReset,
 } from "../../helpers/paymentManagementHelper";
 import { useForm } from "../../helpers/useForm";
 import { Payment } from "../../interfaces/PaymentModel";
 import { User } from "../../interfaces/User";
 import { ApiService } from "../../services/ApiServices";
+import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
-import Message from "../Message";
 import Progress from "../Progress";
 
 interface Props {
@@ -28,17 +29,6 @@ const CreatePayment = ({
   const dispatch = useAppDispatch();
   const [file, setFile] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [message, setMessage] = useState<null | string>(null);
-  const [messageVariant, setMessageVariant] = useState<
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "warning"
-    | "info"
-    | "light"
-    | "dark"
-  >("info");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, onChange, onSubmit, setData } = useForm(
     onPaymentSubmit,
@@ -55,6 +45,7 @@ const CreatePayment = ({
     formData.append("file", file);
     formData.append("email", data.email ? data.email : "");
     formData.append("title", data.title ? data.title : "");
+    formData.append("amount", data.amount ? data.amount : "");
     formData.append("description", data.description ? data.description : "");
 
     try {
@@ -80,13 +71,16 @@ const CreatePayment = ({
         }));
       console.log(resUpdate && resUpdate.data);
       console.log(resCreate && resCreate.data);
-      if (resCreate && !resCreate.success) {
-        resCreate && setMessageVariant("danger");
-        resCreate && setMessage(`Error: ${resCreate.data.message}`);
+      if (resCreate && !resCreate.data.success) {
+        dispatch(setMessage(null));
+        resCreate && dispatch(setMessageVariant("danger"));
+        resCreate && dispatch(setMessage(`Error: ${resCreate.data.message}`));
+        document.getElementById("msg")?.scrollIntoView();
       }
-      if (resUpdate && !resUpdate.success) {
-        resUpdate && setMessageVariant("danger");
-        resUpdate && setMessage(`Error: ${resUpdate.data.message}`);
+      if (resUpdate && !resUpdate.data.success) {
+        resUpdate && dispatch(setMessageVariant("danger"));
+        resUpdate && dispatch(setMessage(`Error: ${resUpdate.data.message}`));
+        document.getElementById("msg")?.scrollIntoView();
       }
       if (
         (resCreate && resCreate.data.success) ||
@@ -94,14 +88,15 @@ const CreatePayment = ({
       ) {
         // Clear percentage
         setTimeout(() => setUploadPercentage(0), 5000);
-        setMessageVariant("info");
-        setTimeout(() => setMessage(null), 5000);
-        resCreate && setMessage("Payment Created SuccessFully");
-        resUpdate && setMessage("Payment Updated SuccessFully");
-        setData(paymentFormInitial);
+        dispatch(setMessageVariant("info"));
+        setTimeout(() => setMessage(""), 3000);
+        resCreate && dispatch(setMessage("Payment Created SuccessFully"));
+        resUpdate && dispatch(setMessage("Payment Updated SuccessFully"));
+        setData(paymentFormReset);
         fileInputRef.current && (fileInputRef.current.value = "");
         setFile("");
         getAllPayments(dispatch);
+        document.getElementById("msg")?.scrollIntoView();
         // setPaymentEntryForm(false);
       }
     } catch (err) {
@@ -114,7 +109,6 @@ const CreatePayment = ({
   return (
     <>
       <Card className="m-4 p-4">
-        <Message msg={message} variant={messageVariant} />
         <h4 className="text-center">
           {updatePaymentData ? "Update Payment" : "Create Payment"}
         </h4>
@@ -149,10 +143,11 @@ const CreatePayment = ({
           <Form.Group className="mb-3">
             <Form.Label>Amount</Form.Label>
             <Form.Control
-              name="title"
+              name="amount"
               placeholder="Amount"
               value={data.amount}
               onChange={onChange}
+              type="number"
               required
             />
           </Form.Group>

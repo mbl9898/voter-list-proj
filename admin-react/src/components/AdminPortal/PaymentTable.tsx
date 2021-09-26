@@ -26,7 +26,7 @@ const PaymentTable = ({
   const payments = useAppSelector((state) => state.app.payments);
   const deletePayment = async (id: string) => {
     const res = await PaymentService.deletePayment(id);
-    if (res.success) {
+    if (res.success && res.success) {
       setMsg(res.data);
     }
 
@@ -37,10 +37,9 @@ const PaymentTable = ({
   };
   useEffect(() => {
     getAllPayments(dispatch);
-  }, [payments]);
+  }, []);
   return (
     <>
-      {console.log(payments)}
       {!payments[0] && <h5 className="text-center">No Payment Data</h5>}
       {payments[0] && (
         <div>
@@ -64,6 +63,7 @@ const PaymentTable = ({
                       <th scope="row">{index}</th>
                       <td className="text-center">{payment.email}</td>
                       <td className="text-center">{payment.title}</td>
+                      <td className="text-center">{payment.amount}</td>
                       <td className="text-center">{payment.description}</td>
                       <td className="text-center">{payment.fileName}</td>
                       <td className="text-center">

@@ -32,6 +32,7 @@ coverage
 build/Release
 dist-admin
 dist
+uploads/*
 
 # Dependency directories
 node_modules/

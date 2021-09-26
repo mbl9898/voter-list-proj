@@ -6,6 +6,7 @@ import { PaymentSchema } from 'schemas/Payment';
 export const updatePayment = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
+    const { id } = req.params;
     const { email, title, amount, description } = req.body;
     const file = req.files && req.files.file;
     const filePath = file && `./uploads/${file.name}`;
@@ -26,6 +27,17 @@ export const updatePayment = async (req, res) => {
       _id: req.params.id,
     });
     if (fileName) {
+      if (paymentToUpdate.fileName !== fileName) {
+        const checkName = await PaymentSchema.findOne({ fileName });
+        if (checkName) {
+          const error = new Error('Payment file with this name already exist');
+          console.log(error);
+          return res.json({
+            success: false,
+            message: 'Payment file with this name already exist',
+          });
+        }
+      }
       fs.unlinkSync(paymentToUpdate.filePath);
       file.mv(filePath, (err) => {
         if (err) {

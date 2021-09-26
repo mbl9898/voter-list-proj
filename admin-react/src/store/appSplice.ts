@@ -27,6 +27,16 @@ interface InitialState {
   isLogInFormDisplay: boolean;
   isAccessDeniedDisplay: boolean;
   error: string;
+  message: null | string;
+  messageVariant:
+    | "primary"
+    | "secondary"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "light"
+    | "dark";
 }
 
 const initialState: InitialState = {
@@ -50,6 +60,8 @@ const initialState: InitialState = {
   isLogInFormDisplay: true,
   isAccessDeniedDisplay: false,
   error: "",
+  message: null,
+  messageVariant: "info",
 };
 
 export const appSlice = createSlice({
@@ -126,6 +138,12 @@ export const appSlice = createSlice({
     },
     setError(state, action: PayloadAction<any>) {
       state.error = action.payload;
+    },
+    setMessage(state, action: PayloadAction<any>) {
+      state.message = action.payload;
+    },
+    setMessageVariant(state, action: PayloadAction<any>) {
+      state.messageVariant = action.payload;
     },
   },
 });

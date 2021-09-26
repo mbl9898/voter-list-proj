@@ -35,7 +35,7 @@ router.put(
         id: 'required|string',
         email: 'required|string|email',
         title: 'required|string',
-        amount: 'required|number',
+        amount: 'required|integer',
         description: 'string',
       },
     );
@@ -60,7 +60,7 @@ router.post(
       {
         email: 'required|string|email',
         title: 'required|string',
-        amount: 'required|number',
+        amount: 'required|integer',
         description: 'required|string',
       },
     );

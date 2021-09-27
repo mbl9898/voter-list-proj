@@ -11,6 +11,7 @@ interface InitialState {
   currentUser: User | null;
   dashboardData: { pending: number; rejected: number; approved: number };
   unauthorizedData: UnAuthorizedModel[];
+  unauthorizedRejectedVotes: UnAuthorizedModel[];
   pendingUnauthorizedData: UnAuthorizedModel[];
   rejectedVotes: UnAuthorizedModel[];
   dataVoteReject: any;
@@ -44,6 +45,7 @@ const initialState: InitialState = {
   currentUser: null,
   dashboardData: { rejected: 0, pending: 0, approved: 0 },
   unauthorizedData: [],
+  unauthorizedRejectedVotes: [],
   pendingUnauthorizedData: [],
   rejectedVotes: [],
   dataVoteReject: voteRejectInitial,
@@ -80,6 +82,9 @@ export const appSlice = createSlice({
     setUnauthorizedData(state, action: PayloadAction<any>) {
       state.unauthorizedData = action.payload;
     },
+    setUnauthorizedRejectedVotes(state, action: PayloadAction<any>) {
+      state.unauthorizedRejectedVotes = action.payload;
+    },
     setPendingUnauthorizedData(state, action: PayloadAction<any>) {
       state.pendingUnauthorizedData = action.payload;
     },
@@ -94,11 +99,12 @@ export const appSlice = createSlice({
       action: PayloadAction<any>
     ) {
       console.log(action.payload, "index");
-
-      state.dataVoteReject = {
-        ...state.dataVoteReject,
-        ...state.unauthorizedData[action.payload].rejections,
-      };
+      if (state.unauthorizedData[action.payload]) {
+        state.dataVoteReject = {
+          ...state.dataVoteReject,
+          ...state.unauthorizedData[action.payload].rejections,
+        };
+      }
     },
     setCurrentRejectedVote(state, action: PayloadAction<any>) {
       state.currentRejectedVote = action.payload;

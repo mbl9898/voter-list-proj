@@ -16,7 +16,7 @@ export const deleteRecord = async (req, res) => {
     }
     return res.json({
       success: true,
-      data: 'Thiks record has been deleted successfully',
+      data: 'This record has been deleted successfully',
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

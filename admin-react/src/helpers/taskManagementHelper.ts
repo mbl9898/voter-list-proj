@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { Task } from "../interfaces/TaskModel";
 import { TaskService } from "../services/TaskService";
 import { setFilteredTaskHeadings, setTasks } from "../store";
@@ -10,7 +11,8 @@ export const taskFormInitial: Task = {
 
 export const getAllTasks = async (
   // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
-  dispatch: any
+  dispatch: any,
+  setLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   const res = await TaskService.getAllTasks();
   console.log(res);
@@ -38,7 +40,8 @@ export const getAllTasks = async (
         );
       });
       dispatch(setFilteredTaskHeadings(sentenceCaseHeadings));
-      dispatch(setTasks(res));
+      await dispatch(setTasks(res));
+      setLoading && setLoading(false);
     }
   }
 };

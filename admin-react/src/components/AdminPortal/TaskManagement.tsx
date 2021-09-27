@@ -32,6 +32,7 @@ const TaskManagement = () => {
           Create Task
         </button>
       </div>
+
       {!taskEntryForm && (
         <TasksTable
           taskEntryForm={taskEntryForm}

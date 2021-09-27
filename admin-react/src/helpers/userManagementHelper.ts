@@ -22,10 +22,14 @@ export const userEntryFormInitial: User = {
   defaultBlockCode: 0,
 };
 
-export const getUsers = async (setUsers: Dispatch<SetStateAction<User[]>>) => {
+export const getUsers = async (
+  setUsers: Dispatch<SetStateAction<User[]>>,
+  setLoading?: Dispatch<SetStateAction<boolean>>
+) => {
   try {
     const res = await UserService.allUsers();
-    setUsers(res);
+    await setUsers(res);
+    setLoading && setLoading(false);
   } catch (error) {
     console.log(error);
   }

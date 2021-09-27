@@ -5,9 +5,16 @@ import { UnAuthorizedSchema } from '~/schemas';
 export const uploadData = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
-    if (!req.body.cnic) {
+    const checkCNIC = req.body.cnic;
+    if (!checkCNIC) {
       throw new Error('Invalid CNIC Number');
     }
+
+    const checkData = await UnAuthorizedSchema.findOne({ cnic: checkCNIC });
+    if (checkData) {
+      throw new Error('CNIC already exist');
+    }
+
     const {
       blockCode,
       constituencyName,

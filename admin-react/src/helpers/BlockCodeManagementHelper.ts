@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import { BlockCode } from "../interfaces/BlockCode";
 import { BlockCodeService } from "../services/BlockCodeService";
 import { setBlockCodes, setFilteredBlockCodeHeadings } from "../store";
@@ -20,7 +21,8 @@ export const blockCodeFormInitial: BlockCode = {
 
 export const getBlockCodes = async (
   // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
-  dispatch: any
+  dispatch: any,
+  setLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   const res = await BlockCodeService.getBlockCodes();
   if (res) {
@@ -46,6 +48,8 @@ export const getBlockCodes = async (
       });
       dispatch(setFilteredBlockCodeHeadings(sentenceCaseHeadings));
       dispatch(setBlockCodes(res));
+      setFilteredBlockCodeHeadings(false);
+      setLoading && setLoading(false);
     }
   }
 };

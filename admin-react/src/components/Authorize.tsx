@@ -1,33 +1,33 @@
 import { useEffect, useState } from "react";
-import CCard from "./CCard";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { getUnAuthorizedList } from "../helpers/authorizeHelper";
 import VoteDisplayModal from "./VoteDisplayModal";
 import { setDataVoteRejectToUnauthorizedDataIndex } from "../store";
 
 const Authorize = () => {
   const dispatch = useAppDispatch();
-  const [unAthorizedVoteIndex, setUnathorizedVoteIndex] = useState(0);
-  const [unAthorizedVote, setUnathorizedVote] =
+  const [unAuthorizedVoteIndex, setUnauthorizedVoteIndex] = useState(0);
+  const [unAuthorizedVote, setUnauthorizedVote] =
     useState<null | UnAuthorizedModel>(null);
-  // const [showModalProp, setShowModalProp] = useState<null | number>(null);
   const unauthorizedData: UnAuthorizedModel[] | [] = useAppSelector(
     (state) => state.app.unauthorizedData
   );
 
   useEffect(() => {
-    setUnathorizedVote(unauthorizedData[unAthorizedVoteIndex]);
-    dispatch(setDataVoteRejectToUnauthorizedDataIndex(unAthorizedVoteIndex));
-  }, [unAthorizedVoteIndex]);
+    setUnauthorizedVote(unauthorizedData[unAuthorizedVoteIndex]);
+    dispatch(setDataVoteRejectToUnauthorizedDataIndex(unAuthorizedVoteIndex));
+  }, [unAuthorizedVoteIndex]);
   return (
     <>
-      {unAthorizedVote && (
+      {unauthorizedData && !unauthorizedData[0] && (
+        <h4 className="my-4 text-center">No UnAuthorized Votes Available</h4>
+      )}
+      {unAuthorizedVote && (
         <VoteDisplayModal
-          index={unAthorizedVoteIndex}
-          setIndex={setUnathorizedVoteIndex}
-          showModalProp={unAthorizedVoteIndex}
-          unauthorizedVote={unAthorizedVote}
+          index={unAuthorizedVoteIndex}
+          setIndex={setUnauthorizedVoteIndex}
+          showModalProp={unAuthorizedVoteIndex}
+          unauthorizedVote={unAuthorizedVote}
           unauthorizedVotesLength={unauthorizedData.length - 1}
         />
       )}

@@ -1,5 +1,5 @@
 import { Dispatch } from "react";
-import { setUnauthorizedData } from "../store";
+import { setUnauthorizedData, setUnauthorizedRejectedVotes } from "../store";
 import UnAuthorizedService from "../services/unAuthorizedService";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { VoteRejection } from "../interfaces/VoteRejection";
@@ -40,7 +40,15 @@ export const getUnAuthorizedList = async (
 ) => {
   try {
     const res = await UnAuthorizedService.getUnAuthorized();
-    dispatch(setUnauthorizedData(res));
+    const rejected = res.filter((x: any) => x.status === "rejected");
+    const pending = res.filter((x: any) => x.status === "pending");
+
+    console.log(res);
+    console.log(rejected);
+    console.log(pending);
+
+    dispatch(setUnauthorizedRejectedVotes(rejected));
+    dispatch(setUnauthorizedData(pending));
   } catch (error) {
     console.log(error);
   }

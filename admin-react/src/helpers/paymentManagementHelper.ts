@@ -22,7 +22,7 @@ export const getAllPayments = async (
   const res = await PaymentService.getAllPayments();
   console.log(res);
 
-  !res[0] && dispatch(setPayments(res));
+  res && !res[0] && dispatch(setPayments(res));
   if (res) {
     let resHeadings = res[0] && Object.keys(res[0]);
     let sentenceCaseHeadings: string[] = [];

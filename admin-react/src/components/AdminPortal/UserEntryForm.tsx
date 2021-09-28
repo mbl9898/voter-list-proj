@@ -9,6 +9,7 @@ import {
 } from "../../helpers/userManagementHelper";
 import { User } from "../../interfaces/User";
 import { UserService } from "../../services/UserService";
+import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
 import Loading from "../Loading";
 import TagInput from "../TagInput";
@@ -40,6 +41,8 @@ const BlockCodeEntryForm = ({
       const res = await UserService.updateUser(data);
       res.success && setData(userEntryFormInitial);
       getUsers(setUsers);
+      res.success && dispatch(setMessageVariant("success"));
+      res.success && dispatch(setMessage("User Updated Successfully"));
       setUserEntryForm(false);
     }
     setLoading(false);
@@ -139,7 +142,7 @@ const BlockCodeEntryForm = ({
               <hr />
               <div className="d-flex justify-content-center">
                 <Button
-                  className="m-1 w-50"
+                  className="m-1 w-50 mt-4 my-5"
                   disabled={loading}
                   onClick={(e: any) => {
                     onSubmit(e);
@@ -149,7 +152,7 @@ const BlockCodeEntryForm = ({
                   {loading && <Loading variant="warning" />}
                 </Button>
                 <Button
-                  className="m-1 w-25"
+                  className="m-1 w-25 mt-4 my-5"
                   variant="danger"
                   onClick={() => {
                     setData(userEntryFormInitial);

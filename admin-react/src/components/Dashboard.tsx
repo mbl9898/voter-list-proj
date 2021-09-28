@@ -63,6 +63,7 @@ const Dashboard = () => {
                 <div>
                   <button
                     className="btn btn-danger"
+                    disabled={dashboardData.rejected === 0}
                     onClick={() => {
                       setRejectedVoteModal(true);
                     }}

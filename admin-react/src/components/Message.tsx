@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
+import { setMessage } from "../store";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 
 interface Props extends React.AllHTMLAttributes<any> {
-  msg: string | null;
+  msg: string;
   variant:
     | "primary"
     | "secondary"
@@ -14,28 +16,33 @@ interface Props extends React.AllHTMLAttributes<any> {
 }
 
 const Message = (props: Props) => {
-  const { msg, variant, ...others } = props;
-  useEffect(() => {}, [msg]);
-
+  const dispatch = useAppDispatch();
+  const msg = useAppSelector((state) => state.app.message);
+  const { variant, ...others } = props;
+  useEffect(() => {
+    setTimeout(() => {
+      dispatch(setMessage(""));
+    }, 5000);
+  }, [msg]);
   return (
     <>
       {console.log(msg)}
-      {msg && (
-        <div
-          className={`alert alert-${variant} alert-dismissible fade show`}
-          role="alert"
-          {...others}
-        >
-          {msg}
-          {/* <button
+      {/* {msg && ( */}
+      <div
+        className={`alert alert-${variant} alert-dismissible fade show notify`}
+        role="alert"
+        {...others}
+      >
+        {msg}
+        {/* <button
             type="button"
             className="btn-close"
             data-bs-dismiss="alert"
             aria-label="Close"
           >
           </button> */}
-        </div>
-      )}
+      </div>
+      {/* )} */}
     </>
   );
 };

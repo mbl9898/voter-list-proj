@@ -4,6 +4,7 @@ import { Container } from "react-bootstrap";
 import { getBlockCodes } from "../../helpers/BlockCodeManagementHelper";
 import { BlockCode } from "../../interfaces/BlockCode";
 import { BlockCodeService } from "../../services/BlockCodeService";
+import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import CModal from "../CModal";
 import Loading from "../Loading";
@@ -23,6 +24,11 @@ const BlockCodeManagement = () => {
   const deleteBlockCode = async (id: string) => {
     setLoading(true);
     const res = await BlockCodeService.deleteBlockCode(id);
+    console.log(res);
+    if (res === "This record has been deleted successfully") {
+      dispatch(setMessageVariant("success"));
+      dispatch(setMessage("BlockCode Deleted Successfully"));
+    }
     getBlockCodes(dispatch, setLoading);
   };
 

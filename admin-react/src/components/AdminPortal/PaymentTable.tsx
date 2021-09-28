@@ -26,7 +26,7 @@ const PaymentTable = ({
   const payments = useAppSelector((state) => state.app.payments);
   const deletePayment = async (id: string) => {
     const res = await PaymentService.deletePayment(id);
-    if (res.success && res.success) {
+    if (res && res.success) {
       setMsg(res.data);
     }
 

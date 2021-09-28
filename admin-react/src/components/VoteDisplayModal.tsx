@@ -440,7 +440,7 @@ const VoteDisplayModal = ({
                 const success = await approveVote(unauthorizedVote);
                 if (success) {
                   getUnAuthorizedList(dispatch);
-                  setIndex && setIndex(0);
+                  setIndex && setIndex(index - 1);
                 }
               }}
             >

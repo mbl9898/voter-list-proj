@@ -8,6 +8,7 @@ import {
 import { useForm } from "../../helpers/useForm";
 import { BlockCode } from "../../interfaces/BlockCode";
 import { BlockCodeService } from "../../services/BlockCodeService";
+import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
 import Loading from "../Loading";
 
@@ -39,12 +40,16 @@ const BlockCodeEntryForm = ({
       res.error &&
         setError(`${res.error.message}
     `);
-      res.success && setData(blockCodeFormInitial);
+      res.success && (await setData(blockCodeFormInitial));
+      dispatch(setMessageVariant("success"));
+      dispatch(setMessage("BlockCode Created Successfully..."));
     }
     if (updateBlockCodeData) {
       const res = await BlockCodeService.updateBlockCode(data);
       res.success && setData(blockCodeFormInitial);
-      getBlockCodes(dispatch);
+      await getBlockCodes(dispatch);
+      dispatch(setMessageVariant("success"));
+      dispatch(setMessage("BlockCode Updated Successfully..."));
       setBlockCodeEntryForm(false);
     }
     setLoading(false);
@@ -220,7 +225,7 @@ const BlockCodeEntryForm = ({
               <hr />
               <div className="d-flex justify-content-center">
                 <Button
-                  className="my-3 w-50"
+                  className="my-3 w-50 mt-4 my-5"
                   disabled={loading}
                   // onClick={onSubmit}
                   type="submit"

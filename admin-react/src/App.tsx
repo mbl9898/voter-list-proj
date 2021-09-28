@@ -28,7 +28,7 @@ const App = () => {
     getUnAuthorizedList(dispatch);
     setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 10000);
   }, []);
   return (
     <>
@@ -38,7 +38,9 @@ const App = () => {
           <>
             <Navbar />
             {currentUser !== null && <NavLinks />}
-            <Message msg={message} variant={messageVariant} id="msg" />
+            {message && (
+              <Message msg={message} variant={messageVariant} id="msg" />
+            )}
             <Routes />
           </>
         )}

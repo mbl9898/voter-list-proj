@@ -8,8 +8,8 @@ import { useForm } from "../../helpers/useForm";
 import { Task } from "../../interfaces/TaskModel";
 import { User } from "../../interfaces/User";
 import { ApiService } from "../../services/ApiServices";
+import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
-import Message from "../Message";
 import Progress from "../Progress";
 
 interface Props {
@@ -28,17 +28,6 @@ const CreateTask = ({
   const dispatch = useAppDispatch();
   const [file, setFile] = useState("");
   const [uploadPercentage, setUploadPercentage] = useState(0);
-  const [message, setMessage] = useState<null | string>(null);
-  const [messageVariant, setMessageVariant] = useState<
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "warning"
-    | "info"
-    | "light"
-    | "dark"
-  >("info");
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, onChange, onSubmit, setData } = useForm(
     onTaskSubmit,
@@ -81,12 +70,12 @@ const CreateTask = ({
       console.log(resUpdate && resUpdate.data);
       console.log(resCreate && resCreate.data);
       if (resCreate && !resCreate.success) {
-        resCreate && setMessageVariant("danger");
-        resCreate && setMessage(`Error: ${resCreate.data.message}`);
+        resCreate && dispatch(setMessageVariant("danger"));
+        resCreate && dispatch(setMessage(`Error: ${resCreate.data.message}`));
       }
       if (resUpdate && !resUpdate.success) {
-        resUpdate && setMessageVariant("danger");
-        resUpdate && setMessage(`Error: ${resUpdate.data.message}`);
+        resUpdate && dispatch(setMessageVariant("danger"));
+        resUpdate && dispatch(setMessage(`Error: ${resUpdate.data.message}`));
       }
       if (
         (resCreate && resCreate.data.success) ||
@@ -94,10 +83,10 @@ const CreateTask = ({
       ) {
         // Clear percentage
         setTimeout(() => setUploadPercentage(0), 5000);
-        setMessageVariant("info");
-        setTimeout(() => setMessage(null), 5000);
-        resCreate && setMessage("Task Created SuccessFully");
-        resUpdate && setMessage("Task Updated SuccessFully");
+        setTimeout(() => dispatch(setMessage("")), 5000);
+        dispatch(setMessageVariant("info"));
+        resCreate && dispatch(setMessage("Task Created SuccessFully"));
+        resUpdate && dispatch(setMessage("Task Updated SuccessFully"));
         setData(taskFormInitial);
         fileInputRef.current && (fileInputRef.current.value = "");
         setFile("");
@@ -114,7 +103,6 @@ const CreateTask = ({
   return (
     <>
       <Card className="m-4 p-4">
-        <Message msg={message} variant={messageVariant} />
         <h4 className="text-center">
           {updateTaskData ? "Update Task" : "Create Task"}
         </h4>
@@ -170,7 +158,7 @@ const CreateTask = ({
           <div className="d-flex justify-content-center">
             <Button
               type="submit"
-              className="btn btn-primary btn-block w-50 mt-4"
+              className="btn btn-primary btn-block w-50 mt-4 my-5"
             >
               {updateTaskData ? "Update Task" : "Create Task"}
             </Button>

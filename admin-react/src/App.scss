@@ -18,3 +18,20 @@
 .br-5 {
   border-radius: 5px;
 }
+
+.notify {
+  width: fit-content;
+  position: fixed;
+  align-items: center;
+  flex-wrap: nowrap;
+  flex-direction: column;
+  display: flex;
+  bottom: 0;
+  margin-bottom: 10px;
+  pointer-events: none;
+  z-index: 9500;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+}

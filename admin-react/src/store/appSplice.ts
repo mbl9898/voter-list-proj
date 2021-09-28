@@ -28,7 +28,7 @@ interface InitialState {
   isLogInFormDisplay: boolean;
   isAccessDeniedDisplay: boolean;
   error: string;
-  message: null | string;
+  message: string;
   messageVariant:
     | "primary"
     | "secondary"
@@ -62,7 +62,7 @@ const initialState: InitialState = {
   isLogInFormDisplay: true,
   isAccessDeniedDisplay: false,
   error: "",
-  message: null,
+  message: "",
   messageVariant: "info",
 };
 

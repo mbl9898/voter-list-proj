@@ -31,6 +31,7 @@ const Login = () => {
       });
       if (!res.success) {
         setError(res.error.message);
+        setLoading(false);
       }
       if (res.success) {
         setAlert("This user has been successfully loggedIn");

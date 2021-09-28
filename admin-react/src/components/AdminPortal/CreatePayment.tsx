@@ -175,7 +175,7 @@ const CreatePayment = ({
           <div className="d-flex justify-content-center">
             <Button
               type="submit"
-              className="btn btn-primary btn-block w-50 mt-4"
+              className="btn btn-primary btn-block w-50 mt-4 my-5"
             >
               {updatePaymentData ? "Update Payment" : "Create Payment"}
             </Button>

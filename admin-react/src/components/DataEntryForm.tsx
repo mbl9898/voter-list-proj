@@ -15,6 +15,8 @@ import {
   setDashboardData,
   setDataVoteReject,
   setDefaultBlockCodeData,
+  setMessage,
+  setMessageVariant,
 } from "../store";
 import {
   dataEntryFormInitial,
@@ -56,12 +58,16 @@ const DataEntryForm = ({
   async function submitVoteCallback(data: any) {
     const resSubmitVote: any = !forRejectedVotes && (await submitVote(data));
     resSubmitVote && getDefaultBlockCodeData(currentUser.defaultBlockCode);
+    console.log(resSubmitVote);
+
     const res = currentRejectedVote && (await updateRejectedVote(data));
     if (res && res.success) {
       setData(dataEntryFormInitial);
       dispatch(setCurrentRejectedVote(null));
       getRejectedVotes(dispatch);
       dispatch(setDataVoteReject(voteRejectInitial));
+      dispatch(setMessageVariant("info"));
+      dispatch(setMessage("Vote Submitted SuccessFully"));
       setRejectedVoteIndex && setRejectedVoteIndex(0);
       rejectedVotes.length === 0 &&
         setRejectedVoteModal &&
@@ -79,22 +85,22 @@ const DataEntryForm = ({
     console.log(res);
     if (res.success) {
       await dispatch(setDefaultBlockCodeData(res.data));
-      const dbcd = res.data;
+      const data = res.data;
       setData({
         ...dataEntryFormInitial,
-        blockCode: dbcd.blockCode,
-        constituencyName: dbcd.constituencyName,
-        moza: dbcd.moza,
-        dehya: dbcd.dehya,
-        city: dbcd.city,
-        patwarHalka: dbcd.patwarHalka,
-        tapaydar: dbcd.tapaydar,
-        tehseel: dbcd.tehseel,
-        talka: dbcd.talka,
-        district: dbcd.district,
-        unionCouncil: dbcd.unionCouncil,
-        bookNo: dbcd.bookNo,
-        constituency: dbcd.constituency,
+        blockCode: data.blockCode,
+        constituencyName: data.constituencyName,
+        moza: data.moza,
+        dehya: data.dehya,
+        city: data.city,
+        patwarHalka: data.patwarHalka,
+        tapaydar: data.tapaydar,
+        tehseel: data.tehseel,
+        talka: data.talka,
+        district: data.district,
+        unionCouncil: data.unionCouncil,
+        bookNo: data.bookNo,
+        constituency: data.constituency,
       });
       setLoading(false);
     }

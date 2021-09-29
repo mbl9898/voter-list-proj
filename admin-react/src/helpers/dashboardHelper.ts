@@ -1,8 +1,9 @@
 import axios from "axios";
+import { setDashboardData } from "../store";
 
 export const getUserProgressData = async (
   dispatch: any,
-  setDashboardData: any,
+  // setDashboardData: any,
   source?: any
 ) => {
   const dataReq = axios.create({
@@ -16,7 +17,7 @@ export const getUserProgressData = async (
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const res = await dataReq.get("profile-settings", { cancelToken: source });
+  const res = await dataReq.get("profile", { cancelToken: source });
   console.log(res);
   dispatch(setDashboardData(res && res.data && res.data.data));
 };

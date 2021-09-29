@@ -7,13 +7,9 @@ export const userData = async (req, res) => {
   const { SERVER_ERROR } = status;
 
   //Destructuring user from the req that we added in auth middleware
-  const email = req.params.email;
   const user = req.user;
 
   try {
-    const users = await UserSchema.find();
-    const user = users.filter((x) => x.email === email);
-
     const UnAuthorizedData = await UnAuthorizedSchema.find();
     const AuthorizedData = await AuthorizedSchema.find();
 

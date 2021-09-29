@@ -1,7 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getUserProgressData } from "../helpers/dashboardHelper";
-import { setDashboardData } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import RejectedVotesModal from "./RejectedVotesModal";
 const Dashboard = () => {
@@ -21,7 +20,7 @@ const Dashboard = () => {
     const source = cancelToken.source();
     try {
       setLoading(true);
-      getUserProgressData(dispatch, setDashboardData, source.token);
+      getUserProgressData(dispatch, source.token);
       setLoading(false);
     } catch (error) {
       console.log(error);

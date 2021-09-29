@@ -2,7 +2,7 @@ import { User } from "../interfaces/User";
 import { ApiService } from "./ApiServices";
 import UserModel from "./UserModel";
 export class UserService {
-  static baseUrl = ["auth", "profile-settings"];
+  static baseUrl = ["auth", "profile"];
 
   static async registerUser(registerUser: UserModel) {
     try {
@@ -32,6 +32,16 @@ export class UserService {
     try {
       const data = await ApiService.get(
         `${UserService.baseUrl[0]}/validateToken`
+      );
+      return data;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getUserDataByEmail(email: string) {
+    try {
+      const data = await ApiService.get(
+        `${UserService.baseUrl[1]}/userData/${email}`
       );
       return data;
     } catch (error) {

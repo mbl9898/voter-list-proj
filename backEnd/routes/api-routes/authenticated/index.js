@@ -18,7 +18,7 @@ const authenticatedRoutes = [
     route: testRoutes,
   },
   {
-    path: '/profile-settings',
+    path: '/profile',
     route: profileRoutes,
   },
   {

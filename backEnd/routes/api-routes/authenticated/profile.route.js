@@ -1,4 +1,6 @@
+import { roles } from 'constants/roles';
 import express from 'express';
+import { isAuthorized } from 'middlewares/roles';
 import { profile } from '~/controllers';
 import { validate as validation } from '~/middlewares';
 
@@ -27,6 +29,25 @@ router.patch(
     );
   },
   profile.changePassword,
+);
+
+router.get(
+  '/userData/:email',
+  (req, res, next) => {
+    validation(
+      req,
+      res,
+      next,
+      {
+        email: req.params.email,
+      },
+      {
+        email: 'required|string',
+      },
+    );
+  },
+  isAuthorized(roles.admin),
+  profile.getUserDataByEmail,
 );
 
 router.get('/', profile.userData);

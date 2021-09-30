@@ -24,7 +24,7 @@ export const getUserDataByEmail = async (req, res) => {
 
     if (UnAuthorizedData || UnAuthorizedData.length > 0) {
       const unAuthorizedDataByEmail = UnAuthorizedData.filter(
-        (x) => x.enteredBy.email === currentUser.email,
+        (x) => x.enteredBy.email === email,
       );
       pendingApprovals = unAuthorizedDataByEmail.filter(
         (x) => x.status === 'pending',
@@ -32,7 +32,7 @@ export const getUserDataByEmail = async (req, res) => {
     }
     if (UnAuthorizedData || UnAuthorizedData.length > 0) {
       const unAuthorizedDataByEmail = UnAuthorizedData.filter(
-        (x) => x.enteredBy.email === currentUser.email,
+        (x) => x.enteredBy.email === email,
       );
       rejectedData = unAuthorizedDataByEmail.filter(
         (x) => x.status === 'rejected',
@@ -40,9 +40,7 @@ export const getUserDataByEmail = async (req, res) => {
     }
 
     if (pendingApprovals || pendingApprovals.length > 0) {
-      approvedData = AuthorizedData.filter(
-        (x) => x.enteredBy.email === currentUser.email,
-      );
+      approvedData = AuthorizedData.filter((x) => x.enteredBy.email === email);
     }
 
     return res.json({

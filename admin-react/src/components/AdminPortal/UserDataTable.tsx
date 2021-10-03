@@ -1,8 +1,8 @@
 import {
   headings,
   userEntryFormInitial,
-} from "../../helpers/userManagementHelper";
-import { User } from "../../interfaces/User";
+} from '../../helpers/userManagementHelper';
+import { User } from '../../interfaces/User';
 // import CModal from "./CModal";
 
 const UserDataTable = ({
@@ -14,11 +14,11 @@ const UserDataTable = ({
   //   const onSubmit = (user: any) => {};
   return (
     <div>
-      <table className="table">
+      <table className='table'>
         <thead>
           <tr>
             {headings.map((heading, index) => (
-              <th key={index} scope="col" className="text-center">
+              <th key={index} scope='col' className='text-center'>
                 {heading}
               </th>
             ))}
@@ -29,17 +29,17 @@ const UserDataTable = ({
             users.map((user: User, index: number) => {
               return (
                 <tr key={index}>
-                  <th className="text-center" scope="row">
-                    {index}
+                  <th className='text-center' scope='row'>
+                    {index + 1}
                   </th>
-                  <td className="text-center">{user.username}</td>
+                  <td className='text-center'>{user.username}</td>
 
-                  <td className="text-center">{user.email}</td>
-                  <td className="text-center">{user.role}</td>
-                  <td className="text-center">{user.rate}</td>
-                  <td className="text-center">
+                  <td className='text-center'>{user.email}</td>
+                  <td className='text-center'>{user.role}</td>
+                  <td className='text-center'>{user.rate}</td>
+                  <td className='text-center'>
                     <button
-                      className="btn btn-primary"
+                      className='btn btn-primary'
                       onClick={() => {
                         setUpdateUserData(
                           !userEntryForm ? user : userEntryFormInitial

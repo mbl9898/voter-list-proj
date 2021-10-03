@@ -16,11 +16,11 @@ const Dashboard = () => {
   );
 
   useEffect(() => {
-    const cancelToken = axios.CancelToken;
-    const source = cancelToken.source();
+    const source = axios.CancelToken.source();
+
     try {
       setLoading(true);
-      getUserProgressData(dispatch, source.token);
+      getUserProgressData(dispatch, source);
       setLoading(false);
     } catch (error) {
       console.log(error);

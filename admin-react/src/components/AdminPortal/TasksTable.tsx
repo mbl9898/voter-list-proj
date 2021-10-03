@@ -1,9 +1,10 @@
 import { SetStateAction, useState } from 'react';
 import { Dispatch } from 'react';
 import { useEffect } from 'react';
-import { getAllTasks } from '../../helpers/taskManagementHelper';
+import { getAllTasks, getTaskFile } from '../../helpers/taskManagementHelper';
 import { Task } from '../../interfaces/TaskModel';
 import { TaskService } from '../../services/TaskService';
+import { setMessage, setMessageVariant } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CModal from '../CModal';
 import Loading from '../Loading';
@@ -20,7 +21,6 @@ const TasksTable = ({
   taskEntryForm,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const [msg, setMsg] = useState('');
   const [loading, setLoading] = useState(false);
   const filteredTaskHeadings = useAppSelector(
     (state) => state.app.filteredTaskHeadings
@@ -29,7 +29,8 @@ const TasksTable = ({
   const deleteTask = async (id: string) => {
     const res = await TaskService.deleteTask(id);
     if (res.success) {
-      setMsg(res.data);
+      dispatch(setMessageVariant('danger'));
+      dispatch(setMessage('Task Deleted Successfully...'));
     }
 
     getAllTasks(dispatch, setLoading);
@@ -80,6 +81,18 @@ const TasksTable = ({
                             >
                               update
                             </button>
+                          </td>
+                          <td>
+                            {task.fileName && (
+                              <button
+                                className='btn btn-primary'
+                                onClick={() => {
+                                  task.fileName && getTaskFile(task.fileName);
+                                }}
+                              >
+                                View File
+                              </button>
+                            )}
                           </td>
                           <td>
                             <CModal

@@ -1,9 +1,13 @@
 import { SetStateAction, useState } from 'react';
 import { Dispatch } from 'react';
 import { useEffect } from 'react';
-import { getAllPayments } from '../../helpers/paymentManagementHelper';
+import {
+  getAllPayments,
+  getPaymentFile,
+} from '../../helpers/paymentManagementHelper';
 import { Payment } from '../../interfaces/PaymentModel';
 import { PaymentService } from '../../services/PaymentService';
+import { setMessage, setMessageVariant } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CModal from '../CModal';
 
@@ -19,7 +23,6 @@ const PaymentTable = ({
   paymentEntryForm,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const [msg, setMsg] = useState('');
   const filteredPaymentHeadings = useAppSelector(
     (state) => state.app.filteredPaymentHeadings
   );
@@ -27,7 +30,8 @@ const PaymentTable = ({
   const deletePayment = async (id: string) => {
     const res = await PaymentService.deletePayment(id);
     if (res && res.success) {
-      setMsg(res.data);
+      dispatch(setMessageVariant('danger'));
+      dispatch(setMessage('Payment Deleted Successfully...'));
     }
 
     getAllPayments(dispatch);
@@ -78,6 +82,19 @@ const PaymentTable = ({
                         >
                           update
                         </button>
+                      </td>
+                      <td>
+                        {payment.filePath && (
+                          <button
+                            className='btn btn-primary'
+                            onClick={() => {
+                              payment.fileName &&
+                                getPaymentFile(payment.fileName);
+                            }}
+                          >
+                            View File
+                          </button>
+                        )}
                       </td>
                       <td>
                         <CModal

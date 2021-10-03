@@ -17,7 +17,7 @@ export const getUserProgressData = async (
       Authorization: `Bearer ${localStorage.getItem("token")}`,
     },
   });
-  const res = await dataReq.get("profile", { cancelToken: source });
-  console.log(res);
+  const res = await dataReq.get("profile", { cancelToken: source.token });
+  // console.log(res);
   dispatch(setDashboardData(res && res.data && res.data.data));
 };

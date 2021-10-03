@@ -14,7 +14,7 @@ import {
 } from "../store";
 
 const apiBaseUrl =
-  process.env.REACT_APP_API_IS_DEV === "true"
+  process.env.REACT_APP_API_IS_DEV
     ? process.env.REACT_APP_API_BASE_URL_DEV
     : process.env.REACT_APP_API_BASE_URL_STAGING;
 
@@ -81,7 +81,7 @@ export const getSortedFilteredVotes = async (
   const currentToken = localStorage.getItem("token");
 
   const vote = axios.create({
-    baseURL: apiBaseUrl + "votesData",
+    baseURL: apiBaseUrl + "authorized",
     timeout: 500000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",
@@ -93,11 +93,16 @@ export const getSortedFilteredVotes = async (
       console.log(voteRes, "voteRes");
       if (voteRes.data.success) {
         const dataSnap = voteRes.data.votesData;
+        console.log(dataSnap);
         const newData = createAddress(dataSnap);
+        console.log(newData);
+
         if (newData) {
+          console.log("Hi");
           let inCompleteDataFilter = newData.filter(
             (data) => data.Name !== "-"
           );
+
           inCompleteDataFilter.splice(1237, 75);
 
           await dispatch(setData(inCompleteDataFilter));
@@ -106,13 +111,13 @@ export const getSortedFilteredVotes = async (
           const filteredHeadings1 = headings.filter(
             (heading) => heading !== "S No"
           );
+          // const filteredHeadings2 = filteredHeadings1.filter(
+          //   (heading) => heading !== "Count"
+          // );
           const filteredHeadings2 = filteredHeadings1.filter(
-            (heading) => heading !== "Count"
-          );
-          const filteredHeadings3 = filteredHeadings2.filter(
             (heading) => heading !== "_id"
           );
-          dispatch(setHeadings(filteredHeadings3));
+          dispatch(setHeadings(filteredHeadings2));
           dispatch(setIsDataLoading(false));
         }
       }

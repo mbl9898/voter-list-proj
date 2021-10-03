@@ -25,9 +25,9 @@ const App = () => {
     | 'dark' = useAppSelector((state) => state.app.messageVariant);
   useEffect(() => {
     setLoading(true);
-    currentUser !== null && getUnAuthorizedList(dispatch);
+    currentUser && getUnAuthorizedList(dispatch);
     setLoading(false);
-  }, []);
+  }, [currentUser]);
   return (
     <>
       <Router>

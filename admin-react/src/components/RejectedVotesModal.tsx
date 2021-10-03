@@ -1,12 +1,11 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { voteRejectInitial } from "../helpers/authorizeHelper";
-import { getRejectedVotes } from "../helpers/dataEntryHelper";
-import UnAuthorizedModel from "../services/UnAuthorizedModel";
-import { setCurrentRejectedVote } from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import DataEntryForm from "./DataEntryForm";
-import Loading from "./Loading";
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { getRejectedVotes } from '../helpers/dataEntryHelper';
+import UnAuthorizedModel from '../services/UnAuthorizedModel';
+import { setCurrentRejectedVote } from '../store';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import DataEntryForm from './DataEntryForm';
+import Loading from './Loading';
 
 interface Props {
   rejectedVoteModal: boolean;
@@ -61,7 +60,7 @@ const RejectedVotesModal = ({
               } of ${rejectedVotes.length}`}</span>
             )}
             <Button
-              variant="primary"
+              variant='primary'
               disabled={rejectedVoteIndex === 0}
               onClick={() => {
                 dispatch(
@@ -70,10 +69,10 @@ const RejectedVotesModal = ({
                 setRejectedVoteIndex(rejectedVoteIndex - 1);
               }}
             >
-              {"< Prev"}
+              {'< Prev'}
             </Button>
             <Button
-              variant="primary"
+              variant='primary'
               disabled={
                 rejectedVotes && rejectedVoteIndex === rejectedVotes.length - 1
               }
@@ -84,10 +83,10 @@ const RejectedVotesModal = ({
                 setRejectedVoteIndex(rejectedVoteIndex + 1);
               }}
             >
-              {"Next >"}
+              {'Next >'}
             </Button>
             <Button
-              variant="danger"
+              variant='danger'
               onClick={() => {
                 setRejectedVoteModal(false);
                 dispatch(setCurrentRejectedVote(rejectedVotes[0]));

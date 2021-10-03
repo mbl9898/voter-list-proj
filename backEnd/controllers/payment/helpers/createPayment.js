@@ -11,7 +11,7 @@ export const createPayment = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const filePath = `./uploads/${file.name}`;
+    const filePath = `./uploads/payment/${file.name}`;
     const fileName = file.name;
 
     if (

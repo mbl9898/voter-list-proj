@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { getBlockCodes } from "../../helpers/BlockCodeManagementHelper";
-import { BlockCode } from "../../interfaces/BlockCode";
-import { BlockCodeService } from "../../services/BlockCodeService";
-import { setMessage, setMessageVariant } from "../../store";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import CModal from "../CModal";
-import Loading from "../Loading";
-import BlockCodeEntryForm from "./BlockCodeEntryForm";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { getBlockCodes } from '../../helpers/BlockCodeManagementHelper';
+import { BlockCode } from '../../interfaces/BlockCode';
+import { BlockCodeService } from '../../services/BlockCodeService';
+import { setMessage, setMessageVariant } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import CModal from '../CModal';
+import Loading from '../Loading';
+import BlockCodeEntryForm from './BlockCodeEntryForm';
 
 const BlockCodeManagement = () => {
   const dispatch = useAppDispatch();
@@ -25,9 +25,9 @@ const BlockCodeManagement = () => {
     setLoading(true);
     const res = await BlockCodeService.deleteBlockCode(id);
     console.log(res);
-    if (res === "This record has been deleted successfully") {
-      dispatch(setMessageVariant("success"));
-      dispatch(setMessage("BlockCode Deleted Successfully"));
+    if (res === 'This record has been deleted successfully') {
+      dispatch(setMessageVariant('success'));
+      dispatch(setMessage('BlockCode Deleted Successfully'));
     }
     getBlockCodes(dispatch, setLoading);
   };
@@ -42,16 +42,16 @@ const BlockCodeManagement = () => {
   return (
     <>
       <Container
-        className="mt-5 align-items-center justify-content-center"
-        style={{ minWidth: 1500 + "px !important" }}
+        className='mt-5 align-items-center justify-content-center'
+        style={{ minWidth: 1500 + 'px !important' }}
       >
-        <h4 className="text-center my-1">Block Code Management</h4>
+        <h4 className='text-center my-1'>Block Code Management</h4>
         {loading && <Loading />}
         {!loading && (
           <>
-            <div className="d-flex flex-row-reverse m-2">
+            <div className='d-flex flex-row-reverse m-2'>
               <button
-                className="btn btn-primary mx-2"
+                className='btn btn-primary mx-2'
                 onClick={() => {
                   setBlockCodeEntryForm(!blockCodeEntryForm);
                 }}
@@ -60,13 +60,13 @@ const BlockCodeManagement = () => {
               </button>
             </div>
             {!blockCodeEntryForm && (
-              <div className="table-responsive">
-                <table className="table">
+              <div className='table-responsive'>
+                <table className='table'>
                   <thead>
                     <tr>
                       {filteredBlockCodeHeadings.map(
                         (heading: string, index: number) => (
-                          <th className="text-center" key={index} scope="col">
+                          <th className='text-center' key={index} scope='col'>
                             {heading}
                           </th>
                         )
@@ -77,31 +77,31 @@ const BlockCodeManagement = () => {
                     {blockCodes.map((blockCode: BlockCode, index: number) => {
                       return (
                         <tr key={index}>
-                          <th scope="row">{index}</th>
-                          <td className="text-center">{blockCode.blockCode}</td>
-                          <td className="text-center">
+                          <th scope='row'>{index + 1}</th>
+                          <td className='text-center'>{blockCode.blockCode}</td>
+                          <td className='text-center'>
                             {blockCode.constituencyName}
                           </td>
-                          <td className="text-center">{blockCode.moza}</td>
-                          <td className="text-center">{blockCode.dehya}</td>
-                          <td className="text-center">{blockCode.city}</td>
-                          <td className="text-center">
+                          <td className='text-center'>{blockCode.moza}</td>
+                          <td className='text-center'>{blockCode.dehya}</td>
+                          <td className='text-center'>{blockCode.city}</td>
+                          <td className='text-center'>
                             {blockCode.patwarHalka}
                           </td>
-                          <td className="text-center">{blockCode.tapaydar}</td>
-                          <td className="text-center">{blockCode.tehseel}</td>
-                          <td className="text-center">{blockCode.talka}</td>
-                          <td className="text-center">{blockCode.district}</td>
-                          <td className="text-center">
+                          <td className='text-center'>{blockCode.tapaydar}</td>
+                          <td className='text-center'>{blockCode.tehseel}</td>
+                          <td className='text-center'>{blockCode.talka}</td>
+                          <td className='text-center'>{blockCode.district}</td>
+                          <td className='text-center'>
                             {blockCode.unionCouncil}
                           </td>
-                          <td className="text-center">{blockCode.bookNo}</td>
-                          <td className="text-center">
+                          <td className='text-center'>{blockCode.bookNo}</td>
+                          <td className='text-center'>
                             {blockCode.constituency}
                           </td>
-                          <td className="text-center">
+                          <td className='text-center'>
                             <button
-                              className="btn btn-primary"
+                              className='btn btn-primary'
                               onClick={() => {
                                 setUpdateBlockCodeData(
                                   !blockCodeEntryForm ? blockCode : null
@@ -115,10 +115,10 @@ const BlockCodeManagement = () => {
                           <td>
                             <CModal
                               heading={
-                                "Are you sure you want to delete this Block Code?"
+                                'Are you sure you want to delete this Block Code?'
                               }
-                              triggerButtonContent="delete"
-                              triggerButtonVarient="danger"
+                              triggerButtonContent='delete'
+                              triggerButtonVarient='danger'
                               onSubmit={() => {
                                 onSubmit(blockCode);
                               }}
@@ -140,7 +140,7 @@ const BlockCodeManagement = () => {
           />
         )}
       </Container>
-      <hr className="mx-5" />
+      <hr className='mx-5' />
     </>
   );
 };

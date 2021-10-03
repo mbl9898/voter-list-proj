@@ -25,8 +25,9 @@ export const userData = async (req, res) => {
 
     if (PaymentData || PaymentData.length > 0) {
       const paymentDataByEmail = PaymentData.filter(
-        (x) => x.enteredBy.email === user.email,
+        (x) => x.email === user.email,
       );
+      console.log(paymentDataByEmail, 'paymentDataByEmail');
       paymentDataByEmail.forEach((payment) => {
         totalPayments.push(payment.amount);
       });

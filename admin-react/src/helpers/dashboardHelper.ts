@@ -11,7 +11,7 @@ export const getUserProgressData = async (
       process.env.REACT_APP_API_IS_DEV === "true"
         ? process.env.REACT_APP_API_BASE_URL_DEV
         : process.env.REACT_APP_API_BASE_URL_STAGING,
-    timeout: 5000,
+    timeout: 15000,
     headers: {
       "x-api-key": "SG.cpdcjwepcjio",
       Authorization: `Bearer ${localStorage.getItem("token")}`,

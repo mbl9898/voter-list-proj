@@ -8,11 +8,12 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { getUnAuthorizedList } from './helpers/authorizeHelper';
 import Routes from './components/Routes';
 import Message from './components/Message';
+import { User } from './interfaces/User';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const currentUser = useAppSelector((state) => state.app.currentUser);
+  const currentUser: User = useAppSelector((state) => state.app.currentUser);
   const message: null | string = useAppSelector((state) => state.app.message);
   const messageVariant:
     | 'primary'

@@ -1,6 +1,9 @@
 import mongoose from 'mongoose';
 
 const Authorized = new mongoose.Schema({
+  sNo: {
+    type: Number,
+  },
   blockCode: {
     type: Number,
   },

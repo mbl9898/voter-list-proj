@@ -25,7 +25,7 @@ const App = () => {
     | 'dark' = useAppSelector((state) => state.app.messageVariant);
   useEffect(() => {
     setLoading(true);
-    currentUser && getUnAuthorizedList(dispatch);
+    currentUser.role === 'admin' && getUnAuthorizedList(dispatch);
     setLoading(false);
   }, [currentUser]);
   return (

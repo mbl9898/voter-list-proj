@@ -14,7 +14,7 @@ import {
 } from "../store";
 
 const apiBaseUrl =
-  process.env.REACT_APP_API_IS_DEV
+  process.env.REACT_APP_API_IS_DEV && +process.env.REACT_APP_API_IS_DEV
     ? process.env.REACT_APP_API_BASE_URL_DEV
     : process.env.REACT_APP_API_BASE_URL_STAGING;
 
@@ -52,23 +52,35 @@ const heading = [
   "Address",
 ];
 
-const createAddress = (d: VotesModel[]) => {
+const createAddress = (d: any) => {
   if (d) {
     const actualData = d;
-    actualData.forEach((data, i) => {
+    actualData.forEach((data: any, i: number) => {
       actualData[i].Address = `
-        ${data["House No"] === "-" ? "" : "House:"} 
-        ${data["House No"] === "-" ? "" : data["House No"]} 
-        ${data.Street === "-" ? "" : "Street:"} 
-        ${data.Street === "-" ? "" : data.Street} 
-        ${data.Phase === "-" ? "" : data.Phase} 
-        ${data.Sector === "-" ? "" : "Sector:"} 
-        ${data.Sector === "-" ? "" : data.Sector} 
-        ${data.Lane === "-" ? "" : "Lane:"} 
-        ${data.Lane === "-" ? "" : data.Lane}
-        ${data["Boulevard|Avenue"] === "-" ? "" : data["Boulevard|Avenue"]}
-        ${data["Other Area"] === "-" ? "" : data["Other Area"]}
-        ${data.City === "-" ? "" : data.City}`;
+        ${data.houseNo === "-" ? "" : "House:"} 
+        ${data.houseNo === "-" ? "" : data.houseNo} 
+        ${data.street === "-" ? "" : "Street:"} 
+        ${data.street === "-" ? "" : data.street} 
+        ${data.sector === "-" ? "" : "Sector:"} 
+        ${data.sector === "-" ? "" : data.sector} 
+        ${data.lane === "-" ? "" : "Lane:"} 
+        ${data.lane === "-" ? "" : data.lane}
+        ${data.boulevardAvenue === "-" ? "" : data.boulevardAvenue}
+        ${data.otherArea === "-" ? "" : data.otherArea}
+        ${data.phase === "-" ? "" : data.phase} 
+        ${data.city === "-" ? "" : data.city}`;
+      // ${data["House No"] === "-" ? "" : "House:"}
+      // ${data["House No"] === "-" ? "" : data["House No"]}
+      // ${data.Street === "-" ? "" : "Street:"}
+      // ${data.Street === "-" ? "" : data.Street}
+      // ${data.Phase === "-" ? "" : data.Phase}
+      // ${data.Sector === "-" ? "" : "Sector:"}
+      // ${data.Sector === "-" ? "" : data.Sector}
+      // ${data.Lane === "-" ? "" : "Lane:"}
+      // ${data.Lane === "-" ? "" : data.Lane}
+      // ${data["Boulevard|Avenue"] === "-" ? "" : data["Boulevard|Avenue"]}
+      // ${data["Other Area"] === "-" ? "" : data["Other Area"]}
+      // ${data.City === "-" ? "" : data.City}`;
     });
     return actualData;
   }
@@ -98,9 +110,9 @@ export const getSortedFilteredVotes = async (
         console.log(newData);
 
         if (newData) {
-          console.log("Hi");
           let inCompleteDataFilter = newData.filter(
-            (data) => data.Name !== "-"
+            (data: any) => data.name !== "-"
+            // (data) => data.Name !== "-"
           );
 
           inCompleteDataFilter.splice(1237, 75);
@@ -108,16 +120,15 @@ export const getSortedFilteredVotes = async (
           await dispatch(setData(inCompleteDataFilter));
           const headings: string[] = Object.keys(newData[0]);
           headings.sort((a, b) => heading.indexOf(a) - heading.indexOf(b));
-          const filteredHeadings1 = headings.filter(
-            (heading) => heading !== "S No"
+          const filteredHeadings = headings.filter(
+            (heading) =>
+              heading !== "enteredBy" &&
+              heading !== "_id" &&
+              heading !== "createdAt" &&
+              heading !== "__v" &&
+              heading !== "verifiedBy"
           );
-          // const filteredHeadings2 = filteredHeadings1.filter(
-          //   (heading) => heading !== "Count"
-          // );
-          const filteredHeadings2 = filteredHeadings1.filter(
-            (heading) => heading !== "_id"
-          );
-          dispatch(setHeadings(filteredHeadings2));
+          dispatch(setHeadings(filteredHeadings));
           dispatch(setIsDataLoading(false));
         }
       }

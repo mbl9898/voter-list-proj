@@ -5,7 +5,7 @@
   "author": "Abdulmoiz Ahmer",
   "license": "MIT",
   "scripts": {
-    "start": "kill -9 `lsof -t -i:5000` && forever start -c babel-node index.js",
+    "start": "forever start -c babel-node index.js",
     "server": "nodemon --exec babel-node index.js",
     "format": "prettier --write \"./**/*.js\"",
     "lint": "eslint \"./**/*.js\"",

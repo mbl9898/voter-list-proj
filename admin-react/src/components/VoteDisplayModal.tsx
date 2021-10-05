@@ -11,6 +11,7 @@ import { useVoteReject } from '../helpers/useVoteReject';
 import UnAuthorizedModel from '../services/UnAuthorizedModel';
 import { setDataVoteReject, setNavLinkActive } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { StoreState } from './../store/index';
 interface Props {
   heading?: string;
   body?: string;
@@ -35,7 +36,9 @@ const VoteDisplayModal = ({
 }: Props) => {
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
+  const dataVoteReject = useAppSelector(
+    (state: StoreState) => state.app.dataVoteReject
+  );
   const handleClose = () => {
     dispatch(setNavLinkActive(0));
     history.push('/');

@@ -2,14 +2,19 @@ import { useHistory } from 'react-router-dom';
 import { setIsLogInFormDisplay, setIsSignUpFormDisplay } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import ProfileDropDown from './ProfileDropDown';
+import { StoreState } from './../store/index';
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
-  const dashboardData = useAppSelector((state) => state.app.dashboardData);
-  const currentUser = useAppSelector((state) => state.app.currentUser);
+  const dashboardData = useAppSelector(
+    (state: StoreState) => state.app.dashboardData
+  );
+  const currentUser = useAppSelector(
+    (state: StoreState) => state.app.currentUser
+  );
   const isLogInFormDisplay = useAppSelector(
-    (state) => state.app.isLogInFormDisplay
+    (state: StoreState) => state.app.isLogInFormDisplay
   );
 
   const openSignUpForm = () => {

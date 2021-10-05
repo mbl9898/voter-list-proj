@@ -9,12 +9,17 @@ import { getUnAuthorizedList } from './helpers/authorizeHelper';
 import Routes from './components/Routes';
 import Message from './components/Message';
 import { User } from './interfaces/User';
+import { StoreState } from './store/index';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
-  const currentUser: User = useAppSelector((state) => state.app.currentUser);
-  const message: null | string = useAppSelector((state) => state.app.message);
+  const currentUser: User | null = useAppSelector(
+    (state: StoreState) => state.app.currentUser
+  );
+  const message: null | string = useAppSelector(
+    (state: StoreState) => state.app.message
+  );
   const messageVariant:
     | 'primary'
     | 'secondary'
@@ -23,7 +28,7 @@ const App = () => {
     | 'warning'
     | 'info'
     | 'light'
-    | 'dark' = useAppSelector((state) => state.app.messageVariant);
+    | 'dark' = useAppSelector((state: StoreState) => state.app.messageVariant);
   useEffect(() => {
     setLoading(true);
     currentUser &&

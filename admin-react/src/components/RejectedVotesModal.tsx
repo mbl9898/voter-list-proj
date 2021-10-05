@@ -6,6 +6,7 @@ import { setCurrentRejectedVote } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import DataEntryForm from './DataEntryForm';
 import Loading from './Loading';
+import { StoreState } from './../store/index';
 
 interface Props {
   rejectedVoteModal: boolean;
@@ -20,7 +21,7 @@ const RejectedVotesModal = ({
   const [loading, setLoading] = useState(true);
   const [rejectedVoteIndex, setRejectedVoteIndex] = useState(0);
   const rejectedVotes: UnAuthorizedModel[] | [] = useAppSelector(
-    (state) => state.app.rejectedVotes
+    (state: StoreState) => state.app.rejectedVotes
   );
 
   useEffect(() => {

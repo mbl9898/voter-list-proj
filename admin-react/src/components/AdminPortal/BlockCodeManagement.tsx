@@ -4,7 +4,7 @@ import { Container } from 'react-bootstrap';
 import { getBlockCodes } from '../../helpers/BlockCodeManagementHelper';
 import { BlockCode } from '../../interfaces/BlockCode';
 import { BlockCodeService } from '../../services/BlockCodeService';
-import { setMessage, setMessageVariant } from '../../store';
+import { setMessage, setMessageVariant, StoreState } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CModal from '../CModal';
 import Loading from '../Loading';
@@ -13,12 +13,14 @@ import BlockCodeEntryForm from './BlockCodeEntryForm';
 const BlockCodeManagement = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
-  const blockCodes = useAppSelector((state) => state.app.blockCodes);
+  const blockCodes = useAppSelector(
+    (state: StoreState) => state.app.blockCodes
+  );
   const [blockCodeEntryForm, setBlockCodeEntryForm] = useState(false);
   const [updateBlockCodeData, setUpdateBlockCodeData] =
     useState<null | BlockCode>(null);
   const filteredBlockCodeHeadings = useAppSelector(
-    (state) => state.app.filteredBlockCodeHeadings
+    (state: StoreState) => state.app.filteredBlockCodeHeadings
   );
 
   const deleteBlockCode = async (id: string) => {

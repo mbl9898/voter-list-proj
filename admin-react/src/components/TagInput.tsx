@@ -1,6 +1,7 @@
-import { useState, SetStateAction, useEffect, Dispatch } from "react";
-import { BlockCode } from "../interfaces/BlockCode";
-import { useAppSelector } from "../store/hooks";
+import { useState, SetStateAction, useEffect, Dispatch } from 'react';
+import { BlockCode } from '../interfaces/BlockCode';
+import { useAppSelector } from '../store/hooks';
+import { StoreState } from './../store/index';
 
 interface Props {
   tags?: string[];
@@ -11,7 +12,9 @@ interface Props {
 }
 
 const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
-  const blockCodes = useAppSelector((state) => state.app.blockCodes);
+  const blockCodes = useAppSelector(
+    (state: StoreState) => state.app.blockCodes
+  );
   const [tagData, setTagData] = useState<string[]>([]);
   const removeTagData = (indexToRemove: number) => {
     const newtags: string[] = [
@@ -23,14 +26,14 @@ const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
     // setData && setData( assignedBlockCodes: [ ...tagData.filter((_: any, index: number) => index !== indexToRemove)]);
   };
   const addTagData = (event: any) => {
-    if (event.target.value !== "") {
+    if (event.target.value !== '') {
       setTagData([...tagData, event.target.value]);
       setData &&
         setData({
           ...data,
           assignedBlockCodes: [...tagData, event.target.value],
         });
-      event.target.value = "";
+      event.target.value = '';
     }
   };
   useEffect(() => {
@@ -38,13 +41,13 @@ const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
   }, [tags]);
   return (
     <>
-      <div className="tag-input">
-        <ul className="tags">
+      <div className='tag-input'>
+        <ul className='tags'>
           {tagData.map((tag: string, index: number) => (
-            <li key={index} className="tag">
-              <span className="tag-title">{tag}</span>
+            <li key={index} className='tag'>
+              <span className='tag-title'>{tag}</span>
               <span
-                className="tag-close-icon"
+                className='tag-close-icon'
                 onClick={() => removeTagData(index)}
               >
                 x
@@ -53,14 +56,14 @@ const TagInput = ({ tags, setTags, data, setData, placeholder }: Props) => {
           ))}
         </ul>
         <input
-          list="brow"
-          type="number"
+          list='brow'
+          type='number'
           onKeyUp={(event) =>
-            event.key === "Enter" ? addTagData(event) : null
+            event.key === 'Enter' ? addTagData(event) : null
           }
-          placeholder={placeholder ? placeholder : "Press enter to add a tag"}
+          placeholder={placeholder ? placeholder : 'Press enter to add a tag'}
         />
-        <datalist id="brow">
+        <datalist id='brow'>
           {blockCodes.map((blockCode: BlockCode) => {
             return (
               <option key={blockCode._id} value={`${blockCode.blockCode}`} />

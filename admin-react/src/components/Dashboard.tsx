@@ -3,10 +3,15 @@ import { useEffect, useState } from 'react';
 import { getUserProgressData } from '../helpers/dashboardHelper';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import RejectedVotesModal from './RejectedVotesModal';
+import { StoreState } from './../store/index';
 const Dashboard = () => {
   const [rejectedVoteModal, setRejectedVoteModal] = useState(false);
-  const dashboardData = useAppSelector((state) => state.app.dashboardData);
-  const currentUser = useAppSelector((state) => state.app.currentUser);
+  const dashboardData = useAppSelector(
+    (state: StoreState) => state.app.dashboardData
+  );
+  const currentUser = useAppSelector(
+    (state: StoreState) => state.app.currentUser
+  );
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const accuracy = Math.floor(
@@ -40,7 +45,8 @@ const Dashboard = () => {
 
       {!loading && (
         <div className='container'>
-          {currentUser.role === 'dataEntry' || currentUser.role === 'admin' ? (
+          {(currentUser && currentUser.role === 'dataEntry') ||
+          (currentUser && currentUser.role === 'admin') ? (
             <>
               <div className='d-flex justify-content-center'>
                 <h5 className='mt-3'>

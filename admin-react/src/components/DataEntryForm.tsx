@@ -27,6 +27,7 @@ import {
   updateRejectedVote,
 } from '../helpers/dataEntryHelper';
 import Loading from './Loading';
+import { StoreState } from './../store/index';
 
 interface Props {
   forRejectedVotes?: boolean;
@@ -42,11 +43,17 @@ const DataEntryForm = ({
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
   const currentRejectedVote = useAppSelector(
-    (state) => state.app.currentRejectedVote
+    (state: StoreState) => state.app.currentRejectedVote
   );
-  const currentUser: User = useAppSelector((state) => state.app.currentUser);
-  const rejectedVotes = useAppSelector((state) => state.app.rejectedVotes);
-  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
+  const currentUser: User | null = useAppSelector(
+    (state: StoreState) => state.app.currentUser
+  );
+  const rejectedVotes = useAppSelector(
+    (state: StoreState) => state.app.rejectedVotes
+  );
+  const dataVoteReject = useAppSelector(
+    (state: StoreState) => state.app.dataVoteReject
+  );
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
     dataEntryFormInitial
@@ -54,7 +61,9 @@ const DataEntryForm = ({
 
   async function submitVoteCallback(data: any) {
     const resSubmitVote: any = !forRejectedVotes && (await submitVote(data));
-    resSubmitVote && getDefaultBlockCodeData(currentUser.defaultBlockCode);
+    resSubmitVote &&
+      currentUser &&
+      getDefaultBlockCodeData(currentUser.defaultBlockCode);
     console.log(resSubmitVote);
 
     const res = currentRejectedVote && (await updateRejectedVote(data));
@@ -70,7 +79,9 @@ const DataEntryForm = ({
         setRejectedVoteModal &&
         setRejectedVoteModal(false);
       getUserProgressData(dispatch, setDashboardData);
-      currentUser.role === 'admin' && getUnAuthorizedList(dispatch);
+      currentUser &&
+        currentUser.role === 'admin' &&
+        getUnAuthorizedList(dispatch);
     }
   }
 
@@ -110,7 +121,9 @@ const DataEntryForm = ({
   useEffect(() => {
     !forRejectedVotes && dispatch(setDataVoteReject(voteRejectInitial));
     !forRejectedVotes && setData(dataEntryFormInitial);
-    !forRejectedVotes && getDefaultBlockCodeData(currentUser.defaultBlockCode);
+    !forRejectedVotes &&
+      currentUser &&
+      getDefaultBlockCodeData(currentUser.defaultBlockCode);
     forRejectedVotes &&
       currentRejectedVote &&
       setData({ ...currentRejectedVote });
@@ -138,7 +151,8 @@ const DataEntryForm = ({
                   name='blockCode'
                   value={data.blockCode ? data.blockCode : ''}
                   onChange={(e: any) => {
-                    onBlockCodeSelect(currentUser._id, e.target.value);
+                    currentUser &&
+                      onBlockCodeSelect(currentUser._id, e.target.value);
                   }}
                   required
                 >
@@ -147,11 +161,12 @@ const DataEntryForm = ({
                       ? `Current: ${data.blockCode}`
                       : 'Select Block Code'}
                   </option>
-                  {currentUser.assignedBlockCodes.map((blockCode) => (
-                    <option key={blockCode} value={blockCode}>
-                      {blockCode}
-                    </option>
-                  ))}
+                  {currentUser &&
+                    currentUser.assignedBlockCodes.map((blockCode) => (
+                      <option key={blockCode} value={blockCode}>
+                        {blockCode}
+                      </option>
+                    ))}
                 </Form.Select>
               </Form.Group>
             </div>

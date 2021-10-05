@@ -10,7 +10,6 @@ export const userData = async (req, res) => {
 
   //Destructuring user from the req that we added in auth middleware
   const user = req.user;
-  // console.log(user);
 
   try {
     const PaymentData = await PaymentSchema.find();
@@ -27,7 +26,6 @@ export const userData = async (req, res) => {
       const paymentDataByEmail = PaymentData.filter(
         (x) => x.email === user.email,
       );
-      console.log(paymentDataByEmail, 'paymentDataByEmail');
       paymentDataByEmail.forEach((payment) => {
         totalPayments.push(payment.amount);
       });
@@ -65,7 +63,7 @@ export const userData = async (req, res) => {
     return res.json({
       success: true,
       data: {
-        withdrawalAmount: withdrawalAmount,
+        withdrawalAmount,
         pending: pendingApprovals ? pendingApprovals.length : 0,
         approved: approvedData ? approvedData.length : 0,
         rejected: rejectedData ? rejectedData.length : 0,

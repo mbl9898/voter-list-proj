@@ -9,6 +9,7 @@ export const getCurrentUserPayments = async (req, res) => {
     if (!data) {
       throw new Error('Invalid Request');
     }
+    const user = req.user;
     const userEmail = req.user.email;
     data = data.filter((x) => x.email === userEmail);
     return res.json({

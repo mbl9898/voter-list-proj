@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Card } from 'react-bootstrap';
-import { getPaymentFile } from '../helpers/paymentManagementHelper';
-import { Payment } from '../interfaces/PaymentModel';
-import { PaymentService } from '../services/PaymentService';
-import Loading from './Loading';
+import { useState } from "react";
+import { useEffect } from "react";
+import { Card } from "react-bootstrap";
+import { getPaymentFile } from "../helpers/paymentManagementHelper";
+import { Payment } from "../interfaces/PaymentModel";
+import { PaymentService } from "../services/PaymentService";
+import PaymentTable from "./AdminPortal/PaymentTable";
+import Loading from "./Loading";
 
 const Payments = () => {
   const [payments, setPayments] = useState<null | Payment[]>(null);
@@ -27,11 +28,20 @@ const Payments = () => {
     <>
       {loading && <Loading />}
       {!loading && (
-        <div className='container'>
+        <div className="container">
           {payments && !payments[0] && (
-            <h4 className='my-4 text-center'>No Payments Available</h4>
+            <h4 className="my-4 text-center">No Payments Available</h4>
           )}
-          <div className='cpage-content'>
+          <div className="mt-5">
+            <h3 className="text-center mb-5">Payments Data</h3>
+
+            <div className="d-flex justify-content-center">
+              {payments && payments[0] && (
+                <PaymentTable currentUserPayments={payments} />
+              )}
+            </div>
+          </div>
+          {/* <div className='cpage-content'>
             {payments?.map((payment: Payment, index: number) => {
               return (
                 <Card key={index} className='d-flex justify-content-center p-4'>
@@ -51,7 +61,7 @@ const Payments = () => {
                 </Card>
               );
             })}
-          </div>
+          </div> */}
         </div>
       )}
     </>

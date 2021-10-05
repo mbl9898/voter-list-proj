@@ -6,6 +6,7 @@ import {
   voteRejectInitial,
 } from '../helpers/authorizeHelper';
 import { getUserProgressData } from '../helpers/dashboardHelper';
+import InputMask from 'react-input-mask';
 import { useForm } from '../helpers/useForm';
 import { User } from '../interfaces/User';
 import { BlockCodeService } from '../services/BlockCodeService';
@@ -469,7 +470,9 @@ const DataEntryForm = ({
             >
               <Form.Group id='cnic'>
                 <Form.Label>CNIC</Form.Label>
-                <Form.Control
+                <InputMask
+                  className='form-control'
+                  mask='99999-9999999-9'
                   name='cnic'
                   value={data.cnic ? data.cnic : ''}
                   onChange={onChange}

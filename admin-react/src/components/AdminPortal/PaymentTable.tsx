@@ -97,6 +97,11 @@ const PaymentTable = ({
       {(payments[0] || currentUserPayments) && (
         <div>
           <div className='table-responsive'>
+            {currentUserPayments && (
+              <div className='d-flex bg-dark text-light justify-content-center'>
+                <h5 className='py-1'>Payments</h5>
+              </div>
+            )}
             <table className='table'>
               <thead>
                 <tr>
@@ -111,18 +116,14 @@ const PaymentTable = ({
               <tbody>
                 {paymentsData.map((payment: Payment, index: number) => {
                   return (
-                    <tr key={index}>
+                    <tr className='text-center' key={index}>
                       <th scope='row'>{index + 1}</th>
-                      {!currentUserPayments && (
-                        <td className='text-center'>{payment.email}</td>
-                      )}
-                      <td className='text-center'>{payment.title}</td>
-                      <td className='text-center'>{payment.amount}</td>
-                      <td className='text-center'>{payment.description}</td>
-                      {!currentUserPayments && (
-                        <td className='text-center'>{payment.fileName}</td>
-                      )}
-                      <td className='text-center'>
+                      {!currentUserPayments && <td>{payment.email}</td>}
+                      <td>{payment.title}</td>
+                      <td>{payment.amount}</td>
+                      <td>{payment.description}</td>
+                      {!currentUserPayments && <td>{payment.fileName}</td>}
+                      <td>
                         {setUpdatePaymentData && (
                           <button
                             className='btn btn-primary'

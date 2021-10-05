@@ -8,6 +8,7 @@ import { setMessage, setMessageVariant } from '../../store';
 import { useAppDispatch, useAppSelector } from '../../store/hooks';
 import CModal from '../CModal';
 import Loading from '../Loading';
+import { StoreState } from './../../store/index';
 
 interface Props {
   setUpdateTaskData: Dispatch<SetStateAction<Task | null>>;
@@ -23,9 +24,9 @@ const TasksTable = ({
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const filteredTaskHeadings = useAppSelector(
-    (state) => state.app.filteredTaskHeadings
+    (state: StoreState) => state.app.filteredTaskHeadings
   );
-  const tasks = useAppSelector((state) => state.app.tasks);
+  const tasks = useAppSelector((state: StoreState) => state.app.tasks);
   const deleteTask = async (id: string) => {
     const res = await TaskService.deleteTask(id);
     if (res.success) {

@@ -5,3 +5,4 @@ export * from './UnAuthorized';
 export * from './User';
 export * from './Vote';
 export * from './Task';
+export * from './Payment';

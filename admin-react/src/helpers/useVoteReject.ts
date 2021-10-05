@@ -1,9 +1,10 @@
 import { setDataVoteReject } from "../store";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { StoreState } from './../store/index';
 
 export const useVoteReject = () => {
   const dispatch = useAppDispatch();
-  const dataVoteReject = useAppSelector((state) => state.app.dataVoteReject);
+  const dataVoteReject = useAppSelector((state: StoreState) => state.app.dataVoteReject);
   // dispatch(setDataVoteReject(initialState));
   const onChangeVoteReject = (event: any) => {
     dispatch(

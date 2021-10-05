@@ -6,10 +6,10 @@ import { Task } from "../interfaces/TaskModel";
 import { User } from "../interfaces/User";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 
-interface InitialState {
+export interface StoreInitialState {
   navLinkActive: number;
   currentUser: User | null;
-  dashboardData: { pending: number; rejected: number; approved: number };
+  dashboardData: { withdrawalAmount: number; pending: number; rejected: number; approved: number };
   unauthorizedData: UnAuthorizedModel[];
   unauthorizedRejectedVotes: UnAuthorizedModel[];
   pendingUnauthorizedData: UnAuthorizedModel[];
@@ -30,20 +30,20 @@ interface InitialState {
   error: string;
   message: string;
   messageVariant:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "warning"
-    | "info"
-    | "light"
-    | "dark";
+  | "primary"
+  | "secondary"
+  | "success"
+  | "danger"
+  | "warning"
+  | "info"
+  | "light"
+  | "dark";
 }
 
-const initialState: InitialState = {
+const initialState: StoreInitialState = {
   navLinkActive: 0,
   currentUser: null,
-  dashboardData: { rejected: 0, pending: 0, approved: 0 },
+  dashboardData: { withdrawalAmount: 0, rejected: 0, pending: 0, approved: 0 },
   unauthorizedData: [],
   unauthorizedRejectedVotes: [],
   pendingUnauthorizedData: [],

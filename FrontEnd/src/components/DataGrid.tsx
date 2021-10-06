@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
-import ReactDOM from 'react-dom';
-import GridPrintHeader from './GridPrintHeader';
-import GridPrintFooter from './GridPrintFooter';
-import { useAppSelector } from '../store/hooks';
-import Loading from './Loading';
-import './DataGrid.css';
+import { useState, useEffect } from "react";
+import ReactDOM from "react-dom";
+import GridPrintHeader from "./GridPrintHeader";
+import GridPrintFooter from "./GridPrintFooter";
+import { useAppSelector } from "../store/hooks";
+import Loading from "./Loading";
+import "./DataGrid.css";
 import {
   dataBound,
   printComplete,
@@ -12,7 +12,7 @@ import {
   filterSettings,
   getUniqueData,
   onActionBegin,
-} from '../services';
+} from "../services";
 import {
   GridComponent,
   ColumnDirective,
@@ -25,13 +25,13 @@ import {
   Freeze,
   Toolbar,
   VirtualScroll,
-  EditSettingsModel,
-  ToolbarItems,
-  Edit,
-  Search,
-  dataSourceModified,
-  Data,
-} from '@syncfusion/ej2-react-grids';
+  // EditSettingsModel,
+  // ToolbarItems,
+  // Edit,
+  // Search,
+  // dataSourceModified,
+  // Data,
+} from "@syncfusion/ej2-react-grids";
 
 let headingsArr: string[];
 let grid: Grid | null = null;
@@ -42,36 +42,36 @@ const DataGrid = () => {
   const isListDisplay = useAppSelector((state) => state.app.isListDisplay);
   const isDataLoading = useAppSelector((state) => state.app.isDataLoading);
 
-  const editOptions: EditSettingsModel = {
-    allowEditing: true,
-    allowAdding: true,
-    allowDeleting: true,
-    mode: 'Batch',
-  };
-  const toolbarOptions: ToolbarItems[] = [
-    'Add',
-    'Delete',
-    'Update',
-    'Cancel',
-    'Search',
-  ];
-
-  // const toolbarItems = {
-  //   // showToolbar: true,
+  // const editOptions: EditSettingsModel = {
+  //   allowEditing: true,
+  //   allowAdding: true,
+  //   allowDeleting: true,
+  //   mode: 'Batch',
   // };
+  // const toolbarOptions: ToolbarItems[] = [
+  //   'Add',
+  //   'Delete',
+  //   'Update',
+  //   'Cancel',
+  //   'Search',
+  // ];
+
+  // // const toolbarItems = {
+  // //   // showToolbar: true,
+  // // };
 
   headingsArr = headings;
 
   const beforePrint = (e: any) => {
-    const header = document.createElement('div');
-    header.id = 'header';
+    const header = document.createElement("div");
+    header.id = "header";
     e.element.insertBefore(header, e.element.childNodes[0]);
     ReactDOM.render(
       <GridPrintHeader uniqueBlockcodes={uniqueBlockcodes} />,
       header
     );
-    const footer = document.createElement('div');
-    footer.id = 'footer';
+    const footer = document.createElement("div");
+    footer.id = "footer";
     e.element.appendChild(footer);
 
     ReactDOM.render(<GridPrintFooter />, footer);
@@ -83,13 +83,13 @@ const DataGrid = () => {
       {!isDataLoading && (
         <div
           style={{
-            margin: '3%',
-            marginTop: '2%',
+            margin: "3%",
+            marginTop: "2%",
           }}
         >
-          <div className='d-flex '>
+          <div className="d-flex ">
             <button
-              className='btn btn-primary m-2'
+              className="btn btn-primary m-2"
               onClick={async () => {
                 if (grid) {
                   const uniqueBlockcodesArr: any = await getUniqueData(
@@ -103,15 +103,15 @@ const DataGrid = () => {
               }}
             >
               <svg
-                width='20px'
-                height='20px'
-                viewBox='0 0 512 512'
-                className='svg-inline--fa fa-print fa-w-16 fa-7x me-2'
+                width="20px"
+                height="20px"
+                viewBox="0 0 512 512"
+                className="svg-inline--fa fa-print fa-w-16 fa-7x me-2"
               >
                 <path
-                  fill='currentColor'
-                  d='M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z'
-                  className=''
+                  fill="currentColor"
+                  d="M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z"
+                  className=""
                 ></path>
               </svg>
               Print
@@ -122,46 +122,46 @@ const DataGrid = () => {
             actionBegin={onActionBegin}
             beforePrint={beforePrint}
             dataSource={data}
-            printMode='CurrentPage'
+            printMode="CurrentPage"
             allowResizing={true}
             allowPaging={true}
-            beforeBatchSave={() => {
-              console.log('beforeBatchSave');
-            }}
+            // beforeBatchSave={() => {
+            //   console.log('beforeBatchSave');
+            // }}
             allowFiltering
             filterSettings={filterSettings}
             dataBound={dataBound}
             pageSettings={{ pageSize: 180 }}
             toolbarClick={toolbarClick}
             printComplete={printComplete}
-            editSettings={editOptions}
-            toolbar={toolbarOptions}
+            // editSettings={editOptions}
+            // toolbar={toolbarOptions}
           >
             <ColumnsDirective>
               {data[0]
-                ? data[0]['voteSNo'] && (
+                ? data[0]["voteSNo"] && (
                     <ColumnDirective
-                      field='voteSNo'
-                      headerText='Vote S No'
-                      textAlign='Left'
-                      width='45'
+                      field="voteSNo"
+                      headerText="Vote S No"
+                      textAlign="Left"
+                      width="45"
                       isPrimaryKey={true}
                     />
                   )
-                : ''}
+                : ""}
               {headings.map((heading: string, index: number) => (
                 <ColumnDirective
                   key={index}
                   field={heading}
                   headerText={heading}
-                  textAlign='Left'
-                  width='25'
+                  textAlign="Left"
+                  width="25"
                 />
               ))}
             </ColumnsDirective>
             <Inject
               services={[
-                Edit,
+                // Edit,
                 Page,
                 Filter,
                 Resize,
@@ -169,7 +169,7 @@ const DataGrid = () => {
                 Toolbar,
                 VirtualScroll,
                 Resize,
-                Search,
+                // Search,
               ]}
             />
           </GridComponent>

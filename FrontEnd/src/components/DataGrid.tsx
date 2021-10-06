@@ -25,6 +25,12 @@ import {
   Freeze,
   Toolbar,
   VirtualScroll,
+  EditSettingsModel,
+  ToolbarItems,
+  Edit,
+  Search,
+  dataSourceModified,
+  Data,
 } from '@syncfusion/ej2-react-grids';
 
 let headingsArr: string[];
@@ -35,6 +41,24 @@ const DataGrid = () => {
   const headings = useAppSelector((state) => state.app.headings);
   const isListDisplay = useAppSelector((state) => state.app.isListDisplay);
   const isDataLoading = useAppSelector((state) => state.app.isDataLoading);
+
+  const editOptions: EditSettingsModel = {
+    allowEditing: true,
+    allowAdding: true,
+    allowDeleting: true,
+    mode: 'Batch',
+  };
+  const toolbarOptions: ToolbarItems[] = [
+    'Add',
+    'Delete',
+    'Update',
+    'Cancel',
+    'Search',
+  ];
+
+  // const toolbarItems = {
+  //   // showToolbar: true,
+  // };
 
   headingsArr = headings;
 
@@ -101,19 +125,24 @@ const DataGrid = () => {
             printMode='CurrentPage'
             allowResizing={true}
             allowPaging={true}
+            beforeBatchSave={() => {
+              console.log('beforeBatchSave');
+            }}
             allowFiltering
             filterSettings={filterSettings}
             dataBound={dataBound}
             pageSettings={{ pageSize: 180 }}
             toolbarClick={toolbarClick}
             printComplete={printComplete}
+            editSettings={editOptions}
+            toolbar={toolbarOptions}
           >
             <ColumnsDirective>
               {data[0]
-                ? data[0]['S No'] && (
+                ? data[0]['voteSNo'] && (
                     <ColumnDirective
-                      field='S No'
-                      headerText='S No'
+                      field='voteSNo'
+                      headerText='Vote S No'
                       textAlign='Left'
                       width='45'
                       isPrimaryKey={true}
@@ -132,6 +161,7 @@ const DataGrid = () => {
             </ColumnsDirective>
             <Inject
               services={[
+                Edit,
                 Page,
                 Filter,
                 Resize,
@@ -139,6 +169,7 @@ const DataGrid = () => {
                 Toolbar,
                 VirtualScroll,
                 Resize,
+                Search,
               ]}
             />
           </GridComponent>

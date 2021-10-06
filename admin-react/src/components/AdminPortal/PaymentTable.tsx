@@ -1,21 +1,21 @@
-import { SetStateAction, useState } from 'react';
-import { Dispatch } from 'react';
-import { useEffect } from 'react';
+import { SetStateAction, useState } from "react";
+import { Dispatch } from "react";
+import { useEffect } from "react";
 import {
   getAllPayments,
   getPaymentFile,
-} from '../../helpers/paymentManagementHelper';
-import { Payment } from '../../interfaces/PaymentModel';
-import { PaymentService } from '../../services/PaymentService';
+} from "../../helpers/paymentManagementHelper";
+import { Payment } from "../../interfaces/PaymentModel";
+import { PaymentService } from "../../services/PaymentService";
 import {
   setFilteredPaymentHeadings,
   setMessage,
   setMessageVariant,
   setPayments,
-} from '../../store';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import CModal from '../CModal';
-import { StoreState } from './../../store/index';
+} from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import CModal from "../CModal";
+import { StoreState } from "./../../store/index";
 
 interface Props {
   currentUserPayments?: Payment[];
@@ -41,19 +41,19 @@ const PaymentTable = ({
         currentUserPayments[0] && Object.keys(currentUserPayments[0]);
       let sentenceCaseHeadings: string[] = [];
       if (resHeadings) {
-        resHeadings.unshift('Sr');
+        resHeadings.unshift("Sr");
         resHeadings = resHeadings.filter(
           (heading: string) =>
-            heading !== 'filePath' &&
-            heading !== '_id' &&
-            heading !== 'email' &&
-            heading !== 'fileName' &&
-            heading !== 'enteredBy' &&
-            heading !== 'createdAt' &&
-            heading !== '__v'
+            heading !== "filePath" &&
+            heading !== "_id" &&
+            heading !== "email" &&
+            heading !== "fileName" &&
+            heading !== "enteredBy" &&
+            heading !== "createdAt" &&
+            heading !== "__v"
         );
         resHeadings.forEach((heading: string) => {
-          const result = heading.replace(/([A-Z])/g, ' $1');
+          const result = heading.replace(/([A-Z])/g, " $1");
           sentenceCaseHeadings.push(
             result.charAt(0).toUpperCase() + result.slice(1)
           );
@@ -71,11 +71,15 @@ const PaymentTable = ({
     : payments;
   const deletePayment = async (id: string) => {
     const res = await PaymentService.deletePayment(id);
-    if (res && res.success) {
-      dispatch(setMessageVariant('danger'));
-      dispatch(setMessage('Payment Deleted Successfully...'));
+
+    if (res && !res.success) {
+      dispatch(setMessageVariant("danger"));
+      dispatch(setMessage(res.message));
+      return;
     }
 
+    dispatch(setMessageVariant("success"));
+    dispatch(setMessage(res.message));
     getAllPayments(dispatch);
   };
   const onSubmit = (payment: Payment) => {
@@ -89,25 +93,25 @@ const PaymentTable = ({
   return (
     <>
       {!currentUserPayments && !payments[0] ? (
-        <h5 className='text-center'>No Payment Data</h5>
+        <h5 className="text-center">No Payment Data</h5>
       ) : (
         !payments[0] &&
-        !currentUserPayments && <h5 className='text-center'>No Payment Data</h5>
+        !currentUserPayments && <h5 className="text-center">No Payment Data</h5>
       )}
       {(payments[0] || currentUserPayments) && (
         <div>
-          <div className='table-responsive'>
+          <div className="table-responsive">
             {currentUserPayments && (
-              <div className='d-flex bg-dark text-light justify-content-center'>
-                <h5 className='py-1'>Payments</h5>
+              <div className="d-flex bg-dark text-light justify-content-center">
+                <h5 className="py-1">Payments</h5>
               </div>
             )}
-            <table className='table'>
+            <table className="table">
               <thead>
                 <tr>
                   {paymentsHeadings &&
                     paymentsHeadings.map((heading: string, index: number) => (
-                      <th className='text-center' key={index} scope='col'>
+                      <th className="text-center" key={index} scope="col">
                         {heading}
                       </th>
                     ))}
@@ -116,8 +120,8 @@ const PaymentTable = ({
               <tbody>
                 {paymentsData.map((payment: Payment, index: number) => {
                   return (
-                    <tr className='text-center' key={index}>
-                      <th scope='row'>{index + 1}</th>
+                    <tr className="text-center" key={index}>
+                      <th scope="row">{index + 1}</th>
                       {!currentUserPayments && <td>{payment.email}</td>}
                       <td>{payment.title}</td>
                       <td>{payment.amount}</td>
@@ -126,20 +130,20 @@ const PaymentTable = ({
                       <td>
                         {setUpdatePaymentData && (
                           <button
-                            className='btn btn-primary'
+                            className="btn btn-primary"
                             onClick={() => {
                               setUpdatePaymentData
                                 ? setUpdatePaymentData(
                                     !paymentEntryForm ? payment : null
                                   )
                                 : console.log(
-                                    new Error('setUpdatePaymentData issue')
+                                    new Error("setUpdatePaymentData issue")
                                   );
 
                               setPaymentEntryForm
                                 ? setPaymentEntryForm(!paymentEntryForm)
                                 : console.log(
-                                    new Error('setPaymentEntryForm issue')
+                                    new Error("setPaymentEntryForm issue")
                                   );
                             }}
                           >
@@ -150,7 +154,7 @@ const PaymentTable = ({
                       <td>
                         {payment.filePath && (
                           <button
-                            className='btn btn-primary'
+                            className="btn btn-primary"
                             onClick={() => {
                               payment.fileName &&
                                 getPaymentFile(payment.fileName);
@@ -164,10 +168,10 @@ const PaymentTable = ({
                         <td>
                           <CModal
                             heading={
-                              'Are you sure you want to delete this Payment?'
+                              "Are you sure you want to delete this Payment?"
                             }
-                            triggerButtonContent='delete'
-                            triggerButtonVarient='danger'
+                            triggerButtonContent="delete"
+                            triggerButtonVarient="danger"
                             onSubmit={() => {
                               onSubmit(payment);
                             }}

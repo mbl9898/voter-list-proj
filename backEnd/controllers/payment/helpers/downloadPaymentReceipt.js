@@ -6,7 +6,7 @@ export const downloadPaymentReceipt = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
     const fileName = req.params.filename;
-    const newFilePath = `./uploads/payment/${fileName}`;
+    const newFilePath = `../../uploads/payment/${fileName}`;
     return res.json({ success: true, path: newFilePath });
   } catch (e) {
     logger('error', 'Error:', e.message);

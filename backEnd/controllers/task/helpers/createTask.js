@@ -11,7 +11,7 @@ export const createTask = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const filePath = `./uploads/${file.name}`;
+    const filePath = `../../uploads/${file.name}`;
     const fileName = file.name;
 
     if (
@@ -43,27 +43,26 @@ export const createTask = async (req, res) => {
           message: 'no such file or directory',
         });
       }
-    });
+      const data = new TaskSchema({
+        email: req.body.email,
+        title: req.body.title,
+        description: req.body.description,
+        fileName: file.name,
+        filePath: filePath,
+        enteredBy: {
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        },
+        createdAt: new Date().toISOString(),
+      });
 
-    const data = new TaskSchema({
-      email: req.body.email,
-      title: req.body.title,
-      description: req.body.description,
-      fileName: file.name,
-      filePath: filePath,
-      enteredBy: {
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-      createdAt: new Date().toISOString(),
-    });
+      await data.save();
 
-    await data.save();
-
-    return res.json({
-      success: true,
-      data,
+      return res.json({
+        success: true,
+        data,
+      });
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

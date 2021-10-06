@@ -9,7 +9,7 @@ export const updatePayment = async (req, res) => {
     const { id } = req.params;
     const { email, title, amount, description } = req.body;
     const file = req.files && req.files.file;
-    const filePath = file && `./uploads/payment/${file.name}`;
+    const filePath = file && `../../uploads/payment/${file.name}`;
     const fileName = file && file.name;
 
     if (

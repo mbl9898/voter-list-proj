@@ -13,18 +13,25 @@ export const deleteRecord = async (req, res) => {
       console.log(error);
       return res.json({ success: false, message: 'Invalid Id' });
     }
-    unlink(data.filePath, (err) => {
-      if (err) throw new Error('Unxpected file delete Error');
-      console.log(`${data.filePath} was deleted`);
-    });
-    const deleteRecord = await data.delete();
+    unlink(data.filePath, async (err) => {
+      if (err) {
+        console.log(err);
+        return res.json({
+          success: false,
+          message: 'Unexpected file delete Error',
+          error: err,
+        });
+      }
+      const deleteRecord = await data.delete();
 
-    if (!deleteRecord) {
-      throw new Error('Unxpected Error');
-    }
-    return res.json({
-      success: true,
-      data: 'This payment record has been deleted successfully',
+      if (!deleteRecord) {
+        throw new Error('Unexpected Error');
+      }
+      console.log(`${data.filePath} was deleted`);
+      return res.json({
+        success: true,
+        message: 'This payment record has been deleted successfully',
+      });
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

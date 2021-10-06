@@ -11,7 +11,7 @@ export const createPayment = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const filePath = `./uploads/payment/${file.name}`;
+    const filePath = `../../uploads/payment/${file.name}`;
     const fileName = file.name;
 
     if (
@@ -43,29 +43,29 @@ export const createPayment = async (req, res) => {
           message: 'no such file or directory',
         });
       }
+      const data = new PaymentSchema({
+        email: req.body.email,
+        title: req.body.title,
+        amount: req.body.amount,
+        description: req.body.description,
+        fileName: file.name,
+        filePath: filePath,
+        enteredBy: {
+          username: user.username,
+          email: user.email,
+          role: user.role,
+        },
+        createdAt: new Date().toISOString(),
+      });
+  
+      await data.save();
+  
+      return res.json({
+        success: true,
+        data,
+      });
     });
 
-    const data = new PaymentSchema({
-      email: req.body.email,
-      title: req.body.title,
-      amount: req.body.amount,
-      description: req.body.description,
-      fileName: file.name,
-      filePath: filePath,
-      enteredBy: {
-        username: user.username,
-        email: user.email,
-        role: user.role,
-      },
-      createdAt: new Date().toISOString(),
-    });
-
-    await data.save();
-
-    return res.json({
-      success: true,
-      data,
-    });
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({

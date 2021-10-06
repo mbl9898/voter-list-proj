@@ -8,7 +8,7 @@ export const updateTask = async (req, res) => {
   try {
     const { email, title, description } = req.body;
     const file = req.files && req.files.file;
-    const filePath = file && `./uploads/${file.name}`;
+    const filePath = file && `../../uploads/${file.name}`;
     const fileName = file && file.name;
 
     if (

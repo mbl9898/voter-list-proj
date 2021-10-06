@@ -6,6 +6,7 @@ import { connection } from '~/config';
 import { logger } from '~/utils';
 import routes from '~/routes';
 import fileUpload from 'express-fileupload';
+import path from 'path';
 
 dotenv.config();
 
@@ -19,7 +20,7 @@ app.use(
   }),
 );
 app.use(routes);
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static(path.join(__dirname, '../../uploads')));
 
 if (
   process.env.NODE_ENV === 'development' ||

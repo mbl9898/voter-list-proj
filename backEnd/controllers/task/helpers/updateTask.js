@@ -2,13 +2,14 @@ import { logger } from '~/utils';
 import { status } from '~/constants';
 import { TaskSchema } from '~/schemas';
 import fs from 'fs';
+import path from 'path';
 
 export const updateTask = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
   try {
     const { email, title, description } = req.body;
     const file = req.files && req.files.file;
-    const fileName = file && file.name + '_' + new Date().getTime();
+    const fileName = file && new Date().getTime() + '_' + file.name;
     const filePath = file && `../../uploads/task/${fileName}`;
 
     if (

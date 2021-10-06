@@ -11,7 +11,7 @@ export const createTask = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const fileName = file.name + '_' + new Date().getTime();
+    const fileName = new Date().getTime() + '_' + file.name;
     const filePath = `../../uploads/task/${fileName}`;
 
     if (

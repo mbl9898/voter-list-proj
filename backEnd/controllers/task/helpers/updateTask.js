@@ -8,8 +8,8 @@ export const updateTask = async (req, res) => {
   try {
     const { email, title, description } = req.body;
     const file = req.files && req.files.file;
-    const filePath = file && `../../uploads/${file.name}`;
-    const fileName = file && file.name;
+    const fileName = file && file.name + '_' + new Date().getTime();
+    const filePath = file && `../../uploads/task/${fileName}`;
 
     if (
       file.mimetype !== 'application/pdf' &&

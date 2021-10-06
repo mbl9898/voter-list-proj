@@ -11,8 +11,8 @@ export const createPayment = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const filePath = `../../uploads/payment/${file.name}`;
-    const fileName = file.name;
+    const fileName = file.name + '_' + new Date().getTime();
+    const filePath = `../../uploads/payment/${fileName}`;
 
     if (
       file.mimetype !== 'application/pdf' &&
@@ -48,8 +48,8 @@ export const createPayment = async (req, res) => {
         title: req.body.title,
         amount: req.body.amount,
         description: req.body.description,
-        fileName: file.name,
-        filePath: filePath,
+        fileName,
+        filePath,
         enteredBy: {
           username: user.username,
           email: user.email,
@@ -57,15 +57,14 @@ export const createPayment = async (req, res) => {
         },
         createdAt: new Date().toISOString(),
       });
-  
+
       await data.save();
-  
+
       return res.json({
         success: true,
         data,
       });
     });
-
   } catch (e) {
     logger('error', 'Error:', e.message);
     return res.json({

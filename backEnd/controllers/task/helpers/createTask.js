@@ -11,8 +11,8 @@ export const createTask = async (req, res) => {
     }
     const user = req.user;
     const file = req.files.file;
-    const filePath = `../../uploads/${file.name}`;
-    const fileName = file.name;
+    const fileName = file.name + '_' + new Date().getTime();
+    const filePath = `../../uploads/task/${fileName}`;
 
     if (
       file.mimetype !== 'application/pdf' &&
@@ -47,8 +47,8 @@ export const createTask = async (req, res) => {
         email: req.body.email,
         title: req.body.title,
         description: req.body.description,
-        fileName: file.name,
-        filePath: filePath,
+        fileName,
+        filePath,
         enteredBy: {
           username: user.username,
           email: user.email,

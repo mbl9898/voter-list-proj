@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { useEffect } from 'react';
-import { Card } from 'react-bootstrap';
-import { getPaymentFile } from '../helpers/paymentManagementHelper';
-import { Payment } from '../interfaces/PaymentModel';
-import { PaymentService } from '../services/PaymentService';
-import { useAppSelector } from '../store/hooks';
-import PaymentTable from './AdminPortal/PaymentTable';
-import Loading from './Loading';
-import { StoreState } from './../store/index';
-import PaymentsSummaryTable from './Payments/PaymentsSummaryTable';
+import { useState } from "react";
+import { useEffect } from "react";
+import { Card } from "react-bootstrap";
+import { getPaymentFile } from "../helpers/paymentManagementHelper";
+import { Payment } from "../interfaces/PaymentModel";
+import { PaymentService } from "../services/PaymentService";
+import { useAppSelector } from "../store/hooks";
+import PaymentTable from "./AdminPortal/PaymentTable";
+import Loading from "./Loading";
+import { StoreState } from "./../store/index";
+import PaymentsSummaryTable from "./Payments/PaymentsSummaryTable";
+import PaymentSwitches from "./Payments/PaymentSwitches";
 
 const Payments = () => {
   const [payments, setPayments] = useState<null | Payment[]>(null);
@@ -61,45 +62,19 @@ const Payments = () => {
     <>
       {loading && <Loading />}
       {!loading && (
-        <div className='container'>
+        <div className="container">
           {payments && !payments[0] && (
-            <h4 className='my-4 text-center'>No Payments Available</h4>
+            <h4 className="my-4 text-center">No Payments Available</h4>
           )}
           {payments && payments[0] && (
-            <div className='mt-5'>
-              <h3 className='text-center'>Payments Data</h3>
-              <div className='d-flex flex-row-reverse m-2'>
-                <div className='form-check form-switch'>
-                  <input
-                    className='form-check-input'
-                    type='checkbox'
-                    role='switch'
-                    id='flexSwitchCheckDefault'
-                    onClick={() => {
-                      setArePaymentsHidden((prevValue) => !prevValue);
-                    }}
-                  />
-                  <label className='form-check-label'>
-                    {arePaymentsHidden ? 'View Payments' : 'Hide Payments'}
-                  </label>
-                </div>
-                {!arePaymentsHidden && (
-                  <div className='form-check form-switch me-3'>
-                    <input
-                      className='form-check-input'
-                      type='checkbox'
-                      role='switch'
-                      id='flexSwitchCheckDefault'
-                      onClick={() => {
-                        setIsGridView((prevValue) => !prevValue);
-                      }}
-                    />
-                    <label className='form-check-label'>
-                      {isGridView ? 'Table View' : 'Grid View'}
-                    </label>
-                  </div>
-                )}
-              </div>
+            <div className="mt-5">
+              <h3 className="text-center">Payments Data</h3>
+              <PaymentSwitches
+                arePaymentsHidden={arePaymentsHidden}
+                setArePaymentsHidden={setArePaymentsHidden}
+                isGridView={isGridView}
+                setIsGridView={setIsGridView}
+              />
 
               <PaymentsSummaryTable
                 totalEarnings={totalEarnings}
@@ -120,12 +95,12 @@ const Payments = () => {
                   </>
                   <>
                     {isGridView && (
-                      <div className='cpage-content'>
+                      <div className="cpage-content">
                         {payments?.map((payment: Payment, index: number) => {
                           return (
                             <Card
                               key={index}
-                              className='d-flex justify-content-center p-4'
+                              className="d-flex justify-content-center p-4"
                             >
                               <p>Title: {payment.title}</p>
                               <p>Amount: {payment.amount}</p>
@@ -133,7 +108,7 @@ const Payments = () => {
                               {/* <p>FileName: {payment.fileName}</p> */}
                               {payment.filePath && (
                                 <button
-                                  className='btn btn-primary'
+                                  className="btn btn-primary"
                                   onClick={() => {
                                     payment.fileName &&
                                       getPaymentFile(payment.fileName);

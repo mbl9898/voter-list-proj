@@ -3,6 +3,7 @@ import UserManagement from "./UserManagement";
 import BlockCodeManagement from "./BlockCodeManagement";
 import TaskManagement from "./TaskManagement";
 import PaymentManagement from "./PaymentManagement";
+import AdminPortalRoutes from "./AdminPortalRoutes";
 
 const AdminPortal = () => {
   const [userManagement, setUserManagement] = useState<boolean>(false);
@@ -13,52 +14,16 @@ const AdminPortal = () => {
 
   return (
     <>
-      <div className="d-flex justify-content-center m-4">
-        <button
-          className="btn btn-primary mx-2"
-          onClick={() => {
-            setUserManagement(!userManagement);
-            setBlockCodeManagement(false);
-            setTaskManagement(false);
-            setPaymentManagement(false);
-          }}
-        >
-          User Management
-        </button>
-        <button
-          className="btn btn-primary mx-2"
-          onClick={() => {
-            setBlockCodeManagement(!blockCodeManagement);
-            setUserManagement(false);
-            setTaskManagement(false);
-            setPaymentManagement(false);
-          }}
-        >
-          Block Code Management
-        </button>
-        <button
-          className="btn btn-primary mx-2"
-          onClick={() => {
-            setTaskManagement(!taskManagement);
-            setUserManagement(false);
-            setBlockCodeManagement(false);
-            setPaymentManagement(false);
-          }}
-        >
-          Task Management
-        </button>
-        <button
-          className="btn btn-primary mx-2"
-          onClick={() => {
-            setPaymentManagement(!paymentManagement);
-            setTaskManagement(false);
-            setUserManagement(false);
-            setBlockCodeManagement(false);
-          }}
-        >
-          Payment Management
-        </button>
-      </div>
+      <AdminPortalRoutes
+        userManagement={userManagement}
+        blockCodeManagement={blockCodeManagement}
+        taskManagement={taskManagement}
+        paymentManagement={paymentManagement}
+        setUserManagement={setUserManagement}
+        setBlockCodeManagement={setBlockCodeManagement}
+        setTaskManagement={setTaskManagement}
+        setPaymentManagement={setPaymentManagement}
+      />
       {userManagement && <UserManagement />}
       {blockCodeManagement && <BlockCodeManagement />}
       {taskManagement && <TaskManagement />}

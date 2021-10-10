@@ -1,17 +1,17 @@
-import { useEffect, Dispatch, SetStateAction } from 'react';
-import { Button, Modal } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useEffect, Dispatch, SetStateAction } from "react";
+import { Button, Modal } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import {
   approveVote,
   getUnAuthorizedList,
   rejectVote,
   voteRejectInitial,
-} from '../helpers/authorizeHelper';
-import { useVoteReject } from '../helpers/useVoteReject';
-import UnAuthorizedModel from '../services/UnAuthorizedModel';
-import { setDataVoteReject, setNavLinkActive } from '../store';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import { StoreState } from './../store/index';
+} from "../../helpers/authorizeHelper";
+import { useVoteReject } from "../../helpers/useVoteReject";
+import UnAuthorizedModel from "../../services/UnAuthorizedModel";
+import { setDataVoteReject, setNavLinkActive } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import { StoreState } from "../../store/index";
 interface Props {
   heading?: string;
   body?: string;
@@ -41,14 +41,14 @@ const VoteDisplayModal = ({
   );
   const handleClose = () => {
     dispatch(setNavLinkActive(0));
-    history.push('/');
-    document.title = 'Dashboard - Voter List App';
+    history.push("/");
+    document.title = "Dashboard - Voter List App";
   };
   const readOnly: any = {
-    WebkitUserSelect: 'none',
-    MozUserSelect: 'none',
-    msUserSelect: 'none',
-    userSelect: 'none',
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
   };
   const { onChangeVoteReject } = useVoteReject();
 
@@ -73,12 +73,12 @@ const VoteDisplayModal = ({
             {dataVoteReject && body ? (
               <p>{body}</p>
             ) : (
-              <div className='row'>
+              <div className="row">
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['blockCode'] && 'bg-danger'
+                    dataVoteReject["blockCode"] && "bg-danger"
                   }`}
-                  id='blockCode'
+                  id="blockCode"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -86,9 +86,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['constituencyName'] && 'bg-danger'
+                    dataVoteReject["constituencyName"] && "bg-danger"
                   }`}
-                  id='constituencyName'
+                  id="constituencyName"
                   style={{
                     ...readOnly,
                   }}
@@ -98,9 +98,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['moza'] && 'bg-danger'
+                    dataVoteReject["moza"] && "bg-danger"
                   }`}
-                  id='moza'
+                  id="moza"
                   style={{
                     ...readOnly,
                   }}
@@ -110,9 +110,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['dehya'] && 'bg-danger'
+                    dataVoteReject["dehya"] && "bg-danger"
                   }`}
-                  id='dehya'
+                  id="dehya"
                   style={{
                     ...readOnly,
                   }}
@@ -122,9 +122,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['city'] && 'bg-danger'
+                    dataVoteReject["city"] && "bg-danger"
                   }`}
-                  id='city'
+                  id="city"
                   style={{
                     ...readOnly,
                   }}
@@ -134,9 +134,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['patwarHalka'] && 'bg-danger'
+                    dataVoteReject["patwarHalka"] && "bg-danger"
                   }`}
-                  id='patwarHalka'
+                  id="patwarHalka"
                   style={{
                     ...readOnly,
                   }}
@@ -146,9 +146,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['tapaydar'] && 'bg-danger'
+                    dataVoteReject["tapaydar"] && "bg-danger"
                   }`}
-                  id='tapaydar'
+                  id="tapaydar"
                   style={{
                     ...readOnly,
                   }}
@@ -158,9 +158,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['tehseel'] && 'bg-danger'
+                    dataVoteReject["tehseel"] && "bg-danger"
                   }`}
-                  id='tehseel'
+                  id="tehseel"
                   style={{
                     ...readOnly,
                   }}
@@ -170,9 +170,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['talka'] && 'bg-danger'
+                    dataVoteReject["talka"] && "bg-danger"
                   }`}
-                  id='talka'
+                  id="talka"
                   style={{
                     ...readOnly,
                   }}
@@ -182,9 +182,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['district'] && 'bg-danger'
+                    dataVoteReject["district"] && "bg-danger"
                   }`}
-                  id='district'
+                  id="district"
                   style={{
                     ...readOnly,
                   }}
@@ -194,9 +194,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['unionCouncil'] && 'bg-danger'
+                    dataVoteReject["unionCouncil"] && "bg-danger"
                   }`}
-                  id='unionCouncil'
+                  id="unionCouncil"
                   style={{
                     ...readOnly,
                   }}
@@ -206,9 +206,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['bookNo'] && 'bg-danger'
+                    dataVoteReject["bookNo"] && "bg-danger"
                   }`}
-                  id='bookNo'
+                  id="bookNo"
                   style={{
                     ...readOnly,
                   }}
@@ -218,9 +218,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['constituency'] && 'bg-danger'
+                    dataVoteReject["constituency"] && "bg-danger"
                   }`}
-                  id='constituency'
+                  id="constituency"
                   style={{
                     ...readOnly,
                   }}
@@ -230,9 +230,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['gender'] && 'bg-danger'
+                    dataVoteReject["gender"] && "bg-danger"
                   }`}
-                  id='gender'
+                  id="gender"
                   style={{
                     ...readOnly,
                   }}
@@ -242,9 +242,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['voteSNo'] && 'bg-danger'
+                    dataVoteReject["voteSNo"] && "bg-danger"
                   }`}
-                  id='voteSNo'
+                  id="voteSNo"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -252,9 +252,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['familyNo'] && 'bg-danger'
+                    dataVoteReject["familyNo"] && "bg-danger"
                   }`}
-                  id='familyNo'
+                  id="familyNo"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -262,9 +262,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['name'] && 'bg-danger'
+                    dataVoteReject["name"] && "bg-danger"
                   }`}
-                  id='name'
+                  id="name"
                   style={{
                     ...readOnly,
                   }}
@@ -274,9 +274,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['maritalStatus'] && 'bg-danger'
+                    dataVoteReject["maritalStatus"] && "bg-danger"
                   }`}
-                  id='maritalStatus'
+                  id="maritalStatus"
                   style={{
                     ...readOnly,
                   }}
@@ -286,9 +286,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['fatherHusbandName'] && 'bg-danger'
+                    dataVoteReject["fatherHusbandName"] && "bg-danger"
                   }`}
-                  id='fatherHusbandName'
+                  id="fatherHusbandName"
                   style={{
                     ...readOnly,
                   }}
@@ -298,9 +298,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['cnic'] && 'bg-danger'
+                    dataVoteReject["cnic"] && "bg-danger"
                   }`}
-                  id='cnic'
+                  id="cnic"
                   style={{
                     ...readOnly,
                   }}
@@ -310,9 +310,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['age'] && 'bg-danger'
+                    dataVoteReject["age"] && "bg-danger"
                   }`}
-                  id='age'
+                  id="age"
                   style={{
                     ...readOnly,
                   }}
@@ -322,9 +322,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['houseNo'] && 'bg-danger'
+                    dataVoteReject["houseNo"] && "bg-danger"
                   }`}
-                  id='houseNo'
+                  id="houseNo"
                   style={{
                     ...readOnly,
                   }}
@@ -334,9 +334,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['street'] && 'bg-danger'
+                    dataVoteReject["street"] && "bg-danger"
                   }`}
-                  id='street'
+                  id="street"
                   style={{
                     ...readOnly,
                   }}
@@ -346,9 +346,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['phase'] && 'bg-danger'
+                    dataVoteReject["phase"] && "bg-danger"
                   }`}
-                  id='phase'
+                  id="phase"
                   style={{
                     ...readOnly,
                   }}
@@ -358,9 +358,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['sector'] && 'bg-danger'
+                    dataVoteReject["sector"] && "bg-danger"
                   }`}
-                  id='sector'
+                  id="sector"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -368,9 +368,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['lane'] && 'bg-danger'
+                    dataVoteReject["lane"] && "bg-danger"
                   }`}
-                  id='lane'
+                  id="lane"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -378,9 +378,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['boulevardAvenue'] && 'bg-danger'
+                    dataVoteReject["boulevardAvenue"] && "bg-danger"
                   }`}
-                  id='boulevardAvenue'
+                  id="boulevardAvenue"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -388,9 +388,9 @@ const VoteDisplayModal = ({
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
-                    dataVoteReject['otherArea'] && 'bg-danger'
+                    dataVoteReject["otherArea"] && "bg-danger"
                   }`}
-                  id='otherArea'
+                  id="otherArea"
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
@@ -406,25 +406,25 @@ const VoteDisplayModal = ({
             {setIndex && (
               <>
                 <Button
-                  variant='primary'
+                  variant="primary"
                   disabled={index === 0}
                   onClick={() => {
                     dispatch(setDataVoteReject(voteRejectInitial));
                     setIndex(index - 1);
                   }}
                 >
-                  {'< Prev'}
+                  {"< Prev"}
                 </Button>
                 <Button
-                  variant='primary'
+                  variant="primary"
                   disabled={index === unauthorizedVotesLength}
                   onClick={() => {
                     dispatch(setDataVoteReject(voteRejectInitial));
                     setIndex(index + 1);
                   }}
                 >
-                  {'Next >'}
-                </Button>{' '}
+                  {"Next >"}
+                </Button>{" "}
               </>
             )}
             {/* <Button variant="primary" onClick={handleClose}>
@@ -434,7 +434,7 @@ const VoteDisplayModal = ({
               {`Next >`}
             </Button> */}
             <Button
-              variant='primary'
+              variant="primary"
               onClick={async () => {
                 const success = await approveVote(unauthorizedVote);
                 if (success) {
@@ -446,8 +446,8 @@ const VoteDisplayModal = ({
               Approve
             </Button>
             <Button
-              variant='danger'
-              disabled={unauthorizedVote.status === 'rejected'}
+              variant="danger"
+              disabled={unauthorizedVote.status === "rejected"}
               onClick={async () => {
                 const success =
                   unauthorizedVote._id &&
@@ -458,9 +458,9 @@ const VoteDisplayModal = ({
                 unauthorizedVotesLength === 0 && handleClose();
               }}
             >
-              {unauthorizedVote.status === 'rejected' ? 'Rejected' : 'Reject'}
+              {unauthorizedVote.status === "rejected" ? "Rejected" : "Reject"}
             </Button>
-            <Button variant='danger' onClick={handleClose}>
+            <Button variant="danger" onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

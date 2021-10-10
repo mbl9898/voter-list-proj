@@ -1,9 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getUserProgressData } from "../helpers/dashboardHelper";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
+import { getUserProgressData } from "../../helpers/dashboardHelper";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import RejectedVotesModal from "./RejectedVotesModal";
-import { StoreState } from "./../store/index";
+import { StoreState } from "../../store/index";
 import CountUp from "react-countup";
 
 const Dashboard = () => {

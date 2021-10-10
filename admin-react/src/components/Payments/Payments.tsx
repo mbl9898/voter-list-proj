@@ -1,15 +1,15 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
-import { getPaymentFile } from "../helpers/paymentManagementHelper";
-import { Payment } from "../interfaces/PaymentModel";
-import { PaymentService } from "../services/PaymentService";
-import { useAppSelector } from "../store/hooks";
-import PaymentTable from "./AdminPortal/PaymentTable";
-import Loading from "./Loading";
-import { StoreState } from "./../store/index";
-import PaymentsSummaryTable from "./Payments/PaymentsSummaryTable";
-import PaymentSwitches from "./Payments/PaymentSwitches";
+import { getPaymentFile } from "../../helpers/paymentManagementHelper";
+import { Payment } from "../../interfaces/PaymentModel";
+import { PaymentService } from "../../services/PaymentService";
+import { useAppSelector } from "../../store/hooks";
+import PaymentTable from "../AdminPortal/PaymentTable";
+import Loading from "../Loading";
+import { StoreState } from "../../store/index";
+import PaymentsSummaryTable from "./PaymentsSummaryTable";
+import PaymentSwitches from "./PaymentSwitches";
 
 const Payments = () => {
   const [payments, setPayments] = useState<null | Payment[]>(null);

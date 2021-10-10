@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import UnAuthorizedModel from '../services/UnAuthorizedModel';
-import { useAppDispatch, useAppSelector } from '../store/hooks';
-import VoteDisplayModal from './VoteDisplayModal';
-import { setDataVoteRejectToUnauthorizedDataIndex } from '../store';
-import { StoreState } from './../store/index';
+import { useEffect, useState } from "react";
+import UnAuthorizedModel from "../../services/UnAuthorizedModel";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import VoteDisplayModal from "./VoteDisplayModal";
+import { setDataVoteRejectToUnauthorizedDataIndex } from "../../store";
+import { StoreState } from "../../store/index";
 
 const Authorize = () => {
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ const Authorize = () => {
   return (
     <>
       {unauthorizedData && !unauthorizedData[0] && (
-        <h4 className='my-4 text-center'>No UnAuthorized Votes Available</h4>
+        <h4 className="my-4 text-center">No UnAuthorized Votes Available</h4>
       )}
       {unAuthorizedVote && (
         <VoteDisplayModal

@@ -20,12 +20,12 @@ export const blockCodeFormInitial: BlockCode = {
 };
 
 export const getBlockCodes = async (
-  // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
   dispatch: any,
-  setLoading?: Dispatch<SetStateAction<boolean>>
+  setLoading?: Dispatch<SetStateAction<boolean>>,
+  setIsBlockCodeData?: Dispatch<SetStateAction<boolean>>
 ) => {
   const res = await BlockCodeService.getBlockCodes();
-  if (res) {
+  if (res[0]) {
     let resHeadings = res[0] && Object.keys(res[0]);
     let sentenceCaseHeadings: string[] = [];
     if (resHeadings) {
@@ -51,5 +51,7 @@ export const getBlockCodes = async (
       setFilteredBlockCodeHeadings(false);
       setLoading && setLoading(false);
     }
+  } else {
+    setIsBlockCodeData && setIsBlockCodeData(false);
   }
 };

@@ -1,5 +1,6 @@
 import axios from "axios";
 import { Dispatch } from "react";
+import { ApiService } from "../services/ApiServices";
 // import { VotesModel } from "../interfaces/VotesModel";
 import {
   setCurrentUser,
@@ -54,17 +55,11 @@ export const signUp = async (
   passwordRef: any,
   passwordConfirmRef: any,
   dispatch: Dispatch<{ payload: any; type: string }>,
-  setError: any
+  setError: any,
+  history: any
 ) => {
   setError("");
-  const auth = axios.create({
-    baseURL:
-      process.env.REACT_APP_API_IS_DEV === "true"
-        ? process.env.REACT_APP_API_BASE_URL_DEV
-        : process.env.REACT_APP_API_BASE_URL_STAGING,
-    timeout: 5000,
-    headers: { "x-api-key": "SG.cpdcjwepcjio" },
-  });
+  const auth = ApiService.createAxios();
   if (passwordRef.current) {
     if (passwordConfirmRef.current) {
       if (passwordRef.current.value !== passwordConfirmRef.current.value) {
@@ -91,7 +86,10 @@ export const signUp = async (
           })
         );
         localStorage.setItem("token", authRes.data.data.access_token);
-        dispatch(setIsSignUpFormDisplay(false));
+        history.push("/");
+        document.title = "Dashboard - Voter List App";
+        // console.log(true);
+        // dispatch(setIsSignUpFormDisplay(false));
       }
       if (!authRes.data.success) {
         if (authRes.data.error) {
@@ -128,17 +126,7 @@ export const logout = async (
   const currentToken = localStorage.getItem("token");
   // return auth.signOut();
   setError("");
-  const auth = axios.create({
-    baseURL:
-      process.env.REACT_APP_API_IS_DEV === "true"
-        ? process.env.REACT_APP_API_BASE_URL_DEV
-        : process.env.REACT_APP_API_BASE_URL_STAGING,
-    timeout: 5000,
-    headers: {
-      "x-api-key": "SG.cpdcjwepcjio",
-      authorization: `bearer ${currentToken}`,
-    },
-  });
+  const auth = ApiService.createAxios();
 
   try {
     const authRes = await auth.post("logout/", {

@@ -12,7 +12,11 @@ export const uploadData = async (req, res) => {
 
     const checkData = await UnAuthorizedSchema.findOne({ cnic: checkCNIC });
     if (checkData) {
-      throw new Error('CNIC already exist');
+      console.log(new Error('CNIC already exist'));
+      return res.json({
+        success: false,
+        message: 'CNIC already exist',
+      });
     }
 
     const {

@@ -4,6 +4,7 @@ import {
   setCurrentUser,
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,
+  setMessage,
   setNavLinkActive,
 } from "../store";
 import Loading from "./Loading";
@@ -15,14 +16,12 @@ const Login = () => {
   const emailRef = useRef<any>();
   const passwordRef = useRef<any>();
   const [error, setError] = useState("");
-  const [alert, setAlert] = useState("");
   const [loading, setLoading] = useState(false);
   const dispatch = useAppDispatch();
   const history = useHistory();
 
   const onSubmit = async (e: any) => {
     e.preventDefault();
-    setAlert("");
     setLoading(true);
     try {
       const res = await UserService.loginUser({
@@ -34,10 +33,7 @@ const Login = () => {
         setLoading(false);
       }
       if (res.success) {
-        setAlert("This user has been successfully loggedIn");
-        setTimeout(() => {
-          setAlert("");
-        }, 5000);
+        dispatch(setMessage("You Logged In Successfully"));
         dispatch(setCurrentUser(res.data.userData));
         localStorage.setItem("token", res.data.access_token);
         setLoading(false);
@@ -53,7 +49,6 @@ const Login = () => {
 
   return (
     <>
-      {alert && <Alert variant="danger">{alert}</Alert>}
       <Container
         className="d-flex align-items-center justify-content-center"
         style={{ minHeight: "100vh" }}

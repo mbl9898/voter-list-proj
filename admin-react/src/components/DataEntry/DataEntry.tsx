@@ -2,7 +2,7 @@
 // import UnAuthorizedModel from "../services/UnAuthorizedModel";
 // import { useAppSelector } from "../store/hooks";
 // import CCard from "./CCard";
-import DataEntryForm from './DataEntryForm';
+import DataEntryForm from "../DataEntryForm";
 
 const DataEntry = () => {
   // const dispatch = useAppDispatch();
@@ -15,7 +15,7 @@ const DataEntry = () => {
   // }, []);
   return (
     <>
-      <div className='container'>
+      <div className="container">
         {/* {!isVoteFormDisplay && (
           <CCard
             rejectedVotes={rejectedVotes}

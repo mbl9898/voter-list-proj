@@ -1,4 +1,5 @@
 export interface VotesModel {
+  _id?: string;
   blockCode: number | null;
   constituencyName: string;
   moza: string;

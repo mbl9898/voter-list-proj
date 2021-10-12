@@ -31,7 +31,8 @@ const SignUp = () => {
       passwordRef,
       passwordConfirmRef,
       dispatch,
-      setError
+      setError,
+      history
     );
     setLoading(false);
   };

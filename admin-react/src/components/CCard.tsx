@@ -9,7 +9,7 @@ import {
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { setCurrentRejectedVote } from "../store";
 import { useAppDispatch } from "../store/hooks";
-import VoteDisplayModal from "./VoteDisplayModal";
+import VoteDisplayModal from "./Authorize/VoteDisplayModal";
 
 interface Props {
   title?: string;
@@ -100,12 +100,12 @@ const CCard = ({
                       : "Reject"}
                   </button>
                 </div>
-                <VoteDisplayModal
+                {/* <VoteDisplayModal
                   index={index}
                   showModalProp={showModalProp}
                   setShowModalProp={setShowModalProp}
                   unauthorizedVote={unauthorizedVote}
-                />
+                /> */}
               </div>
             );
           })}

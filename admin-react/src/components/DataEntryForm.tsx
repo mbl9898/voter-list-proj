@@ -9,22 +9,21 @@ import { getUserProgressData } from "../helpers/dashboardHelper";
 import InputMask from "react-input-mask";
 import { useForm } from "../helpers/useForm";
 import { User } from "../interfaces/User";
-import { BlockCodeService } from "../services/BlockCodeService";
-import { UserService } from "../services/UserService";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import CModal from "./CModal";
 import {
   setCurrentRejectedVote,
   setDashboardData,
   setDataVoteReject,
-  setDefaultBlockCodeData,
   setMessage,
   setMessageVariant,
 } from "../store";
 import {
   dataEntryFormInitial,
+  getDefaultBlockCodeData,
   getRejectedVotes,
-  submitVote,
+  onBlockCodeSelect,
+  submitNewVote,
   updateRejectedVote,
 } from "../helpers/dataEntryHelper";
 import Loading from "./Loading";
@@ -61,13 +60,8 @@ const DataEntryForm = ({
   );
 
   async function submitVoteCallback(data: any) {
-    const resSubmitVote: any = !forRejectedVotes && (await submitVote(data));
-    if (resSubmitVote && currentUser) {
-      getDefaultBlockCodeData(currentUser.defaultBlockCode);
-      console.log(resSubmitVote);
-      dispatch(setMessageVariant("info"));
-      dispatch(setMessage("Vote Submitted SuccessFully"));
-    }
+    !forRejectedVotes &&
+      (await submitNewVote(data, currentUser, dispatch, setData, setLoading));
 
     const res = currentRejectedVote && (await updateRejectedVote(data));
     if (res && res.success) {
@@ -88,53 +82,17 @@ const DataEntryForm = ({
     }
   }
 
-  const getDefaultBlockCodeData = async (defaultBlockCode: number) => {
-    const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
-    console.log(res);
-    if (res.success) {
-      await dispatch(setDefaultBlockCodeData(res.data));
-      const data = res.data;
-      setData({
-        ...dataEntryFormInitial,
-        blockCode: data.blockCode,
-        constituencyName: data.constituencyName,
-        moza: data.moza,
-        dehya: data.dehya,
-        city: data.city,
-        patwarHalka: data.patwarHalka,
-        tapaydar: data.tapaydar,
-        tehseel: data.tehseel,
-        talka: data.talka,
-        district: data.district,
-        unionCouncil: data.unionCouncil,
-        bookNo: data.bookNo,
-        constituency: data.constituency,
-      });
-      setLoading(false);
-    } else {
-      dispatch(setMessageVariant("danger"));
-      dispatch(
-        setMessage(
-          "Failed to load default Block Code | Set Default Block Code | Contact Admin"
-        )
-      );
-      setLoading(false);
-    }
-  };
-
-  const onBlockCodeSelect = async (
-    userId: string,
-    defaultBlockCode: number
-  ) => {
-    const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
-    getDefaultBlockCodeData(defaultBlockCode);
-  };
   useEffect(() => {
     !forRejectedVotes && dispatch(setDataVoteReject(voteRejectInitial));
     !forRejectedVotes && setData(dataEntryFormInitial);
     !forRejectedVotes &&
       currentUser &&
-      getDefaultBlockCodeData(currentUser.defaultBlockCode);
+      getDefaultBlockCodeData(
+        currentUser.defaultBlockCode,
+        dispatch,
+        setData,
+        setLoading
+      );
     forRejectedVotes &&
       currentRejectedVote &&
       setData({ ...currentRejectedVote });
@@ -163,7 +121,13 @@ const DataEntryForm = ({
                   value={data.blockCode ? data.blockCode : ""}
                   onChange={(e: any) => {
                     currentUser &&
-                      onBlockCodeSelect(currentUser._id, e.target.value);
+                      onBlockCodeSelect(
+                        currentUser._id,
+                        e.target.value,
+                        dispatch,
+                        setData,
+                        setLoading
+                      );
                   }}
                   required
                 >

@@ -100,12 +100,12 @@ const CCard = ({
                       : "Reject"}
                   </button>
                 </div>
-                <VoteDisplayModal
+                {/* <VoteDisplayModal
                   index={index}
                   showModalProp={showModalProp}
                   setShowModalProp={setShowModalProp}
                   unauthorizedVote={unauthorizedVote}
-                />
+                /> */}
               </div>
             );
           })}

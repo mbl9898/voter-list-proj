@@ -9,7 +9,11 @@ export const getData = async (_, res) => {
     const votesData = await AuthorizedSchema.find();
 
     if (!votesData[0]) {
-      throw new Error('Invalid Request Or No Data');
+      console.log(new Error('Invalid Request Or No Data'));
+      return res.json({
+        success: false,
+        message: 'Invalid Request Or No Data',
+      });
     }
 
     return res.json({

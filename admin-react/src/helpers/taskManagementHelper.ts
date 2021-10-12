@@ -11,7 +11,7 @@ export const taskFormInitial: Task = {
 
 export const getAllTasks = async (
   // setFilteredBlockCodeHeadings: Dispatch<SetStateAction<string[]>>,
-  dispatch: any,
+  dispatch: Dispatch<{ payload: any; type: string }>,
   setLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   const res = await TaskService.getAllTasks();

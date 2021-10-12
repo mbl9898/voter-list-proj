@@ -3,6 +3,7 @@ import { setUnauthorizedData, setUnauthorizedRejectedVotes } from "../store";
 import UnAuthorizedService from "../services/unAuthorizedService";
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { VoteRejection } from "../interfaces/VoteRejection";
+import AuthorizedService from "../services/AuthorizedService";
 
 export const voteRejectInitial: VoteRejection = {
   blockCode: false,
@@ -55,7 +56,7 @@ export const getUnAuthorizedList = async (
 };
 
 export const approveVote = async (vote: UnAuthorizedModel) => {
-  const res = await UnAuthorizedService.addNewAuthorizedData(vote);
+  const res = await AuthorizedService.addNewAuthorizedVote(vote);
   return res.success;
 };
 export const rejectVote = async (id: string, rejections?: VoteRejection) => {

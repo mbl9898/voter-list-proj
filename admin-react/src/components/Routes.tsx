@@ -9,6 +9,7 @@ import Payments from "./Payments/Payments";
 import SignUp from "./SignUp";
 import Tasks from "./Tasks/Tasks";
 import { StoreState } from "./../store/index";
+import Votes from "./Votes/Votes";
 
 const Routes = () => {
   const currentUser = useAppSelector(
@@ -63,8 +64,7 @@ const Routes = () => {
         </Route>
         <Route path="/votes" exact>
           {currentUser ? (
-            // <Votes />
-            <Authorize />
+            <Votes />
           ) : (
             <Redirect
               to={{

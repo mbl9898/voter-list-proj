@@ -15,7 +15,10 @@ const Authorize = () => {
   );
 
   useEffect(() => {
-    setUnauthorizedVote(unauthorizedData[unAuthorizedVoteIndex]);
+    console.log(unauthorizedData[unAuthorizedVoteIndex]);
+    unAuthorizedVoteIndex >= 0
+      ? setUnauthorizedVote(unauthorizedData[unAuthorizedVoteIndex])
+      : setUnauthorizedVote(null);
     dispatch(setDataVoteRejectToUnauthorizedDataIndex(unAuthorizedVoteIndex));
   }, [unAuthorizedVoteIndex]);
   return (

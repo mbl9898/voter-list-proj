@@ -18,7 +18,7 @@ interface Props {
   index: number;
   setIndex?: Dispatch<SetStateAction<number>>;
   unauthorizedVote?: UnAuthorizedModel;
-  unauthorizedVotesLength?: number;
+  unauthorizedVotesLength: number;
   showModalProp: null | number;
   setShowModalProp?: Dispatch<SetStateAction<null | number>>;
   onSubmit?: () => void;
@@ -439,7 +439,19 @@ const VoteDisplayModal = ({
                 const success = await approveVote(unauthorizedVote);
                 if (success) {
                   getUnAuthorizedList(dispatch);
-                  setIndex && setIndex(index - 1);
+                  console.log(index);
+                  if (setIndex) {
+                    if (index === 0 && unauthorizedVotesLength > 0) {
+                      console.log(unauthorizedVotesLength);
+                      setIndex(0);
+                      return;
+                    }
+
+                    setIndex((prevValue) => {
+                      console.log(prevValue - 1);
+                      return prevValue - 1;
+                    });
+                  }
                 }
               }}
             >

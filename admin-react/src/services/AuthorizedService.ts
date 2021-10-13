@@ -13,6 +13,16 @@ export default class AuthorizedService {
       console.log(error);
     }
   }
+  static async getAuthorizedPage(pageNo: number, voteLimit: number) {
+    try {
+      const res = await ApiService.get(
+        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
   static async addNewAuthorizedVote(newAuthorizedData: UnAuthorizedModel) {
     try {
       const data = await ApiService.post(

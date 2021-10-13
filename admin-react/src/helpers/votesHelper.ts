@@ -51,7 +51,6 @@ export const getAuthorizedVotesPage = async (
   setVotesData: Dispatch<SetStateAction<null | VotesModel[]>>,
   setFilteredVotesHeadings: Dispatch<SetStateAction<string[] | null>>,
   setVoteRes: Dispatch<SetStateAction<any>>,
-  setPages: Dispatch<SetStateAction<any>>,
   pageNo: number,
   limit: number,
   setLoading?: Dispatch<SetStateAction<boolean>>
@@ -96,7 +95,6 @@ export const getAuthorizedVotesPage = async (
         prev: res.results.previous,
         totalPages: res.results.totalPages,
       });
-      setPages(Array.from({ length: res.results.totalPages }, (_, i) => i + 1));
       setLoading && setLoading(false);
     }
   }

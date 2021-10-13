@@ -51,10 +51,10 @@ export default class AuthorizedService {
 
   static async deleteAuthorizedRecord(id: string) {
     try {
-      const data = await ApiService.delete(
+      const res = await ApiService.delete(
         `${AuthorizedService.baseUrl[0]}/${id}`
       );
-      return data.data;
+      return res;
     } catch (error) {
       console.log(error);
     }

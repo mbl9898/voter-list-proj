@@ -186,7 +186,6 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-
                           1,
                           votesLimit,
                           setLoading
@@ -255,7 +254,6 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-
                           currentPage + 1,
                           votesLimit,
                           setLoading

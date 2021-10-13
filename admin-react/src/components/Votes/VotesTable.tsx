@@ -1,10 +1,9 @@
-import { SetStateAction, useState } from "react";
+import { Fragment, SetStateAction, useState } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
-import { getAllAuthorizedVotes } from "../../helpers/votesHelper";
+import { getAuthorizedVotesPage } from "../../helpers/votesHelper";
 import { VotesModel } from "../../interfaces/VotesModel";
 import AuthorizedService from "../../services/AuthorizedService";
-import { TaskService } from "../../services/TaskService";
 import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
 import CModal from "../CModal";
@@ -22,8 +21,12 @@ const VotesTable = ({
   voteUpdateForm,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(false);
+  const votesLimit = 30;
+  const [pages, setPages] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
+  const [voteRes, setVoteRes] = useState<any>({});
   const [filteredVotesHeadings, setFilteredVotesHeadings] = useState<
     null | string[]
   >(null);
@@ -39,10 +42,14 @@ const VotesTable = ({
     dispatch(setMessageVariant("success"));
     dispatch(setMessage(res.message));
 
-    getAllAuthorizedVotes(
+    getAuthorizedVotesPage(
       dispatch,
       setVotesData,
       setFilteredVotesHeadings,
+      setVoteRes,
+      setPages,
+      currentPage,
+      votesLimit,
       setLoading
     );
   };
@@ -50,13 +57,17 @@ const VotesTable = ({
     vote._id && deleteAuthorizedVote(vote._id);
   };
   useEffect(() => {
-    getAllAuthorizedVotes(
+    getAuthorizedVotesPage(
       dispatch,
       setVotesData,
       setFilteredVotesHeadings,
+      setVoteRes,
+      setPages,
+      currentPage,
+      votesLimit,
       setLoading
     );
-  }, []);
+  }, [voteUpdateForm, currentPage]);
   return (
     <>
       {loading && <Loading />}
@@ -66,7 +77,7 @@ const VotesTable = ({
             <h5 className="text-center my-3">No Authorized Votes Data</h5>
           )}
           {votesData && votesData[0] && (
-            <div>
+            <div className="pb-5">
               <h5 className="text-center my-3">Authorized Votes</h5>
               <div className="table-responsive">
                 <table className="table">
@@ -85,72 +96,156 @@ const VotesTable = ({
                   <tbody>
                     {votesData.map((vote: VotesModel, index: number) => {
                       return (
-                        <tr key={index}>
-                          <th scope="row">{index + 1}</th>
-                          <td className="text-center">{vote.blockCode}</td>
-                          <td className="text-center">{vote.voteSNo}</td>
-                          <td className="text-center">{vote.familyNo}</td>
-                          <td className="text-center">{vote.gender}</td>
-                          <td className="text-center">{vote.name}</td>
-                          <td className="text-center">
-                            {vote.fatherHusbandName}
-                          </td>
-                          <td className="text-center">{vote.maritalStatus}</td>
-                          <td className="text-center">{vote.cnic}</td>
-                          <td className="text-center">{vote.age}</td>
-                          <td className="text-center">{vote.houseNo}</td>
-                          <td className="text-center">{vote.street}</td>
-                          <td className="text-center">{vote.phase}</td>
-                          <td className="text-center">{vote.sector}</td>
-                          <td className="text-center">{vote.lane}</td>
-                          <td className="text-center">
-                            {vote.boulevardAvenue}
-                          </td>
-                          <td className="text-center">{vote.otherArea}</td>
-                          <td className="text-center">
-                            {vote.constituencyName}
-                          </td>
-                          <td className="text-center">{vote.moza}</td>
-                          <td className="text-center">{vote.dehya}</td>
-                          <td className="text-center">{vote.city}</td>
-                          <td className="text-center">{vote.patwarHalka}</td>
-                          <td className="text-center">{vote.tapaydar}</td>
-                          <td className="text-center">{vote.tehseel}</td>
-                          <td className="text-center">{vote.talka}</td>
-                          <td className="text-center">{vote.district}</td>
-                          <td className="text-center">{vote.unionCouncil}</td>
-                          <td className="text-center">{vote.bookNo}</td>
-                          <td className="text-center">{vote.constituency}</td>
-                          <td className="text-center">
-                            <button
-                              className="btn btn-primary"
-                              onClick={() => {
-                                setVoteUpdateData(
-                                  !voteUpdateForm ? vote : null
-                                );
-                                setVoteUpdateForm(!voteUpdateForm);
-                              }}
-                            >
-                              update
-                            </button>
-                          </td>
-                          <td>
-                            <CModal
-                              heading={
-                                "Are you sure you want to delete this Vote?"
-                              }
-                              triggerButtonContent="delete"
-                              triggerButtonVarient="danger"
-                              onSubmit={() => {
-                                onSubmit(vote);
-                              }}
-                            />
-                          </td>
-                        </tr>
+                        <Fragment key={index}>
+                          <tr
+                            // className="dropdown-toggle"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                          >
+                            <th scope="row">
+                              {currentPage === 1
+                                ? index + 1
+                                : (currentPage - 1) * votesLimit + index + 1}
+                            </th>
+                            <td className="text-center">{vote.blockCode}</td>
+                            <td className="text-center">{vote.voteSNo}</td>
+                            <td className="text-center">{vote.familyNo}</td>
+                            <td className="text-center">{vote.gender}</td>
+                            <td className="text-center">{vote.name}</td>
+                            <td className="text-center">
+                              {vote.fatherHusbandName}
+                            </td>
+                            <td className="text-center">
+                              {vote.maritalStatus}
+                            </td>
+                            <td className="text-center">{vote.cnic}</td>
+                            <td className="text-center">{vote.age}</td>
+                            <td className="text-center">{vote.houseNo}</td>
+                            <td className="text-center">{vote.street}</td>
+                            <td className="text-center">{vote.phase}</td>
+                            <td className="text-center">{vote.sector}</td>
+                            <td className="text-center">{vote.lane}</td>
+                            <td className="text-center">
+                              {vote.boulevardAvenue}
+                            </td>
+                            <td className="text-center">{vote.otherArea}</td>
+                            <td className="text-center">
+                              {vote.constituencyName}
+                            </td>
+                            <td className="text-center">{vote.moza}</td>
+                            <td className="text-center">{vote.dehya}</td>
+                            <td className="text-center">{vote.city}</td>
+                            <td className="text-center">{vote.patwarHalka}</td>
+                            <td className="text-center">{vote.tapaydar}</td>
+                            <td className="text-center">{vote.tehseel}</td>
+                            <td className="text-center">{vote.talka}</td>
+                            <td className="text-center">{vote.district}</td>
+                            <td className="text-center">{vote.unionCouncil}</td>
+                            <td className="text-center">{vote.bookNo}</td>
+                            <td className="text-center">{vote.constituency}</td>
+                          </tr>
+                          <ul className="dropdown-menu dropdown-menu-dark">
+                            <li>
+                              <button
+                                className="dropdown-item btn text-primary"
+                                onClick={() => {
+                                  setVoteUpdateData(
+                                    !voteUpdateForm ? vote : null
+                                  );
+                                  setVoteUpdateForm(!voteUpdateForm);
+                                }}
+                              >
+                                Update
+                              </button>
+                            </li>
+                            <li>
+                              <CModal
+                                heading={
+                                  "Are you sure you want to delete this Vote?"
+                                }
+                                triggerButtonContent="delete"
+                                triggerButtonVariant="danger"
+                                onSubmit={() => {
+                                  onSubmit(vote);
+                                }}
+                                btnClasses="dropdown-item text-primary"
+                              />
+                            </li>
+                          </ul>
+                        </Fragment>
                       );
                     })}
                   </tbody>
                 </table>
+                <div className="d-flex justify-content-center">
+                  {currentPage > 1 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        getAuthorizedVotesPage(
+                          dispatch,
+                          setVotesData,
+                          setFilteredVotesHeadings,
+                          setVoteRes,
+                          setPages,
+                          currentPage - 1,
+                          votesLimit,
+                          setLoading
+                        );
+                        setCurrentPage((prevValue) => {
+                          return prevValue - 1;
+                        });
+                      }}
+                    >
+                      {`<Prev`}
+                    </button>
+                  )}
+                  {pages.map((pageNo: number) => (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        getAuthorizedVotesPage(
+                          dispatch,
+                          setVotesData,
+                          setFilteredVotesHeadings,
+                          setVoteRes,
+                          setPages,
+                          pageNo,
+                          votesLimit,
+                          setLoading
+                        );
+                        setCurrentPage(pageNo);
+                      }}
+                    >
+                      {pageNo}
+                    </button>
+                  ))}
+                  {currentPage < voteRes.totalPages && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        getAuthorizedVotesPage(
+                          dispatch,
+                          setVotesData,
+                          setFilteredVotesHeadings,
+                          setVoteRes,
+                          setPages,
+                          currentPage + 1,
+                          votesLimit,
+                          setLoading
+                        );
+                        setCurrentPage((prevValue) => {
+                          return prevValue + 1;
+                        });
+                      }}
+                    >
+                      {`Next>`}
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           )}

@@ -139,10 +139,10 @@ const DataGrid = () => {
           >
             <ColumnsDirective>
               {data[0]
-                ? data[0]["voteSNo"] && (
+                ? data[0]["S No"] && (
                     <ColumnDirective
-                      field="voteSNo"
-                      headerText="Vote S No"
+                      field="S No"
+                      headerText="S No"
                       textAlign="Left"
                       width="45"
                       isPrimaryKey={true}

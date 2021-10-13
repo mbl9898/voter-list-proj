@@ -171,7 +171,7 @@ const PaymentTable = ({
                               "Are you sure you want to delete this Payment?"
                             }
                             triggerButtonContent="delete"
-                            triggerButtonVarient="danger"
+                            triggerButtonVariant="danger"
                             onSubmit={() => {
                               onSubmit(payment);
                             }}

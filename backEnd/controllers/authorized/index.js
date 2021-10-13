@@ -2,12 +2,14 @@ import { getData } from './helpers/getData';
 import { uploadData } from './helpers/uploadData';
 import { deleteData } from './helpers/deleteData';
 import { updateVoteData } from './helpers/updateVoteData';
+import { getPages } from './helpers/getPages';
 
 export const authorized = {
   getData,
   uploadData,
   deleteData,
   updateVoteData,
+  getPages,
 };
 
 export const getAuthorizedVoteFields = (req) => {

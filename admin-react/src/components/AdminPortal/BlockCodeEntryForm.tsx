@@ -76,7 +76,7 @@ const BlockCodeEntryForm = ({
                 </Alert>
               </div>
             )}
-            <Form onSubmit={onSubmit}>
+            <Form className="pb-3" onSubmit={onSubmit}>
               <div className="row">
                 <div className="col col-xs-12 col-sm-4 q-pa-sm">
                   <Form.Group id="blockCode">
@@ -225,7 +225,7 @@ const BlockCodeEntryForm = ({
               <hr />
               <div className="d-flex justify-content-center">
                 <Button
-                  className="my-3 w-50 mt-4 my-5"
+                  className="my-3 w-50 mt-4"
                   disabled={loading}
                   // onClick={onSubmit}
                   type="submit"

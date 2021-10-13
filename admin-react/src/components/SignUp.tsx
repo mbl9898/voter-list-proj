@@ -48,7 +48,7 @@ const SignUp = () => {
             <Card.Body>
               <h2 className="text-center mb-4">Sign Up</h2>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={handleSubmit}>
+              <Form className="pb-5" onSubmit={handleSubmit}>
                 <Form.Group id="userName">
                   <Form.Label>User Name</Form.Label>
                   <Form.Control type="text" ref={userNameRef} required />

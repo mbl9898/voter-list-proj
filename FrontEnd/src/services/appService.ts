@@ -110,12 +110,33 @@ export const getSortedFilteredVotes = async (
         console.log(newData);
 
         if (newData) {
-          let inCompleteDataFilter = newData.filter(
+          let inCompleteDataFilter: any[] = newData.filter(
             (data: any) => data.name !== "-"
             // (data) => data.Name !== "-"
           );
 
           inCompleteDataFilter.splice(1237, 75);
+          // inCompleteDataFilter.sort(
+          //   (firstVote, secondVote) => firstVote.voteSNo - secondVote.voteSNo
+          // );
+          // inCompleteDataFilter.sort((firstVote, secondVote) => {
+          //   // secondVote.gender - firstVote.gender
+          //   var genderA = firstVote.gender.toUpperCase(); // ignore upper and lowercase
+          //   var genderB = secondVote.gender.toUpperCase(); // ignore upper and lowercase
+          //   if (genderA < genderB) {
+          //     return 1;
+          //   }
+          //   if (genderA > genderB) {
+          //     return -1;
+          //   }
+
+          //   // genders must be equal
+          //   return 0;
+          // });
+          // inCompleteDataFilter.sort(
+          //   (firstVote, secondVote) =>
+          //     firstVote.blockCode - secondVote.blockCode
+          // );
 
           await dispatch(setData(inCompleteDataFilter));
           const headings: string[] = Object.keys(newData[0]);

@@ -4,6 +4,7 @@ import { AuthorizedSchema } from '~/schemas';
 
 export const updateVoteData = async (req, res) => {
   const { OK, SERVER_ERROR } = status;
+  console.log(true);
   try {
     if (!req.body.cnic) {
       throw new Error('Invalid CNIC Number');
@@ -43,7 +44,7 @@ export const updateVoteData = async (req, res) => {
 
     const verifiedBy = req.user;
 
-    const data = await UnAuthorizedSchema.findByIdAndUpdate(
+    const data = await AuthorizedSchema.findByIdAndUpdate(
       { _id: req.body._id },
       {
         blockCode,

@@ -7,10 +7,18 @@ import {
   getAuthorizedVoteFields,
   getAuthorizedVoteTypes,
 } from '../../../controllers/authorized';
+import { paginatedResults } from 'middlewares/pagination';
+import { AuthorizedSchema } from 'schemas/authorized';
 
 const router = express.Router();
 
 router.get('/', isAuthorized(roles.dataViewer), authorized.getData);
+router.get(
+  '/page',
+  isAuthorized(roles.dataViewer),
+  paginatedResults(AuthorizedSchema),
+  authorized.getPages,
+);
 
 router.post(
   '/',

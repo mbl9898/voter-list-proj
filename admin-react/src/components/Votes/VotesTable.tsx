@@ -21,8 +21,7 @@ const VotesTable = ({
   voteUpdateForm,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const votesLimit = 30;
-  const [pages, setPages] = useState([]);
+  const votesLimit = 50;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageTemp, setCurrentPageTemp] = useState(1);
   const [loading, setLoading] = useState(true);
@@ -48,7 +47,6 @@ const VotesTable = ({
       setVotesData,
       setFilteredVotesHeadings,
       setVoteRes,
-      setPages,
       currentPage,
       votesLimit,
       setLoading
@@ -63,7 +61,6 @@ const VotesTable = ({
       setVotesData,
       setFilteredVotesHeadings,
       setVoteRes,
-      setPages,
       currentPage,
       votesLimit,
       setLoading
@@ -189,7 +186,7 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-                          setPages,
+
                           1,
                           votesLimit,
                           setLoading
@@ -211,7 +208,7 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-                          setPages,
+
                           currentPage - 1,
                           votesLimit,
                           setLoading
@@ -239,7 +236,7 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-                          setPages,
+
                           currentPageTemp,
                           votesLimit,
                           setLoading
@@ -258,7 +255,7 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-                          setPages,
+
                           currentPage + 1,
                           votesLimit,
                           setLoading
@@ -282,7 +279,7 @@ const VotesTable = ({
                           setVotesData,
                           setFilteredVotesHeadings,
                           setVoteRes,
-                          setPages,
+
                           voteRes.totalPages,
                           votesLimit,
                           setLoading

@@ -8,18 +8,26 @@ export const deleteData = async (req, res) => {
   try {
     const data = await AuthorizedSchema.findById(id);
     if (!data) {
-      throw new Error('Invalid Request');
+      console.log(new Error('Invalid Request'));
+      return res.json({
+        success: false,
+        message: 'Invalid Request',
+      });
     }
 
     const deletedData = await data.delete();
 
     if (!deletedData) {
-      throw new Error('Invalid data');
+      console.log(new Error('Invalid data'));
+      return res.json({
+        success: false,
+        message: 'Invalid data',
+      });
     }
 
     return res.json({
       success: true,
-      data: 'This record has been deleted successfully',
+      message: 'This record has been deleted successfully',
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

@@ -11,7 +11,8 @@ interface Props {
   externalButton?: boolean;
   showModalProp?: boolean;
   triggerButtonContent?: string;
-  triggerButtonVarient?: "primary" | "danger";
+  triggerButtonVariant?: "primary" | "danger";
+  btnClasses?: string;
 }
 
 const CModal = ({
@@ -22,7 +23,8 @@ const CModal = ({
   externalButton,
   showModalProp,
   triggerButtonContent,
-  triggerButtonVarient,
+  triggerButtonVariant,
+  btnClasses,
 }: Props) => {
   const [show, setShow] = useState<boolean | undefined>(false);
   const handleClose = () => setShow(false);
@@ -35,9 +37,9 @@ const CModal = ({
     <>
       {!externalButton && (
         <Button
-          className={triggerButtonVarient ? "" : "mt-5"}
-          style={triggerButtonVarient ? undefined : { width: 50 + "%" }}
-          variant={triggerButtonVarient ? triggerButtonVarient : "primary"}
+          className={`${btnClasses} ${triggerButtonVariant ? "" : "mt-5"}`}
+          style={triggerButtonVariant ? undefined : { width: 50 + "%" }}
+          variant={triggerButtonVariant ? triggerButtonVariant : "primary"}
           onClick={handleShow}
         >
           {triggerButtonContent ? triggerButtonContent : "Submit"}

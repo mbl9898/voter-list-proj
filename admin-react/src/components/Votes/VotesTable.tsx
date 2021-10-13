@@ -24,6 +24,7 @@ const VotesTable = ({
   const votesLimit = 30;
   const [pages, setPages] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [currentPageTemp, setCurrentPageTemp] = useState(1);
   const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
   const [voteRes, setVoteRes] = useState<any>({});
@@ -178,6 +179,28 @@ const VotesTable = ({
                   </tbody>
                 </table>
                 <div className="d-flex justify-content-center">
+                  {currentPage > 2 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        getAuthorizedVotesPage(
+                          dispatch,
+                          setVotesData,
+                          setFilteredVotesHeadings,
+                          setVoteRes,
+                          setPages,
+                          1,
+                          votesLimit,
+                          setLoading
+                        );
+                        setCurrentPage(1);
+                        setCurrentPageTemp(1);
+                      }}
+                    >
+                      {`|<`}
+                    </button>
+                  )}
                   {currentPage > 1 && (
                     <button
                       className="btn btn-primary mx-2 my-3"
@@ -194,6 +217,7 @@ const VotesTable = ({
                           setLoading
                         );
                         setCurrentPage((prevValue) => {
+                          setCurrentPageTemp(prevValue - 1);
                           return prevValue - 1;
                         });
                       }}
@@ -201,10 +225,14 @@ const VotesTable = ({
                       {`<Prev`}
                     </button>
                   )}
-                  {pages.map((pageNo: number) => (
-                    <button
-                      className="btn btn-primary mx-2 my-3"
-                      onClick={() => {
+                  <input
+                    className="form-control mx-2 my-3"
+                    style={{ width: 4 + "rem" }}
+                    type="number"
+                    value={currentPageTemp}
+                    onChange={(e: any) => setCurrentPageTemp(e.target.value)}
+                    onKeyUp={(event) => {
+                      if (event.key === "Enter") {
                         setLoading(true);
                         getAuthorizedVotesPage(
                           dispatch,
@@ -212,16 +240,14 @@ const VotesTable = ({
                           setFilteredVotesHeadings,
                           setVoteRes,
                           setPages,
-                          pageNo,
+                          currentPageTemp,
                           votesLimit,
                           setLoading
                         );
-                        setCurrentPage(pageNo);
-                      }}
-                    >
-                      {pageNo}
-                    </button>
-                  ))}
+                        setCurrentPage(currentPageTemp);
+                      }
+                    }}
+                  />
                   {currentPage < voteRes.totalPages && (
                     <button
                       className="btn btn-primary mx-2 my-3"
@@ -238,11 +264,34 @@ const VotesTable = ({
                           setLoading
                         );
                         setCurrentPage((prevValue) => {
+                          setCurrentPageTemp(prevValue + 1);
                           return prevValue + 1;
                         });
                       }}
                     >
                       {`Next>`}
+                    </button>
+                  )}
+                  {currentPage < voteRes.totalPages - 1 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        getAuthorizedVotesPage(
+                          dispatch,
+                          setVotesData,
+                          setFilteredVotesHeadings,
+                          setVoteRes,
+                          setPages,
+                          voteRes.totalPages,
+                          votesLimit,
+                          setLoading
+                        );
+                        setCurrentPage(voteRes.totalPages);
+                        setCurrentPageTemp(voteRes.totalPages);
+                      }}
+                    >
+                      {`>|`}
                     </button>
                   )}
                 </div>

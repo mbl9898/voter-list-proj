@@ -106,7 +106,7 @@ const CreateTask = ({
         <h4 className="text-center">
           {updateTaskData ? "Update Task" : "Create Task"}
         </h4>
-        <Form onSubmit={onSubmit}>
+        <Form className="pb-5" onSubmit={onSubmit}>
           <Form.Group className="mb-3">
             <Form.Label>Select User Email</Form.Label>
             <Form.Control
@@ -158,7 +158,7 @@ const CreateTask = ({
           <div className="d-flex justify-content-center">
             <Button
               type="submit"
-              className="btn btn-primary btn-block w-50 mt-4 my-5"
+              className="btn btn-primary btn-block w-50 mt-4"
             >
               {updateTaskData ? "Update Task" : "Create Task"}
             </Button>

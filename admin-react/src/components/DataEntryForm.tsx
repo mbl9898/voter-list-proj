@@ -106,7 +106,7 @@ const DataEntryForm = ({
     <>
       {loading && <Loading />}
       {!loading && (
-        <Form>
+        <Form className="pb-5">
           <div className="row">
             {!forRejectedVotes && <h3 className="text-center p-5">Add Vote</h3>}
             <div

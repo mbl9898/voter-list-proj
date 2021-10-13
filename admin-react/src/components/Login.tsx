@@ -58,7 +58,7 @@ const Login = () => {
             <Card.Body>
               <h2 className="text-center mb-4">Log In</h2>
               {error && <Alert variant="danger">{error}</Alert>}
-              <Form onSubmit={onSubmit}>
+              <Form className="pb-5" onSubmit={onSubmit}>
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />

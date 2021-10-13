@@ -70,7 +70,7 @@ const BlockCodeEntryForm = ({
                 </Alert>
               </div>
             )}
-            <Form>
+            <Form className="pb-5">
               <div className="row">
                 <div className="col col-xs-12 col-sm-4 p-2">
                   <Form.Group id="username">
@@ -142,7 +142,7 @@ const BlockCodeEntryForm = ({
               <hr />
               <div className="d-flex justify-content-center">
                 <Button
-                  className="m-1 w-50 mt-4 my-5"
+                  className="m-1 w-50 mt-4"
                   disabled={loading}
                   onClick={(e: any) => {
                     onSubmit(e);
@@ -152,7 +152,7 @@ const BlockCodeEntryForm = ({
                   {loading && <Loading variant="warning" />}
                 </Button>
                 <Button
-                  className="m-1 w-25 mt-4 my-5"
+                  className="m-1 w-25 mt-4"
                   variant="danger"
                   onClick={() => {
                     setData(userEntryFormInitial);

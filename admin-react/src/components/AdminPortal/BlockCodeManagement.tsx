@@ -149,7 +149,7 @@ const BlockCodeManagement = () => {
                                       "Are you sure you want to delete this Block Code?"
                                     }
                                     triggerButtonContent="delete"
-                                    triggerButtonVarient="danger"
+                                    triggerButtonVariant="danger"
                                     onSubmit={() => {
                                       onSubmit(blockCode);
                                     }}

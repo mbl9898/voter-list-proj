@@ -106,7 +106,7 @@ const TasksTable = ({
                                 "Are you sure you want to delete this Task?"
                               }
                               triggerButtonContent="delete"
-                              triggerButtonVarient="danger"
+                              triggerButtonVariant="danger"
                               onSubmit={() => {
                                 onSubmit(task);
                               }}

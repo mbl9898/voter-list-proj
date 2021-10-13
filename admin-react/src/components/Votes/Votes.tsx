@@ -15,7 +15,12 @@ const Votes = () => {
           voteUpdateForm={voteUpdateForm}
         />
       )}
-      {voteUpdateForm && <VotesUpdateForm voteUpdateData={voteUpdateData} />}
+      {voteUpdateForm && (
+        <VotesUpdateForm
+          voteUpdateData={voteUpdateData}
+          setVoteUpdateForm={setVoteUpdateForm}
+        />
+      )}
     </div>
   );
 };

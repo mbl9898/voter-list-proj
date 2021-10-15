@@ -49,7 +49,7 @@ export const getAllTasks = async (
 export const getTaskFile = async (fileName: string) => {
   const res = await TaskService.getTaskFile(fileName);
   window.location.assign(
-    (process.env.REACT_APP_API_IS_DEV
+    (process.env.REACT_APP_API_IS_DEV === "true"
       ? "http://localhost:5000/"
       : "https://dataentry.alabrar.pk/") + res.path
   );

@@ -3,6 +3,7 @@ import { uploadData } from './helpers/uploadData';
 import { deleteData } from './helpers/deleteData';
 import { updateVoteData } from './helpers/updateVoteData';
 import { getPages } from './helpers/getPages';
+import { searchAuthorizedVotes } from './helpers/searchAuthorizedVotes';
 
 export const authorized = {
   getData,
@@ -10,6 +11,7 @@ export const authorized = {
   deleteData,
   updateVoteData,
   getPages,
+  searchAuthorizedVotes,
 };
 
 export const getAuthorizedVoteFields = (req) => {

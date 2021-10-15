@@ -9,7 +9,6 @@ import {
 } from '../../../controllers/authorized';
 import { paginatedResults } from 'middlewares/pagination';
 import { AuthorizedSchema } from 'schemas/authorized';
-import { searchResults } from 'middlewares/search';
 
 const router = express.Router();
 

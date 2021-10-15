@@ -9,17 +9,22 @@ import {
 } from '../../../controllers/authorized';
 import { paginatedResults } from 'middlewares/pagination';
 import { AuthorizedSchema } from 'schemas/authorized';
+import { searchResults } from 'middlewares/search';
 
 const router = express.Router();
 
 router.get('/', isAuthorized(roles.dataViewer), authorized.getData);
 router.get(
   '/page',
-  isAuthorized(roles.dataViewer),
+  isAuthorized(roles.admin),
   paginatedResults(AuthorizedSchema),
   authorized.getPages,
 );
-
+router.get(
+  '/search',
+  isAuthorized(roles.admin),
+  authorized.searchAuthorizedVotes,
+);
 router.post(
   '/',
   (req, res, next) => {

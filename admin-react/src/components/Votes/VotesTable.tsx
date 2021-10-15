@@ -1,7 +1,10 @@
 import { Fragment, SetStateAction, useState } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
-import { getAuthorizedVotesPage } from "../../helpers/votesHelper";
+import {
+  getAuthorizedVotesPage,
+  getSearchedAuthorizedVotes,
+} from "../../helpers/votesHelper";
 import { VotesModel } from "../../interfaces/VotesModel";
 import AuthorizedService from "../../services/AuthorizedService";
 import { setMessage, setMessageVariant } from "../../store";
@@ -24,6 +27,8 @@ const VotesTable = ({
   const votesLimit = 50;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageTemp, setCurrentPageTemp] = useState(1);
+  // const [searchOptions, setSearchOptions] = useState<string[] | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
   const [voteRes, setVoteRes] = useState<any>({});
@@ -45,7 +50,6 @@ const VotesTable = ({
     getAuthorizedVotesPage(
       dispatch,
       setVotesData,
-      setFilteredVotesHeadings,
       setVoteRes,
       currentPage,
       votesLimit,
@@ -55,16 +59,19 @@ const VotesTable = ({
   const onSubmit = (vote: VotesModel) => {
     vote._id && deleteAuthorizedVote(vote._id);
   };
+
   useEffect(() => {
-    getAuthorizedVotesPage(
-      dispatch,
-      setVotesData,
-      setFilteredVotesHeadings,
-      setVoteRes,
-      currentPage,
-      votesLimit,
-      setLoading
-    );
+    !searchTerm &&
+      getAuthorizedVotesPage(
+        dispatch,
+        setVotesData,
+        setVoteRes,
+        currentPage,
+        votesLimit,
+        setLoading,
+        setFilteredVotesHeadings
+        // setSearchOptions
+      );
   }, [voteUpdateForm, currentPage]);
   return (
     <>
@@ -74,25 +81,60 @@ const VotesTable = ({
           {(!votesData || (votesData && !votesData[0])) && (
             <h5 className="text-center my-3">No Authorized Votes Data</h5>
           )}
-          {votesData && votesData[0] && (
+          {votesData![0] && (
             <div className="pb-5">
               <h5 className="text-center my-3">Authorized Votes</h5>
+              {/* <div className="input-group mb-3">
+                <select
+                  className="form-select"
+                  style={{ maxWidth: 10 + "rem" }}
+                  required
+                >
+                  {searchOptions!.map((heading, index) => {
+                    return <option key={index}>{heading}</option>;
+                  })}
+                </select> */}
+              <input
+                className="form-control"
+                type="search"
+                placeholder="Search..."
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                }}
+                onKeyUp={(event) => {
+                  event.preventDefault();
+                  if (event.key === "Enter") {
+                    setLoading(true);
+                    getSearchedAuthorizedVotes(
+                      dispatch,
+                      setVotesData,
+                      setVoteRes,
+                      searchTerm,
+                      1,
+                      votesLimit,
+                      setLoading
+                    );
+                    setCurrentPage(1);
+                  }
+                }}
+              />
+              {/* </div> */}
               <div className="table-responsive">
                 <table className="table">
                   <thead>
                     <tr>
-                      {filteredVotesHeadings &&
-                        filteredVotesHeadings.map(
-                          (heading: string, index: number) => (
-                            <th className="text-center" key={index} scope="col">
-                              {heading}
-                            </th>
-                          )
-                        )}
+                      {filteredVotesHeadings?.map(
+                        (heading: string, index: number) => (
+                          <th className="text-center" key={index} scope="col">
+                            {heading}
+                          </th>
+                        )
+                      )}
                     </tr>
                   </thead>
                   <tbody>
-                    {votesData.map((vote: VotesModel, index: number) => {
+                    {votesData?.map((vote: VotesModel, index: number) => {
                       return (
                         <Fragment key={index}>
                           <tr
@@ -181,15 +223,25 @@ const VotesTable = ({
                       className="btn btn-primary mx-2 my-3"
                       onClick={() => {
                         setLoading(true);
-                        getAuthorizedVotesPage(
-                          dispatch,
-                          setVotesData,
-                          setFilteredVotesHeadings,
-                          setVoteRes,
-                          1,
-                          votesLimit,
-                          setLoading
-                        );
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            searchTerm,
+                            1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            1,
+                            votesLimit,
+                            setLoading
+                          );
                         setCurrentPage(1);
                         setCurrentPageTemp(1);
                       }}
@@ -202,16 +254,25 @@ const VotesTable = ({
                       className="btn btn-primary mx-2 my-3"
                       onClick={() => {
                         setLoading(true);
-                        getAuthorizedVotesPage(
-                          dispatch,
-                          setVotesData,
-                          setFilteredVotesHeadings,
-                          setVoteRes,
-
-                          currentPage - 1,
-                          votesLimit,
-                          setLoading
-                        );
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            searchTerm,
+                            currentPage - 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPage - 1,
+                            votesLimit,
+                            setLoading
+                          );
                         setCurrentPage((prevValue) => {
                           setCurrentPageTemp(prevValue - 1);
                           return prevValue - 1;
@@ -230,16 +291,25 @@ const VotesTable = ({
                     onKeyUp={(event) => {
                       if (event.key === "Enter") {
                         setLoading(true);
-                        getAuthorizedVotesPage(
-                          dispatch,
-                          setVotesData,
-                          setFilteredVotesHeadings,
-                          setVoteRes,
-
-                          currentPageTemp,
-                          votesLimit,
-                          setLoading
-                        );
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            searchTerm,
+                            currentPageTemp,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPageTemp,
+                            votesLimit,
+                            setLoading
+                          );
                         setCurrentPage(currentPageTemp);
                       }
                     }}
@@ -249,15 +319,25 @@ const VotesTable = ({
                       className="btn btn-primary mx-2 my-3"
                       onClick={() => {
                         setLoading(true);
-                        getAuthorizedVotesPage(
-                          dispatch,
-                          setVotesData,
-                          setFilteredVotesHeadings,
-                          setVoteRes,
-                          currentPage + 1,
-                          votesLimit,
-                          setLoading
-                        );
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            searchTerm,
+                            currentPage + 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPage + 1,
+                            votesLimit,
+                            setLoading
+                          );
                         setCurrentPage((prevValue) => {
                           setCurrentPageTemp(prevValue + 1);
                           return prevValue + 1;
@@ -272,16 +352,25 @@ const VotesTable = ({
                       className="btn btn-primary mx-2 my-3"
                       onClick={() => {
                         setLoading(true);
-                        getAuthorizedVotesPage(
-                          dispatch,
-                          setVotesData,
-                          setFilteredVotesHeadings,
-                          setVoteRes,
-
-                          voteRes.totalPages,
-                          votesLimit,
-                          setLoading
-                        );
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            searchTerm,
+                            voteRes.totalPages,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            voteRes.totalPages,
+                            votesLimit,
+                            setLoading
+                          );
                         setCurrentPage(voteRes.totalPages);
                         setCurrentPageTemp(voteRes.totalPages);
                       }}

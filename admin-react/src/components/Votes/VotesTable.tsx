@@ -192,7 +192,7 @@ const VotesTable = ({
                                   setVoteUpdateData(
                                     !voteUpdateForm ? vote : null
                                   );
-                                  setVoteUpdateForm(!voteUpdateForm);
+                                  setVoteUpdateForm((prevV) => !prevV);
                                 }}
                               >
                                 Update

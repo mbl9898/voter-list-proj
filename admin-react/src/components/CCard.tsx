@@ -9,7 +9,6 @@ import {
 import UnAuthorizedModel from "../services/UnAuthorizedModel";
 import { setCurrentRejectedVote } from "../store";
 import { useAppDispatch } from "../store/hooks";
-import VoteDisplayModal from "./Authorize/VoteDisplayModal";
 
 interface Props {
   title?: string;

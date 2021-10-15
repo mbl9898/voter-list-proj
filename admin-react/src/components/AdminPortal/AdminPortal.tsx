@@ -11,23 +11,22 @@ const AdminPortal = () => {
     useState<boolean>(false);
   const [taskManagement, setTaskManagement] = useState<boolean>(false);
   const [paymentManagement, setPaymentManagement] = useState<boolean>(false);
+  const [reports, setReports] = useState<boolean>(false);
 
   return (
     <>
       <AdminPortalRoutes
-        userManagement={userManagement}
-        blockCodeManagement={blockCodeManagement}
-        taskManagement={taskManagement}
-        paymentManagement={paymentManagement}
         setUserManagement={setUserManagement}
         setBlockCodeManagement={setBlockCodeManagement}
         setTaskManagement={setTaskManagement}
         setPaymentManagement={setPaymentManagement}
+        setReports={setReports}
       />
       {userManagement && <UserManagement />}
       {blockCodeManagement && <BlockCodeManagement />}
       {taskManagement && <TaskManagement />}
       {paymentManagement && <PaymentManagement />}
+      {reports && <PaymentManagement />}
     </>
   );
 };

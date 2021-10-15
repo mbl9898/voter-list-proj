@@ -141,7 +141,7 @@ const PaymentTable = ({
                                   );
 
                               setPaymentEntryForm
-                                ? setPaymentEntryForm(!paymentEntryForm)
+                                ? setPaymentEntryForm((prevV) => !prevV)
                                 : console.log(
                                     new Error("setPaymentEntryForm issue")
                                   );

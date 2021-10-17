@@ -24,13 +24,14 @@ export default class AuthorizedService {
     }
   }
   static async getAuthorizedSearch(
+    searchField: string,
     search: string | number,
     pageNo: number,
     voteLimit: number
   ) {
     try {
       const res = await ApiService.get(
-        `${AuthorizedService.baseUrl[0]}/search?search=${search}&page=${pageNo}&limit=${voteLimit}`
+        `${AuthorizedService.baseUrl[0]}/search?search=${search}&searchField=${searchField}&page=${pageNo}&limit=${voteLimit}`
       );
       return res;
     } catch (error) {

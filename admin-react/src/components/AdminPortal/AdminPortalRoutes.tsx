@@ -1,35 +1,30 @@
 import React, { Dispatch, SetStateAction } from "react";
 
 interface Props {
-  userManagement: boolean;
-  blockCodeManagement: boolean;
-  taskManagement: boolean;
-  paymentManagement: boolean;
   setUserManagement: Dispatch<SetStateAction<boolean>>;
   setBlockCodeManagement: Dispatch<SetStateAction<boolean>>;
   setTaskManagement: Dispatch<SetStateAction<boolean>>;
   setPaymentManagement: Dispatch<SetStateAction<boolean>>;
+  setReports: Dispatch<SetStateAction<boolean>>;
 }
 
 const AdminPortalRoutes = ({
-  userManagement,
-  blockCodeManagement,
-  taskManagement,
-  paymentManagement,
   setUserManagement,
   setBlockCodeManagement,
   setTaskManagement,
   setPaymentManagement,
+  setReports,
 }: Props) => {
   return (
     <div className="d-flex justify-content-center m-4">
       <button
         className="btn btn-primary mx-2"
         onClick={() => {
-          setUserManagement(!userManagement);
+          setUserManagement((prevV) => !prevV);
           setBlockCodeManagement(false);
           setTaskManagement(false);
           setPaymentManagement(false);
+          setReports(false);
         }}
       >
         User Management
@@ -37,10 +32,11 @@ const AdminPortalRoutes = ({
       <button
         className="btn btn-primary mx-2"
         onClick={() => {
-          setBlockCodeManagement(!blockCodeManagement);
+          setBlockCodeManagement((prevV) => !prevV);
           setUserManagement(false);
           setTaskManagement(false);
           setPaymentManagement(false);
+          setReports(false);
         }}
       >
         Block Code Management
@@ -48,10 +44,11 @@ const AdminPortalRoutes = ({
       <button
         className="btn btn-primary mx-2"
         onClick={() => {
-          setTaskManagement(!taskManagement);
+          setTaskManagement((prevV) => !prevV);
           setUserManagement(false);
           setBlockCodeManagement(false);
           setPaymentManagement(false);
+          setReports(false);
         }}
       >
         Task Management
@@ -59,13 +56,26 @@ const AdminPortalRoutes = ({
       <button
         className="btn btn-primary mx-2"
         onClick={() => {
-          setPaymentManagement(!paymentManagement);
+          setPaymentManagement((prevV) => !prevV);
+          setTaskManagement(false);
+          setUserManagement(false);
+          setBlockCodeManagement(false);
+          setReports(false);
+        }}
+      >
+        Payment Management
+      </button>
+      <button
+        className="btn btn-primary mx-2"
+        onClick={() => {
+          setReports((prevV) => !prevV);
+          setPaymentManagement(false);
           setTaskManagement(false);
           setUserManagement(false);
           setBlockCodeManagement(false);
         }}
       >
-        Payment Management
+        Reports
       </button>
     </div>
   );

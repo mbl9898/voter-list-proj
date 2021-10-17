@@ -54,7 +54,7 @@ const BlockCodeManagement = () => {
           <button
             className="btn btn-primary mx-2"
             onClick={() => {
-              setBlockCodeEntryForm(!blockCodeEntryForm);
+              setBlockCodeEntryForm((prevV) => !prevV);
             }}
           >
             Create Block Code

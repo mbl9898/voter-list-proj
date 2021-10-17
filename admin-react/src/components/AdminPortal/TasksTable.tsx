@@ -82,7 +82,7 @@ const TasksTable = ({
                               className="btn btn-primary"
                               onClick={() => {
                                 setUpdateTaskData(!taskEntryForm ? task : null);
-                                setTaskEntryForm(!taskEntryForm);
+                                setTaskEntryForm((prevV) => !prevV);
                               }}
                             >
                               update

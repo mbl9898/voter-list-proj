@@ -1,3 +1,4 @@
+import { Dispatch, SetStateAction } from "react";
 import {
   headings,
   userEntryFormInitial,
@@ -5,12 +6,19 @@ import {
 import { User } from "../../interfaces/User";
 // import CModal from "./CModal";
 
+interface Props {
+  users: User[];
+  setUpdateUserData: Dispatch<SetStateAction<User>>;
+  userEntryForm: boolean;
+  setUserEntryForm: Dispatch<SetStateAction<boolean>>;
+}
+
 const UserDataTable = ({
   users,
   setUpdateUserData,
   userEntryForm,
   setUserEntryForm,
-}: any) => {
+}: Props) => {
   //   const onSubmit = (user: any) => {};
   return (
     <div>
@@ -44,7 +52,7 @@ const UserDataTable = ({
                         setUpdateUserData(
                           !userEntryForm ? user : userEntryFormInitial
                         );
-                        setUserEntryForm(!userEntryForm);
+                        setUserEntryForm((prevV) => !prevV);
                       }}
                     >
                       update

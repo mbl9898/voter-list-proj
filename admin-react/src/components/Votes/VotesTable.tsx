@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import {
   getAuthorizedVotesPage,
   getSearchedAuthorizedVotes,
+  onVotesSearch,
 } from "../../helpers/votesHelper";
 import { VotesModel } from "../../interfaces/VotesModel";
 import AuthorizedService from "../../services/AuthorizedService";
@@ -27,7 +28,8 @@ const VotesTable = ({
   const votesLimit = 50;
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageTemp, setCurrentPageTemp] = useState(1);
-  // const [searchOptions, setSearchOptions] = useState<string[] | null>(null);
+  const [searchOptions, setSearchOptions] = useState<string[] | null>(null);
+  const [currentSearchField, setCurrentSearchField] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
@@ -69,8 +71,8 @@ const VotesTable = ({
         currentPage,
         votesLimit,
         setLoading,
-        setFilteredVotesHeadings
-        // setSearchOptions
+        setFilteredVotesHeadings,
+        setSearchOptions
       );
   }, [voteUpdateForm, currentPage]);
   return (
@@ -84,42 +86,44 @@ const VotesTable = ({
           {votesData![0] && (
             <div className="pb-5">
               <h5 className="text-center my-3">Authorized Votes</h5>
-              {/* <div className="input-group mb-3">
+              <div className="input-group mb-3">
                 <select
                   className="form-select"
                   style={{ maxWidth: 10 + "rem" }}
+                  value={currentSearchField}
+                  onChange={(e: any) => {
+                    setCurrentSearchField(e.target.value);
+                  }}
                   required
                 >
-                  {searchOptions!.map((heading, index) => {
+                  <option>Select Field</option>
+                  {searchOptions?.map((heading, index) => {
                     return <option key={index}>{heading}</option>;
                   })}
-                </select> */}
-              <input
-                className="form-control"
-                type="search"
-                placeholder="Search..."
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }}
-                onKeyUp={(event) => {
-                  event.preventDefault();
-                  if (event.key === "Enter") {
-                    setLoading(true);
-                    getSearchedAuthorizedVotes(
+                </select>
+                <input
+                  className="form-control"
+                  type="search"
+                  placeholder="Search..."
+                  value={searchTerm}
+                  onChange={(e) => {
+                    setSearchTerm(e.target.value);
+                  }}
+                  onKeyUp={(e) => {
+                    onVotesSearch(
+                      e,
                       dispatch,
                       setVotesData,
                       setVoteRes,
+                      setCurrentPage,
+                      currentSearchField,
                       searchTerm,
-                      1,
                       votesLimit,
                       setLoading
                     );
-                    setCurrentPage(1);
-                  }
-                }}
-              />
-              {/* </div> */}
+                  }}
+                />
+              </div>
               <div className="table-responsive">
                 <table className="table">
                   <thead>
@@ -192,7 +196,7 @@ const VotesTable = ({
                                   setVoteUpdateData(
                                     !voteUpdateForm ? vote : null
                                   );
-                                  setVoteUpdateForm(!voteUpdateForm);
+                                  setVoteUpdateForm((prevV) => !prevV);
                                 }}
                               >
                                 Update
@@ -228,6 +232,7 @@ const VotesTable = ({
                             dispatch,
                             setVotesData,
                             setVoteRes,
+                            currentSearchField,
                             searchTerm,
                             1,
                             votesLimit,
@@ -259,6 +264,7 @@ const VotesTable = ({
                             dispatch,
                             setVotesData,
                             setVoteRes,
+                            currentSearchField,
                             searchTerm,
                             currentPage - 1,
                             votesLimit,
@@ -296,6 +302,7 @@ const VotesTable = ({
                             dispatch,
                             setVotesData,
                             setVoteRes,
+                            currentSearchField,
                             searchTerm,
                             currentPageTemp,
                             votesLimit,
@@ -324,6 +331,7 @@ const VotesTable = ({
                             dispatch,
                             setVotesData,
                             setVoteRes,
+                            currentSearchField,
                             searchTerm,
                             currentPage + 1,
                             votesLimit,
@@ -357,6 +365,7 @@ const VotesTable = ({
                             dispatch,
                             setVotesData,
                             setVoteRes,
+                            currentSearchField,
                             searchTerm,
                             voteRes.totalPages,
                             votesLimit,

@@ -2,17 +2,46 @@ import { Dispatch, SetStateAction } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
 import AuthorizedService from "../services/AuthorizedService";
 import { setMessage, setMessageVariant } from "../store";
+let headings = [
+  "blockCode",
+  "voteSNo",
+  "familyNo",
+  "gender",
+  "name",
+  "fatherHusbandName",
+  "maritalStatus",
+  "cnic",
+  "age",
+  "houseNo",
+  "street",
+  "phase",
+  "sector",
+  "lane",
+  "boulevardAvenue",
+  "otherArea",
+  "constituencyName",
+  "moza",
+  "dehya",
+  "city",
+  "patwarHalka",
+  "tapaydar",
+  "tehseel",
+  "talka",
+  "district",
+  "unionCouncil",
+  "bookNo",
+  "constituency",
+];
 
 const createFilteredVotesHeadings = async (
-  votesData: VotesModel[],
-  setFilteredVotesHeadings: Dispatch<SetStateAction<string[] | null>>
-  // setSearchOptions: Dispatch<SetStateAction<string[] | null>>
+  setFilteredVotesHeadings: Dispatch<SetStateAction<string[] | null>>,
+  setSearchOptions: Dispatch<SetStateAction<string[] | null>>
 ) => {
-  let resHeadings = votesData[0] && Object.keys(votesData[0]);
+  // let resHeadings = votesData[0] && Object.keys(votesData[0]);
   let sentenceCaseHeadings: string[] = [];
-  if (resHeadings) {
-    resHeadings.unshift("Sr");
-    resHeadings = resHeadings.filter(
+  if (headings) {
+    headings.unshift("Sr");
+    headings = headings.filter(
       (heading: string) =>
         heading !== "filePath" &&
         heading !== "_id" &&
@@ -21,15 +50,15 @@ const createFilteredVotesHeadings = async (
         heading !== "verifiedBy" &&
         heading !== "__v"
     );
-    resHeadings.forEach((heading: string) => {
+    headings.forEach((heading: string) => {
       const result = heading.replace(/([A-Z])/g, " $1");
       sentenceCaseHeadings.push(
         result.charAt(0).toUpperCase() + result.slice(1)
       );
     });
     setFilteredVotesHeadings(sentenceCaseHeadings);
-    // resHeadings = resHeadings.filter((heading: string) => heading !== "Sr");
-    // setSearchOptions(resHeadings);
+    headings = headings.filter((heading: string) => heading !== "Sr");
+    setSearchOptions(headings);
   }
 };
 
@@ -40,8 +69,8 @@ export const getAuthorizedVotesPage = async (
   pageNo: number,
   limit: number,
   setLoading?: Dispatch<SetStateAction<boolean>>,
-  setFilteredVotesHeadings?: Dispatch<SetStateAction<string[] | null>>
-  // setSearchOptions?: Dispatch<SetStateAction<string[] | null>>
+  setFilteredVotesHeadings?: Dispatch<SetStateAction<string[] | null>>,
+  setSearchOptions?: Dispatch<SetStateAction<string[] | null>>
 ) => {
   const res = await AuthorizedService.getAuthorizedPage(pageNo, limit);
   console.log(res);
@@ -55,12 +84,8 @@ export const getAuthorizedVotesPage = async (
 
   if (res.results.results[0]) {
     setFilteredVotesHeadings &&
-      // setSearchOptions &&
-      createFilteredVotesHeadings(
-        res.results.results,
-        setFilteredVotesHeadings
-        // setSearchOptions
-      );
+      setSearchOptions &&
+      createFilteredVotesHeadings(setFilteredVotesHeadings, setSearchOptions);
     setVotesData(res.results.results);
     setVoteRes({
       next: res.results.next,
@@ -75,12 +100,14 @@ export const getSearchedAuthorizedVotes = async (
   dispatch: Dispatch<{ payload: any; type: string }>,
   setVotesData: Dispatch<SetStateAction<VotesModel[] | null>>,
   setVoteRes: Dispatch<SetStateAction<any>>,
+  searchField: string,
   searchTerm: string | number,
   pageNo: number,
   limit: number,
   setLoading?: Dispatch<SetStateAction<boolean>>
 ) => {
   const res = await AuthorizedService.getAuthorizedSearch(
+    searchField,
     searchTerm,
     pageNo,
     limit
@@ -103,5 +130,39 @@ export const getSearchedAuthorizedVotes = async (
       totalPages: res.results.totalPages,
     });
     setLoading && setLoading(false);
+  }
+};
+
+export const onVotesSearch = (
+  event: any,
+  dispatch: Dispatch<{ payload: any; type: string }>,
+  setVotesData: Dispatch<SetStateAction<VotesModel[] | null>>,
+  setVoteRes: Dispatch<SetStateAction<any>>,
+  setCurrentPage: Dispatch<SetStateAction<number>>,
+  searchField: string,
+  searchTerm: string | number,
+  votesLimit: number,
+  setLoading?: Dispatch<SetStateAction<boolean>>
+) => {
+  event.preventDefault();
+  if (event.key === "Enter") {
+    if (!searchField) {
+      dispatch(setMessageVariant("danger"));
+      dispatch(setMessage("Search Field not Selected"));
+      return;
+    }
+    console.log(searchField);
+    setLoading && setLoading(true);
+    getSearchedAuthorizedVotes(
+      dispatch,
+      setVotesData,
+      setVoteRes,
+      searchField,
+      searchTerm,
+      1,
+      votesLimit,
+      setLoading
+    );
+    setCurrentPage(1);
   }
 };

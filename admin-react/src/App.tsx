@@ -1,15 +1,15 @@
-import { useEffect, useState } from 'react';
-import AppLoading from './components/AppLoading';
-import NavLinks from './components/NavLinks';
-import Navbar from './components/Navbar';
-import './App.scss';
-import { useAppDispatch, useAppSelector } from './store/hooks';
-import { BrowserRouter as Router } from 'react-router-dom';
-import { getUnAuthorizedList } from './helpers/authorizeHelper';
-import Routes from './components/Routes';
-import Message from './components/Message';
-import { User } from './interfaces/User';
-import { StoreState } from './store/index';
+import { useEffect, useState } from "react";
+import AppLoading from "./components/AppLoading";
+import NavLinks from "./components/NavLinks";
+import Navbar from "./components/Navbar";
+import "./App.scss";
+import { useAppDispatch, useAppSelector } from "./store/hooks";
+import { BrowserRouter as Router } from "react-router-dom";
+import { getUnAuthorizedList } from "./helpers/authorizeHelper";
+import Routes from "./components/Routes";
+import Message from "./components/Message";
+import { User } from "./interfaces/User";
+import { StoreState } from "./store/index";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -21,18 +21,18 @@ const App = () => {
     (state: StoreState) => state.app.message
   );
   const messageVariant:
-    | 'primary'
-    | 'secondary'
-    | 'success'
-    | 'danger'
-    | 'warning'
-    | 'info'
-    | 'light'
-    | 'dark' = useAppSelector((state: StoreState) => state.app.messageVariant);
+    | "primary"
+    | "secondary"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "light"
+    | "dark" = useAppSelector((state: StoreState) => state.app.messageVariant);
   useEffect(() => {
     setLoading(true);
     currentUser &&
-      currentUser.role === 'admin' &&
+      currentUser.role === "admin" &&
       getUnAuthorizedList(dispatch);
     setLoading(false);
   }, [currentUser]);
@@ -45,7 +45,7 @@ const App = () => {
             <Navbar />
             {currentUser !== null && <NavLinks />}
             {message && (
-              <Message msg={message} variant={messageVariant} id='msg' />
+              <Message msg={message} variant={messageVariant} id="msg" />
             )}
             <Routes />
           </>

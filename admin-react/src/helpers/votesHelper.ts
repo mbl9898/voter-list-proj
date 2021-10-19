@@ -70,9 +70,12 @@ export const getAuthorizedVotesPage = async (
   limit: number,
   setLoading?: Dispatch<SetStateAction<boolean>>,
   setFilteredVotesHeadings?: Dispatch<SetStateAction<string[] | null>>,
-  setSearchOptions?: Dispatch<SetStateAction<string[] | null>>
+  setSearchOptions?: Dispatch<SetStateAction<string[] | null>>,
+  source?: any
 ) => {
-  const res = await AuthorizedService.getAuthorizedPage(pageNo, limit);
+  const res = await AuthorizedService.getAuthorizedPage(pageNo, limit, {
+    cancelToken: source?.token,
+  });
   console.log(res);
 
   if (res && !res.success) {
@@ -82,7 +85,7 @@ export const getAuthorizedVotesPage = async (
     return;
   }
 
-  if (res.results.results[0]) {
+  if (res?.results.results[0]) {
     setFilteredVotesHeadings &&
       setSearchOptions &&
       createFilteredVotesHeadings(setFilteredVotesHeadings, setSearchOptions);

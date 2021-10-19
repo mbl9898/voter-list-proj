@@ -12,10 +12,11 @@ export class BlockCodeService {
       console.log(error);
     }
   }
-  static async getBlockCodeByNumber(blockCodeNumber: number) {
+  static async getBlockCodeByNumber(blockCodeNumber: number, config?: any) {
     try {
       const res = await ApiService.get(
-        `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`
+        `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`,
+        { ...config }
       );
       return res;
     } catch (error) {

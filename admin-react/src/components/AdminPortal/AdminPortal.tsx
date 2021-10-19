@@ -4,6 +4,7 @@ import BlockCodeManagement from "./BlockCodeManagement";
 import TaskManagement from "./TaskManagement";
 import PaymentManagement from "./PaymentManagement";
 import AdminPortalRoutes from "./AdminPortalRoutes";
+import Reports from "./Reports";
 
 const AdminPortal = () => {
   const [userManagement, setUserManagement] = useState<boolean>(false);
@@ -26,7 +27,7 @@ const AdminPortal = () => {
       {blockCodeManagement && <BlockCodeManagement />}
       {taskManagement && <TaskManagement />}
       {paymentManagement && <PaymentManagement />}
-      {reports && <PaymentManagement />}
+      {reports && <Reports />}
     </>
   );
 };

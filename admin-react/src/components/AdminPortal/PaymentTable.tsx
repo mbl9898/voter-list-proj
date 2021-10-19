@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
 import {
@@ -86,8 +86,10 @@ const PaymentTable = ({
     payment._id && deletePayment(payment._id);
   };
   useEffect(() => {
-    currentUserPayments && dispatch(setFilteredPaymentHeadings([]));
-    currentUserPayments && dispatch(setPayments([]));
+    if (currentUserPayments) {
+      dispatch(setFilteredPaymentHeadings([]));
+      dispatch(setPayments([]));
+    }
     !currentUserPayments && getAllPayments(dispatch);
   }, []);
   return (
@@ -108,7 +110,7 @@ const PaymentTable = ({
             )}
             <table className="table">
               <thead>
-                <tr>
+                <tr style={{ borderBottom: "1px solid" }}>
                   {paymentsHeadings &&
                     paymentsHeadings.map((heading: string, index: number) => (
                       <th className="text-center" key={index} scope="col">

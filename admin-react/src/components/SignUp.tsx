@@ -5,6 +5,7 @@ import {
   setIsLogInFormDisplay,
   setIsSignUpFormDisplay,
 } from "../store";
+import InputMask from "react-input-mask";
 import Loading from "./Loading";
 import { signUp } from "../helpers/apphelper";
 import { useHistory } from "react-router-dom";
@@ -13,6 +14,7 @@ import { useAppDispatch } from "../store/hooks";
 const SignUp = () => {
   const userNameRef = useRef<any>();
   const emailRef = useRef<any>();
+  const mobileNoRef = useRef<any>();
   const passwordRef = useRef<any>();
   const passwordConfirmRef = useRef<any>();
   const [error, setError] = useState("");
@@ -28,6 +30,7 @@ const SignUp = () => {
     await signUp(
       userNameRef,
       emailRef,
+      mobileNoRef,
       passwordRef,
       passwordConfirmRef,
       dispatch,
@@ -56,6 +59,17 @@ const SignUp = () => {
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />
+                </Form.Group>
+                <Form.Group id="cnic">
+                  <Form.Label>Mobile No.</Form.Label>
+                  <InputMask
+                    className="form-control"
+                    mask="99999-9999999"
+                    placeholder="92300-1112233 Format"
+                    name="mobileNo"
+                    ref={mobileNoRef}
+                    required
+                  />
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>

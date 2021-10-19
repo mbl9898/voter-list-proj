@@ -10,6 +10,7 @@ import SignUp from "./SignUp";
 import Tasks from "./Tasks/Tasks";
 import { StoreState } from "./../store/index";
 import Votes from "./Votes/Votes";
+import Profile from "./Profile";
 
 const Routes = () => {
   const currentUser = useAppSelector(
@@ -87,6 +88,17 @@ const Routes = () => {
         <Route path="/adminPortal" exact>
           {currentUser ? (
             <AdminPortal />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/login",
+              }}
+            />
+          )}
+        </Route>
+        <Route path="/profile" exact>
+          {currentUser ? (
+            <Profile />
           ) : (
             <Redirect
               to={{

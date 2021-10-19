@@ -102,7 +102,7 @@ const CreateTask = ({
   }, [updateTaskData]);
   return (
     <>
-      <Card className="m-4 p-4">
+      <Card className="m-4 p-4 card-shadow">
         <h4 className="text-center">
           {updateTaskData ? "Update Task" : "Create Task"}
         </h4>

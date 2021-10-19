@@ -16,15 +16,16 @@ const Dashboard = () => {
   );
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
-  const accuracy = Math.floor(
-    (dashboardData.approved /
-      (dashboardData.approved + dashboardData.rejected)) *
-      100
-  );
+  const accuracy =
+    dashboardData &&
+    Math.floor(
+      (dashboardData.approved /
+        (dashboardData.approved + dashboardData.rejected)) *
+        100
+    );
 
   useEffect(() => {
     const source = axios.CancelToken.source();
-
     try {
       setLoading(true);
       getUserProgressData(dispatch, source);
@@ -94,7 +95,7 @@ const Dashboard = () => {
                 <div>
                   <button
                     className="btn btn-danger"
-                    disabled={dashboardData.rejected === 0}
+                    disabled={dashboardData?.rejected === 0}
                     onClick={() => {
                       setRejectedVoteModal(true);
                     }}

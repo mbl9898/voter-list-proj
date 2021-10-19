@@ -4,7 +4,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const setDefaultBlockCode = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
 
   //Destructuring email, remember_me & password from body
   const { _id, defaultBlockCode } = req.body;
@@ -16,7 +16,7 @@ export const setDefaultBlockCode = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHROIZED,
+          code: UNAUTHORIZED,
           message: 'Wrong Credentials',
         },
       });

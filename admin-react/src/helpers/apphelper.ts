@@ -1,19 +1,6 @@
-import axios from "axios";
 import { Dispatch } from "react";
 import { ApiService } from "../services/ApiServices";
-// import { VotesModel } from "../interfaces/VotesModel";
-import {
-  setCurrentUser,
-  // setData,
-  setError,
-  // setHeadings,
-  setIsAccessDeniedDisplay,
-  // setIsDataLoading,
-  setIsSignUpFormDisplay,
-} from "../store";
-// import { auth, db } from "../firebase";
-
-export const uids = ["60fc2d09e269a2374ca5e82a"];
+import { setCurrentUser, setError, setIsAccessDeniedDisplay } from "../store";
 
 export const heading = [
   "sNo",
@@ -52,6 +39,7 @@ export const heading = [
 export const signUp = async (
   userNameRef: any,
   emailRef: any,
+  mobileNoRef: any,
   passwordRef: any,
   passwordConfirmRef: any,
   dispatch: Dispatch<{ payload: any; type: string }>,
@@ -71,6 +59,7 @@ export const signUp = async (
     .post("auth/register", {
       username: userNameRef.current.value,
       email: emailRef.current.value,
+      mobileNo: mobileNoRef.current.value,
       password: passwordRef.current.value,
       confirmPassword: passwordConfirmRef.current.value,
     })

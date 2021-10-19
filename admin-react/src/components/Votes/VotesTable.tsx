@@ -1,3 +1,4 @@
+import axios from "axios";
 import { Fragment, SetStateAction, useState } from "react";
 import { Dispatch } from "react";
 import { useEffect } from "react";
@@ -63,6 +64,7 @@ const VotesTable = ({
   };
 
   useEffect(() => {
+    const source = axios.CancelToken.source();
     !searchTerm &&
       getAuthorizedVotesPage(
         dispatch,
@@ -72,8 +74,12 @@ const VotesTable = ({
         votesLimit,
         setLoading,
         setFilteredVotesHeadings,
-        setSearchOptions
+        setSearchOptions,
+        source
       );
+    return () => {
+      source.cancel("axios request cancelled");
+    };
   }, [voteUpdateForm, currentPage]);
   return (
     <>

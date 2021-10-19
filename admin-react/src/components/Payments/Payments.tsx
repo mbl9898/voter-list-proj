@@ -10,8 +10,10 @@ import Loading from "../Loading";
 import { StoreState } from "../../store/index";
 import PaymentsSummaryTable from "./PaymentsSummaryTable";
 import PaymentSwitches from "./PaymentSwitches";
+import axios from "axios";
 
 const Payments = () => {
+  const source = axios.CancelToken.source();
   const [payments, setPayments] = useState<null | Payment[]>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isGridView, setIsGridView] = useState(true);
@@ -45,7 +47,9 @@ const Payments = () => {
   };
   const getPayments = async () => {
     try {
-      const res = await PaymentService.getCurrentUserPayments();
+      const res = await PaymentService.getCurrentUserPayments({
+        cancelToken: source.token,
+      });
       console.log(res);
       res.success && setPayments(res.data);
       res.success && calcEarnings(res.data);
@@ -100,7 +104,7 @@ const Payments = () => {
                           return (
                             <Card
                               key={index}
-                              className="d-flex justify-content-center p-4"
+                              className="d-flex justify-content-center p-4 card-shadow"
                             >
                               <p>Title: {payment.title}</p>
                               <p>Amount: {payment.amount}</p>

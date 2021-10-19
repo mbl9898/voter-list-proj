@@ -6,6 +6,7 @@ import { validate as validation } from '~/middlewares';
 
 const router = express.Router();
 
+router.get('/', profile.userData);
 //Patch route to password change
 //Validation middleware will validate old_password,new_password,confirm_password field before proceeding further
 router.patch(
@@ -49,7 +50,5 @@ router.get(
   isAuthorized(roles.admin),
   profile.getUserDataByEmail,
 );
-
-router.get('/', profile.userData);
 
 module.exports = router;

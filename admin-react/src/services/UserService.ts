@@ -1,5 +1,6 @@
-import { User } from "../interfaces/User";
 import { ApiService } from "./ApiServices";
+import { ResetPasswordModel } from "../components/ResetPassword";
+import { User } from "../interfaces/User";
 import UserModel from "./UserModel";
 export class UserService {
   static baseUrl = ["auth", "profile"];
@@ -60,6 +61,28 @@ export class UserService {
   static async updateUser(userData: User) {
     try {
       const res = await ApiService.put(`${UserService.baseUrl[0]}`, userData);
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async updateProfile(userData: { username: string; mobileNo: string }) {
+    try {
+      const res = await ApiService.put(
+        `${UserService.baseUrl[0]}/updateProfile`,
+        userData
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async resetPassword(passwordData: ResetPasswordModel) {
+    try {
+      const res = await ApiService.put(
+        `${UserService.baseUrl[0]}/reset-password`,
+        passwordData
+      );
       return res;
     } catch (error) {
       console.log(error);

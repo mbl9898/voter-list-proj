@@ -66,7 +66,9 @@ const VoteDisplayModal = ({
           <Modal.Header closeButton>
             {console.log(unauthorizedVote)}
             <Modal.Title>
-              {heading ? heading : unauthorizedVote.name}
+              {heading
+                ? heading
+                : `${unauthorizedVote.name} - ${unauthorizedVote.enteredBy?.username}`}
             </Modal.Title>
           </Modal.Header>
           <Modal.Body>

@@ -10,6 +10,7 @@ import SignUp from "./SignUp";
 import Tasks from "./Tasks/Tasks";
 import { StoreState } from "./../store/index";
 import Votes from "./Votes/Votes";
+import InvalidRoute from "./InvalidRoute";
 
 const Routes = () => {
   const currentUser = useAppSelector(
@@ -95,12 +96,14 @@ const Routes = () => {
             />
           )}
         </Route>
-
         <Route path="/signup" exact>
           <SignUp />
         </Route>
         <Route path="/login" exact>
           <Login />
+        </Route>
+        <Route path="*">
+          <InvalidRoute />
         </Route>
       </Switch>
     </>

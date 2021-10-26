@@ -24,6 +24,11 @@ router.get(
   isAuthorized(roles.admin),
   authorized.searchAuthorizedVotes,
 );
+router.get(
+  '/unique',
+  isAuthorized(roles.admin),
+  authorized.searchAuthorizedUniqueData,
+);
 router.post(
   '/',
   (req, res, next) => {

@@ -1,3 +1,4 @@
+import { DataAccessParamsModel } from "./../components/AdminPortal/DataAccess";
 import { VotesModel } from "../interfaces/VotesModel";
 import { ApiService } from "./ApiServices";
 import UnAuthorizedModel from "./UnAuthorizedModel";
@@ -32,6 +33,20 @@ export default class AuthorizedService {
     try {
       const res = await ApiService.get(
         `${AuthorizedService.baseUrl[0]}/search?search=${search}&searchField=${searchField}&page=${pageNo}&limit=${voteLimit}`
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getUniqueAuthorizedDataSearch(
+    // lastSearchField: string,
+    // lastSelectedValue: string | number,
+    reqData: DataAccessParamsModel
+  ) {
+    try {
+      const res = await ApiService.get(
+        `${AuthorizedService.baseUrl[0]}/unique?reqData=${reqData}`
       );
       return res;
     } catch (error) {

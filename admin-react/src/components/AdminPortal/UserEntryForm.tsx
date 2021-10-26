@@ -13,6 +13,7 @@ import { setMessage, setMessageVariant } from "../../store";
 import { useAppDispatch } from "../../store/hooks";
 import Loading from "../Loading";
 import TagInput from "../TagInput";
+import DataAccess from "./DataAccess";
 
 interface Props {
   updateUserData: null | User;
@@ -140,6 +141,7 @@ const BlockCodeEntryForm = ({
                 </div>
               </div>
               <hr />
+              <DataAccess />
               <div className="d-flex justify-content-center">
                 <Button
                   className="m-1 w-50 mt-4"

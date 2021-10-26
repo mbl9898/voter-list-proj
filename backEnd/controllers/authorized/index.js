@@ -4,6 +4,7 @@ import { deleteData } from './helpers/deleteData';
 import { updateVoteData } from './helpers/updateVoteData';
 import { getPages } from './helpers/getPages';
 import { searchAuthorizedVotes } from './helpers/searchAuthorizedVotes';
+import { searchAuthorizedUniqueData } from './helpers/searchAuthorizedUniqueData';
 
 export const authorized = {
   getData,
@@ -12,6 +13,7 @@ export const authorized = {
   updateVoteData,
   getPages,
   searchAuthorizedVotes,
+  searchAuthorizedUniqueData,
 };
 
 export const getAuthorizedVoteFields = (req) => {

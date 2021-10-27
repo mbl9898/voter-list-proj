@@ -39,14 +39,23 @@ export default class AuthorizedService {
       console.log(error);
     }
   }
-  static async getUniqueAuthorizedDataSearch(
-    // lastSearchField: string,
-    // lastSelectedValue: string | number,
-    reqData: DataAccessParamsModel
-  ) {
+  static async getUniqueAuthorizedDataSearch(reqData: DataAccessParamsModel) {
     try {
       const res = await ApiService.get(
-        `${AuthorizedService.baseUrl[0]}/unique?reqData=${reqData}`
+        `${AuthorizedService.baseUrl[0]}/unique?district=${reqData.district}
+        &city=${reqData.city}
+        &tehseel=${reqData.tehseel}
+        &constituency=${reqData.constituency}
+        &unionCouncil=${reqData.unionCouncil}
+        &constituencyName=${reqData.constituencyName}
+        &blockCode=${reqData.blockCode === null ? "" : reqData.blockCode}
+        &phase=${reqData.phase}
+        &sector=${reqData.sector}
+        &street=${reqData.street}
+        &gender=${reqData.gender}
+        &lane=${reqData.lane}
+        &boulevardAvenue=${reqData.boulevardAvenue}
+        `
       );
       return res;
     } catch (error) {

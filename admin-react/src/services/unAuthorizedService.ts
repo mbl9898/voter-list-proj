@@ -1,9 +1,9 @@
-import { VoteRejection } from "../interfaces/VoteRejection";
-import { ApiService } from "./ApiServices";
-import UnAuthorizedModel from "./UnAuthorizedModel";
+import { VoteRejection } from '../interfaces/VoteRejection';
+import { ApiService } from './ApiServices';
+import UnAuthorizedModel from './UnAuthorizedModel';
 
 export default class UnAuthorized {
-  static baseUrl = ["unauthorized"];
+  static baseUrl = ['unauthorized'];
   static async getUnAuthorized() {
     try {
       const data = await ApiService.get(UnAuthorized.baseUrl[0]);
@@ -15,7 +15,7 @@ export default class UnAuthorized {
   static async getRejectedVotes() {
     try {
       const res = await ApiService.get(
-        `${UnAuthorized.baseUrl[0]}/rejectedVotes`
+        `${UnAuthorized.baseUrl[0]}/rejectedVotes`,
       );
       return res.data;
     } catch (error) {
@@ -26,7 +26,7 @@ export default class UnAuthorized {
     try {
       const res = await ApiService.post(
         UnAuthorized.baseUrl[0],
-        newUnAuthorizedData
+        newUnAuthorizedData,
       );
       return res;
     } catch (error) {
@@ -37,7 +37,7 @@ export default class UnAuthorized {
     try {
       const data = await ApiService.put(
         `${UnAuthorized.baseUrl[0]}/updateRejectedVote`,
-        rejectedVoteData
+        rejectedVoteData,
       );
       return data;
     } catch (error) {
@@ -64,7 +64,7 @@ export default class UnAuthorized {
     try {
       const data = await ApiService.put(
         `${UnAuthorized.baseUrl[0]}/rejectVote`,
-        { id, rejections }
+        { id, rejections },
       );
       return data;
     } catch (error) {

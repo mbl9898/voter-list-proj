@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { memo, useState } from "react";
 import UserManagement from "./UserManagement";
 import BlockCodeManagement from "./BlockCodeManagement";
 import TaskManagement from "./TaskManagement";
@@ -13,7 +13,6 @@ const AdminPortal = () => {
   const [taskManagement, setTaskManagement] = useState<boolean>(false);
   const [paymentManagement, setPaymentManagement] = useState<boolean>(false);
   const [reports, setReports] = useState<boolean>(false);
-
   return (
     <>
       <AdminPortalRoutes
@@ -32,4 +31,4 @@ const AdminPortal = () => {
   );
 };
 
-export default AdminPortal;
+export default memo(AdminPortal);

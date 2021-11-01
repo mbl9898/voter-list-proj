@@ -22,7 +22,7 @@ export const searchAuthorizedUniqueData = async (req, res) => {
     } = req.query;
     const reqData = req.query;
     const findData = {};
-    const createFindData = () => {
+    const createExistingFindData = () => {
       for (const key in reqData) {
         if (Object.hasOwnProperty.call(reqData, key)) {
           const element = reqData[key];
@@ -32,7 +32,7 @@ export const searchAuthorizedUniqueData = async (req, res) => {
         }
       }
     };
-    createFindData();
+    createExistingFindData();
     console.log(findData);
 
     // console.log(reqData);
@@ -49,7 +49,7 @@ export const searchAuthorizedUniqueData = async (req, res) => {
       );
     }
     if (reqData.district.trim()) {
-      const authorizedData = await AuthorizedSchema.find(findData);
+      const authorizedData = await AuthorizedSchema.find(findData).lean();
       return res.json({
         status: OK,
         success: true,

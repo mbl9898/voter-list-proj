@@ -44,7 +44,7 @@ export const uploadData = async (req, res) => {
     const verifiedBy = req.user;
 
     const data = new AuthorizedSchema({
-      blockCode,
+      blockCode: +blockCode,
       voteSNo,
       familyNo,
       gender,

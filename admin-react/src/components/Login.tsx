@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { memo, useRef, useState } from "react";
 import { Form, Button, Card, Alert, Container } from "react-bootstrap";
 import {
   setCurrentUser,
@@ -97,4 +97,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default memo(Login);

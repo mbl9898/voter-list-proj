@@ -1,59 +1,41 @@
-import { useState } from "react";
-import { Form } from "react-bootstrap";
-import { useForm } from "../../helpers/useForm";
-import MultiSelect from "../MultiSelect/MultiSelect";
+import { useState } from 'react';
+import { Form } from 'react-bootstrap';
+import { useForm } from '../../helpers/useForm';
+import MultiSelect from '../MultiSelect/MultiSelect';
 
 const Reports = () => {
   const formOptionsMock = [
     501021717, 501021718, 501021719, 501021720, 501021721, 501021722, 501021723,
   ];
   const reportsFormInitial = {
-    city: "",
+    city: '',
   };
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
-    reportsFormInitial
+    reportsFormInitial,
   );
 
   const [abc, setAbc] = useState([]);
 
   const fields = [
-    "abc",
-    "def",
-    "ghi",
-    "jkl",
-    "mno",
-    "pqr",
-    "stu",
-    "vwx",
-    "yzA",
+    'abc',
+    'def',
+    'ghi',
+    'jkl',
+    'mno',
+    'pqr',
+    'stu',
+    'vwx',
+    'yzA',
   ];
 
   async function submitVoteCallback(data: any) {}
   return (
     <>
       <div className="container">
-        <MultiSelect options={["abc", "def"]} />
-        <div className="row">
-          <Form.Group id="selectFields">
-            <Form.Label>Select Fields</Form.Label>
-            <Form.Control as="select" multiple name="ABC" value={abc} required>
-              {fields.map((x, i) => (
-                <option key={x} value={x}>
-                  {x}
-                </option>
-              ))}
-              {/* {formOptionsMock.map((option) => (
-                <option key={option} value={option}>
-                  {option}
-                </option>
-              ))} */}
-            </Form.Control>
-          </Form.Group>
-        </div>
         <Form>
           <div className="row">
-            <h3 className="text-center p-5">Reports</h3>
+            <h3 className="text-center p-5 fw-bold">Reports</h3>
             <div className={`col col-xs-12 col-sm-4 p-1 br-5`}>
               <Form.Group id="blockCode">
                 <Form.Label>Block Code</Form.Label>

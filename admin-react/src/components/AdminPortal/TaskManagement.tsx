@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Task } from "../../interfaces/TaskModel";
-import { UserService } from "../../services/UserService";
-import CreateTask from "./CreateTask";
-import TasksTable from "./TasksTable";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Task } from '../../interfaces/TaskModel';
+import { UserService } from '../../services/UserService';
+import CreateTask from './CreateTask';
+import TasksTable from './TasksTable';
 
 const TaskManagement = () => {
   const [users, setUsers] = useState([]);
@@ -20,7 +20,7 @@ const TaskManagement = () => {
   }, []);
   return (
     <div className="container">
-      <h4 className="text-center my-1">Task Management</h4>
+      <h4 className="text-center my-1 fw-bold">Task Management</h4>
       <div className="d-flex flex-row-reverse m-2">
         <button
           className="btn btn-primary mx-2"

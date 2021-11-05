@@ -1,15 +1,15 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Payment } from "../../interfaces/PaymentModel";
-import { UserService } from "../../services/UserService";
-import CreatePayment from "./CreatePayment";
-import PaymentTable from "./PaymentTable";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Payment } from '../../interfaces/PaymentModel';
+import { UserService } from '../../services/UserService';
+import CreatePayment from './CreatePayment';
+import PaymentTable from './PaymentTable';
 
 const TaskManagement = () => {
   const [users, setUsers] = useState([]);
   const [paymentEntryForm, setPaymentEntryForm] = useState(false);
   const [updatePaymentData, setUpdatePaymentData] = useState<null | Payment>(
-    null
+    null,
   );
 
   const getAllUsers = async () => {
@@ -23,7 +23,7 @@ const TaskManagement = () => {
   }, []);
   return (
     <div className="container">
-      <h4 className="text-center my-1">Payment Management</h4>
+      <h4 className="text-center my-1 fw-bold">Payment Management</h4>
       <div className="d-flex flex-row-reverse m-2">
         <button
           className="btn btn-primary mx-2"

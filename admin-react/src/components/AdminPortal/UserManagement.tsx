@@ -25,7 +25,7 @@ const UserManagement = () => {
   return (
     <>
       <div className="container">
-        <h4 className="text-center">User Management</h4>
+        <h4 className="text-center fw-bold">User Management</h4>
 
         {loading && <Loading />}
         {!loading && (

@@ -158,12 +158,14 @@ const UserEntryForm = ({
                 </div>
                 {data.dataAccess && (
                   <div className="row">
-                    <h6>Data Access:</h6>
+                    <h5 className="fw-bold">Data Access:</h5>
                     <div className="col col-xs-12 col-sm-4 px-2 mx-1">
                       {Object.entries(data.dataAccess).map(
                         ([key, value]: any) => (
-                          <span>
-                            {key} : {value.toString()}
+                          <span className="d-flex">
+                            {`${value?.toString() ? key + ': ' : ''}${
+                              value?.toString() ? value?.toString() : ''
+                            }`}
                           </span>
                         ),
                       )}

@@ -1,5 +1,4 @@
 import express from 'express';
-
 import { auth } from '../middlewares/auth';
 import publicRoutes from './api-routes/public';
 import authenticatedRoutes from './api-routes/authenticated';

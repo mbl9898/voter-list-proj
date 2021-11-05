@@ -60,7 +60,7 @@ router.put(
         constituency: 'string',
         unionCouncil: 'string',
         constituencyName: 'string',
-        blockCode: 'number',
+        blockCode: 'integer',
         phase: 'string',
         sector: 'string',
         street: 'string',

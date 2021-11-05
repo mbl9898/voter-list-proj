@@ -60,7 +60,7 @@ const BlockCodeEntryForm = ({
   return (
     <div>
       <div>
-        <Card>
+        <Card className="card-shadow">
           <Card.Body>
             <h4 className="text-center mb-4">
               {updateBlockCodeData ? "Update Block Code" : "Create Block Code"}

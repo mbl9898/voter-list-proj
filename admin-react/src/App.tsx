@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { memo, useEffect, useState } from "react";
+=======
+import { useEffect, useState } from "react";
+>>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 import AppLoading from "./components/AppLoading";
 import NavLinks from "./components/NavLinks";
 import Navbar from "./components/Navbar";

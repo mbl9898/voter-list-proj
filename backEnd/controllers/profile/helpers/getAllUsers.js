@@ -4,7 +4,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const getAllUsers = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
 
   try {
     //Making sure that the user exists
@@ -13,7 +13,7 @@ export const getAllUsers = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHROIZED,
+          code: UNAUTHORIZED,
           message: 'Not Allowed',
         },
       });

@@ -4,15 +4,12 @@ import { useHistory } from "react-router-dom";
 import {
   approveVote,
   getUnAuthorizedList,
-  handleClose,
-  handleDelete,
-  readOnly,
   rejectVote,
   voteRejectInitial,
 } from "../../helpers/authorizeHelper";
 import { useVoteReject } from "../../helpers/useVoteReject";
 import UnAuthorizedModel from "../../services/UnAuthorizedModel";
-import { setDataVoteReject } from "../../store";
+import { setDataVoteReject, setNavLinkActive } from "../../store";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { StoreState } from "../../store/index";
 interface Props {
@@ -48,29 +45,23 @@ const VoteDisplayModal = ({
   const dataVoteReject = useAppSelector(
     (state: StoreState) => state.app.dataVoteReject
   );
-<<<<<<< HEAD
   const handleClose = () => {
     dispatch(setNavLinkActive(0));
     history.push("/");
     document.title = "Dashboard - Voter List App";
   };
-=======
-
->>>>>>> 41d6c900763b519042b76f69d2574928aa9b02b0
   const { onChangeVoteReject } = useVoteReject();
 
   useEffect(() => {
     setShowModalProp && setShowModalProp(showModalProp);
-  }, [showModalProp, unauthorizedVotesLength]);
+  }, [showModalProp]);
   return (
     <>
       {unauthorizedVote && (
         <Modal
           show={showModalProp === index}
           fullscreen={true}
-          onHide={() => {
-            handleClose(dispatch, history);
-          }}
+          onHide={handleClose}
         >
           <Modal.Header closeButton>
             {console.log(unauthorizedVote)}
@@ -478,28 +469,12 @@ const VoteDisplayModal = ({
                 if (success) {
                   getUnAuthorizedList(dispatch);
                 }
-                unauthorizedVotesLength === 0 && handleClose(dispatch, history);
+                unauthorizedVotesLength === 0 && handleClose();
               }}
             >
               {unauthorizedVote.status === "rejected" ? "Rejected" : "Reject"}
             </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                unauthorizedVote._id &&
-                  handleDelete(unauthorizedVote._id, dispatch);
-                console.log(unauthorizedVotesLength);
-                unauthorizedVotesLength === 0 && handleClose(dispatch, history);
-              }}
-            >
-              Delete
-            </Button>
-            <Button
-              variant="danger"
-              onClick={() => {
-                handleClose(dispatch, history);
-              }}
-            >
+            <Button variant="danger" onClick={handleClose}>
               Close
             </Button>
           </Modal.Footer>

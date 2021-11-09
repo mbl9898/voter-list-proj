@@ -4,7 +4,6 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import VoteDisplayModal from "./VoteDisplayModal";
 import { setDataVoteRejectToUnauthorizedDataIndex } from "../../store";
 import { StoreState } from "../../store/index";
-import { getUnAuthorizedList } from "../../helpers/authorizeHelper";
 
 const Authorize = () => {
   const dispatch = useAppDispatch();
@@ -17,7 +16,6 @@ const Authorize = () => {
 
   useEffect(() => {
     console.log(unauthorizedData[unAuthorizedVoteIndex]);
-    getUnAuthorizedList(dispatch);
     unAuthorizedVoteIndex >= 0
       ? setUnauthorizedVote(unauthorizedData[unAuthorizedVoteIndex])
       : setUnauthorizedVote(null);

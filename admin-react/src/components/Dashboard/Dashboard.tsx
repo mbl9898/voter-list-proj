@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import RejectedVotesModal from "./RejectedVotesModal";
 import { StoreState } from "../../store/index";
 import CountUp from "react-countup";
-import { getUnAuthorizedList } from "../../helpers/authorizeHelper";
 
 const Dashboard = () => {
   const [rejectedVoteModal, setRejectedVoteModal] = useState(false);

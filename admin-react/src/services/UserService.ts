@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 import { DataAccessParamsModel } from '../components/AdminPortal/DataAccess';
 import { User } from '../interfaces/User';
 import { ApiService } from './ApiServices';
 import UserModel from './UserModel';
-=======
-import { ApiService } from "./ApiServices";
-import { ResetPasswordModel } from "../components/ResetPassword";
-import { User } from "../interfaces/User";
-import UserModel from "./UserModel";
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 export class UserService {
   static baseUrl = ['auth', 'profile'];
 
@@ -82,28 +75,6 @@ export class UserService {
         userId,
         ...accessData,
       });
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  static async updateProfile(userData: { username: string; mobileNo: string }) {
-    try {
-      const res = await ApiService.put(
-        `${UserService.baseUrl[0]}/updateProfile`,
-        userData
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  static async resetPassword(passwordData: ResetPasswordModel) {
-    try {
-      const res = await ApiService.put(
-        `${UserService.baseUrl[0]}/reset-password`,
-        passwordData
-      );
       return res;
     } catch (error) {
       console.log(error);

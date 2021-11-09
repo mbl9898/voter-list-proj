@@ -10,7 +10,7 @@ import { LoginSessionSchema } from '~/schemas/LoginSession';
 dotenv.config();
 export const loginUser = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   //Destructuring email, remember_me & password from body
   const { email, password } = req.body;
@@ -24,7 +24,7 @@ export const loginUser = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Wrong Credentials',
         },
       });
@@ -37,7 +37,7 @@ export const loginUser = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Wrong Credentials',
         },
       });
@@ -115,7 +115,6 @@ export const loginUser = async (req, res) => {
           email: isExisting.email,
           role: isExisting.role,
           username: isExisting.username,
-          mobileNo: isExisting.mobileNo,
           rate: isExisting.rate,
           defaultBlockCode: isExisting.defaultBlockCode,
           assignedBlockCodes: isExisting.assignedBlockCodes,

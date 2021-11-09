@@ -10,15 +10,6 @@ const User = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-<<<<<<< HEAD
-=======
-  role: {
-    type: String,
-  },
-  mobileNo: {
-    type: String,
-  },
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
   assignedBlockCodes: {
     type: [Number],
     default: [],

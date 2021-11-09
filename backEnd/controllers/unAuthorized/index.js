@@ -88,7 +88,7 @@ export const getVoteTypes = () => {
     name: 'required|string',
     fatherHusbandName: 'required|string',
     maritalStatus: 'required|string',
-    cnic: 'required|string|regex:/[0-9]{5}(?:-)[0-9]{7}(?:-)[0-9]{1}/',
+    cnic: 'required|string',
     age: 'required|integer',
     houseNo: 'required|string',
     street: 'required|string',

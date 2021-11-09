@@ -14,15 +14,10 @@ export default class AuthorizedService {
       console.log(error);
     }
   }
-  static async getAuthorizedPage(
-    pageNo: number,
-    voteLimit: number,
-    config?: any
-  ) {
+  static async getAuthorizedPage(pageNo: number, voteLimit: number) {
     try {
       const res = await ApiService.get(
-        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`,
-        { ...config }
+        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`
       );
       return res;
     } catch (error) {

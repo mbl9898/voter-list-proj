@@ -9,7 +9,7 @@ export const registerUser = async (req, res) => {
   const { OK, SERVER_ERROR, CONFLICT } = status;
 
   //Destructuring email & password from body
-  const { username, email, mobileNo, password } = req.body;
+  const { username, email, password } = req.body;
   try {
     //Making sure that the user exists
     const isExisting = await UserSchema.findOne({ email }, { _id: 1 });
@@ -34,7 +34,6 @@ export const registerUser = async (req, res) => {
     const newUser = new UserSchema({
       username,
       email,
-      mobileNo,
       password: passHash,
       role: 'user',
       isApproved: false,

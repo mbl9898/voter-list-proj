@@ -7,7 +7,7 @@ dotenv.config();
 
 export const auth = async (req, res, next) => {
   //Codes that we might return coming from status
-  const { UNAUTHORIZED, PRE_CONDITION_FAILED, BAD_REQUEST, FORBIDDEN } = status;
+  const { UNAUTHROIZED, PRE_CONDITION_FAILED, BAD_REQUEST, FORBIDDEN } = status;
 
   // Expecting authorization field in header starting bearer followed by space and token
   if (
@@ -17,7 +17,7 @@ export const auth = async (req, res, next) => {
     return res.json({
       success: false,
       error: {
-        code: UNAUTHORIZED,
+        code: UNAUTHROIZED,
         message: 'Access Denied! No Token Provided',
       },
     });

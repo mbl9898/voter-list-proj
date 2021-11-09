@@ -71,14 +71,11 @@ export const getDefaultBlockCodeData = async (
   defaultBlockCode: number,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setData: any,
-  setLoading: any,
-  source?: any
+  setLoading: any
 ) => {
-  const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode, {
-    cancelToken: source?.token,
-  });
+  const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
   console.log(res);
-  if (res?.success) {
+  if (res.success) {
     await dispatch(setDefaultBlockCodeData(res.data));
     const data = res.data;
     setData({
@@ -117,14 +114,7 @@ export const onBlockCodeSelect = async (
   setLoading: any
 ) => {
   const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
-  console.log(res);
-  if (res && !res.success) {
-    dispatch(setMessageVariant("danger"));
-    dispatch(setMessage(res.error.message));
-  }
-
-  res?.success === true &&
-    getDefaultBlockCodeData(defaultBlockCode, dispatch, setData, setLoading);
+  getDefaultBlockCodeData(defaultBlockCode, dispatch, setData, setLoading);
 };
 
 export const submitNewVote = async (

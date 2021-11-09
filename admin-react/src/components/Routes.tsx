@@ -10,11 +10,7 @@ import SignUp from "./SignUp";
 import Tasks from "./Tasks/Tasks";
 import { StoreState } from "./../store/index";
 import Votes from "./Votes/Votes";
-<<<<<<< HEAD
 import InvalidRoute from "./InvalidRoute";
-=======
-import Profile from "./Profile";
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 
 const Routes = () => {
   const currentUser = useAppSelector(
@@ -100,21 +96,6 @@ const Routes = () => {
             />
           )}
         </Route>
-<<<<<<< HEAD
-=======
-        <Route path="/profile" exact>
-          {currentUser ? (
-            <Profile />
-          ) : (
-            <Redirect
-              to={{
-                pathname: "/login",
-              }}
-            />
-          )}
-        </Route>
-
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
         <Route path="/signup" exact>
           <SignUp />
         </Route>

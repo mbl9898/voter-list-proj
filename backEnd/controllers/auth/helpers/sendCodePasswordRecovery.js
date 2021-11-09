@@ -10,7 +10,7 @@ import { sendMail } from '~/utils';
 dotenv.config();
 export const sendCodePasswordRecovery = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   //Destructuring email from headers
   const { email } = req.headers;
@@ -23,7 +23,7 @@ export const sendCodePasswordRecovery = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Email does not exist',
         },
       });

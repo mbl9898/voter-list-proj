@@ -28,7 +28,6 @@ import {
 } from "../helpers/dataEntryHelper";
 import Loading from "./Loading";
 import { StoreState } from "./../store/index";
-import axios from "axios";
 
 interface Props {
   forRejectedVotes?: boolean;
@@ -42,7 +41,6 @@ const DataEntryForm = ({
   setRejectedVoteModal,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const source = axios.CancelToken.source();
   const [loading, setLoading] = useState<boolean>(true);
   const currentRejectedVote = useAppSelector(
     (state: StoreState) => state.app.currentRejectedVote
@@ -85,26 +83,23 @@ const DataEntryForm = ({
   }
 
   useEffect(() => {
-    if (!forRejectedVotes) {
-      dispatch(setDataVoteReject(voteRejectInitial));
-      setData(dataEntryFormInitial);
+    !forRejectedVotes && dispatch(setDataVoteReject(voteRejectInitial));
+    !forRejectedVotes && setData(dataEntryFormInitial);
+    !forRejectedVotes &&
       currentUser &&
-        getDefaultBlockCodeData(
-          currentUser.defaultBlockCode,
-          dispatch,
-          setData,
-          setLoading,
-          source
-        );
-    }
-    if (forRejectedVotes && currentRejectedVote) {
+      getDefaultBlockCodeData(
+        currentUser.defaultBlockCode,
+        dispatch,
+        setData,
+        setLoading
+      );
+    forRejectedVotes &&
+      currentRejectedVote &&
       setData({ ...currentRejectedVote });
+    forRejectedVotes &&
+      currentRejectedVote &&
       dispatch(setDataVoteReject({ ...currentRejectedVote.rejections }));
-    }
     forRejectedVotes && setLoading(false);
-    return () => {
-      source.cancel("axios request cancelled");
-    };
   }, [currentRejectedVote]);
 
   return (
@@ -136,15 +131,17 @@ const DataEntryForm = ({
                   }}
                   required
                 >
-                  {" "}
-                  <option value="" disabled selected hidden>
-                    Select BlockCode
+                  <option>
+                    {data.blockCode
+                      ? `Current: ${data.blockCode}`
+                      : "Select Block Code"}
                   </option>
-                  {currentUser?.assignedBlockCodes.map((blockCode) => (
-                    <option key={blockCode} value={blockCode}>
-                      {blockCode}
-                    </option>
-                  ))}
+                  {currentUser &&
+                    currentUser.assignedBlockCodes.map((blockCode) => (
+                      <option key={blockCode} value={blockCode}>
+                        {blockCode}
+                      </option>
+                    ))}
                 </Form.Select>
               </Form.Group>
             </div>
@@ -340,8 +337,10 @@ const DataEntryForm = ({
                   onChange={onChange}
                   required
                 >
-                  <option value="" disabled selected hidden>
-                    Select Gender
+                  <option>
+                    {data.gender
+                      ? `Current: ${data.gender} select the correct`
+                      : `Select Gender`}
                   </option>
                   <option value="MALE">Male</option>
                   <option value="FEMALE">Female</option>
@@ -407,8 +406,10 @@ const DataEntryForm = ({
                   onChange={onChange}
                   required
                 >
-                  <option value="" disabled selected hidden>
-                    Select Marital Status
+                  <option>
+                    {data.maritalStatus
+                      ? `Current: ${data.maritalStatus} select the correct`
+                      : `Select Marital Status`}
                   </option>
                   <option value="MARRIED">Married</option>
                   <option value="UNMARRIED">Unmarried</option>

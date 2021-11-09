@@ -55,7 +55,7 @@ const UserEntryForm = ({
   return (
     <div>
       <div>
-        <Card className="card-shadow">
+        <Card>
           <Card.Body>
             <h4 className="text-center mb-4">
               {updateUserData && 'Update User'}

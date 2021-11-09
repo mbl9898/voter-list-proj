@@ -23,12 +23,6 @@ interface Props {
   setShowModalProp?: Dispatch<SetStateAction<null | number>>;
   onSubmit?: () => void;
 }
-export const readOnly: any = {
-  WebkitUserSelect: "none",
-  MozUserSelect: "none",
-  msUserSelect: "none",
-  userSelect: "none",
-};
 const VoteDisplayModal = ({
   heading,
   body,
@@ -49,6 +43,12 @@ const VoteDisplayModal = ({
     dispatch(setNavLinkActive(0));
     history.push("/");
     document.title = "Dashboard - Voter List App";
+  };
+  const readOnly: any = {
+    WebkitUserSelect: "none",
+    MozUserSelect: "none",
+    msUserSelect: "none",
+    userSelect: "none",
   };
   const { onChangeVoteReject } = useVoteReject();
 

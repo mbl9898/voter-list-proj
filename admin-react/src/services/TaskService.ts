@@ -4,11 +4,9 @@ import { ApiService } from "./ApiServices";
 export class TaskService {
   static baseUrl = ["task"];
 
-  static async getCurrentUserTasks(config?: any) {
+  static async getCurrentUserTasks() {
     try {
-      const res = await ApiService.get(`${TaskService.baseUrl[0]}/current`, {
-        ...config,
-      });
+      const res = await ApiService.get(`${TaskService.baseUrl[0]}/current`);
       return res;
     } catch (error) {
       console.log(error);

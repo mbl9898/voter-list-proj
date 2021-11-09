@@ -4,13 +4,12 @@ import mongoose from 'mongoose';
 import { logger } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
-import { unAuthorized } from 'controllers/unAuthorized';
 
 dotenv.config();
 
 export const changePassword = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   //Destructuring old_password, new_password from the body
   const { old_password, new_password } = req.body;
@@ -26,7 +25,7 @@ export const changePassword = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Email does not exist',
         },
       });
@@ -42,7 +41,7 @@ export const changePassword = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Wrong Credentials',
         },
       });

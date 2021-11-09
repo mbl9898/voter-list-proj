@@ -10,12 +10,11 @@ export const paginatedResults = (model) => {
 
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
-    const totalRecords = await model.countDocuments().exec();
-    const totalPages = Math.ceil(totalRecords / limit);
+    const totalPages = Math.ceil((await model.countDocuments().exec()) / limit);
 
     const results = {};
 
-    if (endIndex < totalRecords) {
+    if (endIndex < (await model.countDocuments().exec())) {
       results.next = {
         page: page + 1,
         limit: limit,
@@ -29,7 +28,6 @@ export const paginatedResults = (model) => {
       };
     }
     try {
-      results.totalRecords = totalRecords;
       results.results = await model.find().limit(limit).skip(startIndex).exec();
       results.totalPages = totalPages;
       res.paginatedResults = results;

@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Card } from "react-bootstrap";
@@ -8,16 +7,13 @@ import { TaskService } from "../../services/TaskService";
 import Loading from "../Loading";
 
 const Tasks = () => {
-  const source = axios.CancelToken.source();
   const [tasks, setTasks] = useState<null | Task[]>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const getTasks = async () => {
     try {
-      const res = await TaskService.getCurrentUserTasks({
-        cancelToken: source.token,
-      });
+      const res = await TaskService.getCurrentUserTasks();
       console.log(res);
-      setTasks(res?.data);
+      await setTasks(res.data);
       setLoading(false);
     } catch (err) {
       console.log(err);
@@ -26,9 +22,6 @@ const Tasks = () => {
 
   useEffect(() => {
     getTasks();
-    return () => {
-      source.cancel("axios request cancelled");
-    };
   }, []);
   return (
     <>
@@ -41,10 +34,7 @@ const Tasks = () => {
           <div className="cpage-content">
             {tasks?.map((task: Task, index: number) => {
               return (
-                <Card
-                  key={index}
-                  className="d-flex justify-content-center p-4 card-shadow"
-                >
+                <Card key={index} className="d-flex justify-content-center p-4">
                   <p>Title: {task.title}</p>
                   <p>Description: {task.description}</p>
                   <p>FileName: {task.fileName}</p>

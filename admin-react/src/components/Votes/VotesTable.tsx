@@ -1,32 +1,22 @@
-import axios from 'axios';
-import { Fragment, SetStateAction, useState } from 'react';
-import { Dispatch } from 'react';
-import { useEffect } from 'react';
+import { Fragment, SetStateAction, useState } from "react";
+import { Dispatch } from "react";
+import { useEffect } from "react";
 import {
   getAuthorizedVotesPage,
   getSearchedAuthorizedVotes,
   onVotesSearch,
-  voteResInitial,
-} from '../../helpers/votesHelper';
-import { VotesModel } from '../../interfaces/VotesModel';
-import AuthorizedService from '../../services/AuthorizedService';
-import { setMessage, setMessageVariant } from '../../store';
-import { useAppDispatch } from '../../store/hooks';
-import CModal from '../CModal';
-import Loading from '../Loading';
-import PaginatedTableFooter from './PaginatedTableFooter';
+} from "../../helpers/votesHelper";
+import { VotesModel } from "../../interfaces/VotesModel";
+import AuthorizedService from "../../services/AuthorizedService";
+import { setMessage, setMessageVariant } from "../../store";
+import { useAppDispatch } from "../../store/hooks";
+import CModal from "../CModal";
+import Loading from "../Loading";
 
 interface Props {
   setVoteUpdateData: Dispatch<SetStateAction<VotesModel | null>>;
   setVoteUpdateForm: Dispatch<SetStateAction<boolean>>;
   voteUpdateForm: boolean;
-}
-
-export interface VotesTableVoteRes {
-  next: { page: number; limit: number };
-  prev: { page: number; limit: number };
-  totalPages: number;
-  totalRecords: number;
 }
 
 const VotesTable = ({
@@ -39,11 +29,11 @@ const VotesTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageTemp, setCurrentPageTemp] = useState(1);
   const [searchOptions, setSearchOptions] = useState<string[] | null>(null);
-  const [currentSearchField, setCurrentSearchField] = useState('');
-  const [searchTerm, setSearchTerm] = useState('');
+  const [currentSearchField, setCurrentSearchField] = useState("");
+  const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
-  const [voteRes, setVoteRes] = useState<VotesTableVoteRes>(voteResInitial);
+  const [voteRes, setVoteRes] = useState<any>({});
   const [filteredVotesHeadings, setFilteredVotesHeadings] = useState<
     null | string[]
   >(null);
@@ -51,12 +41,12 @@ const VotesTable = ({
     const res = await AuthorizedService.deleteAuthorizedRecord(id);
 
     if (res && !res.success) {
-      dispatch(setMessageVariant('danger'));
+      dispatch(setMessageVariant("danger"));
       dispatch(setMessage(res.message));
       return;
     }
 
-    dispatch(setMessageVariant('success'));
+    dispatch(setMessageVariant("success"));
     dispatch(setMessage(res.message));
 
     getAuthorizedVotesPage(
@@ -65,7 +55,7 @@ const VotesTable = ({
       setVoteRes,
       currentPage,
       votesLimit,
-      setLoading,
+      setLoading
     );
   };
   const onSubmit = (vote: VotesModel) => {
@@ -73,7 +63,6 @@ const VotesTable = ({
   };
 
   useEffect(() => {
-    const source = axios.CancelToken.source();
     !searchTerm &&
       getAuthorizedVotesPage(
         dispatch,
@@ -83,12 +72,8 @@ const VotesTable = ({
         votesLimit,
         setLoading,
         setFilteredVotesHeadings,
-        setSearchOptions,
-        source,
+        setSearchOptions
       );
-    return () => {
-      source.cancel('axios request cancelled');
-    };
   }, [voteUpdateForm, currentPage]);
   return (
     <>
@@ -104,7 +89,7 @@ const VotesTable = ({
               <div className="input-group mb-3">
                 <select
                   className="form-select"
-                  style={{ maxWidth: 10 + 'rem' }}
+                  style={{ maxWidth: 10 + "rem" }}
                   value={currentSearchField}
                   onChange={(e: any) => {
                     setCurrentSearchField(e.target.value);
@@ -134,7 +119,7 @@ const VotesTable = ({
                       currentSearchField,
                       searchTerm,
                       votesLimit,
-                      setLoading,
+                      setLoading
                     );
                   }}
                 />
@@ -148,7 +133,7 @@ const VotesTable = ({
                           <th className="text-center" key={index} scope="col">
                             {heading}
                           </th>
-                        ),
+                        )
                       )}
                     </tr>
                   </thead>
@@ -209,7 +194,7 @@ const VotesTable = ({
                                 className="dropdown-item btn text-primary"
                                 onClick={() => {
                                   setVoteUpdateData(
-                                    !voteUpdateForm ? vote : null,
+                                    !voteUpdateForm ? vote : null
                                   );
                                   setVoteUpdateForm((prevV) => !prevV);
                                 }}
@@ -220,7 +205,7 @@ const VotesTable = ({
                             <li>
                               <CModal
                                 heading={
-                                  'Are you sure you want to delete this Vote?'
+                                  "Are you sure you want to delete this Vote?"
                                 }
                                 triggerButtonContent="delete"
                                 triggerButtonVariant="danger"
@@ -236,20 +221,174 @@ const VotesTable = ({
                     })}
                   </tbody>
                 </table>
+                <div className="d-flex justify-content-center">
+                  {currentPage > 2 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentSearchField,
+                            searchTerm,
+                            1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            1,
+                            votesLimit,
+                            setLoading
+                          );
+                        setCurrentPage(1);
+                        setCurrentPageTemp(1);
+                      }}
+                    >
+                      {`|<`}
+                    </button>
+                  )}
+                  {currentPage > 1 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentSearchField,
+                            searchTerm,
+                            currentPage - 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPage - 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        setCurrentPage((prevValue) => {
+                          setCurrentPageTemp(prevValue - 1);
+                          return prevValue - 1;
+                        });
+                      }}
+                    >
+                      {`<Prev`}
+                    </button>
+                  )}
+                  <input
+                    className="form-control mx-2 my-3"
+                    style={{ width: 4 + "rem" }}
+                    type="number"
+                    value={currentPageTemp}
+                    onChange={(e: any) => setCurrentPageTemp(e.target.value)}
+                    onKeyUp={(event) => {
+                      if (event.key === "Enter") {
+                        setLoading(true);
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentSearchField,
+                            searchTerm,
+                            currentPageTemp,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPageTemp,
+                            votesLimit,
+                            setLoading
+                          );
+                        setCurrentPage(currentPageTemp);
+                      }
+                    }}
+                  />
+                  {currentPage < voteRes.totalPages && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentSearchField,
+                            searchTerm,
+                            currentPage + 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentPage + 1,
+                            votesLimit,
+                            setLoading
+                          );
+                        setCurrentPage((prevValue) => {
+                          setCurrentPageTemp(prevValue + 1);
+                          return prevValue + 1;
+                        });
+                      }}
+                    >
+                      {`Next>`}
+                    </button>
+                  )}
+                  {currentPage < voteRes.totalPages - 1 && (
+                    <button
+                      className="btn btn-primary mx-2 my-3"
+                      onClick={() => {
+                        setLoading(true);
+                        searchTerm &&
+                          getSearchedAuthorizedVotes(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            currentSearchField,
+                            searchTerm,
+                            voteRes.totalPages,
+                            votesLimit,
+                            setLoading
+                          );
+                        !searchTerm &&
+                          getAuthorizedVotesPage(
+                            dispatch,
+                            setVotesData,
+                            setVoteRes,
+                            voteRes.totalPages,
+                            votesLimit,
+                            setLoading
+                          );
+                        setCurrentPage(voteRes.totalPages);
+                        setCurrentPageTemp(voteRes.totalPages);
+                      }}
+                    >
+                      {`>|`}
+                    </button>
+                  )}
+                </div>
               </div>
-              <PaginatedTableFooter
-                currentPageTemp={currentPageTemp}
-                setCurrentPageTemp={setCurrentPageTemp}
-                voteRes={voteRes}
-                setVoteRes={setVoteRes}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                votesLimit={votesLimit}
-                setLoading={setLoading}
-                searchTerm={searchTerm}
-                setVotesData={setVotesData}
-                currentSearchField={currentSearchField}
-              />
             </div>
           )}
         </>

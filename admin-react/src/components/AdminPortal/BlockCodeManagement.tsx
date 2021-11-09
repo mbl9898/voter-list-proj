@@ -1,36 +1,36 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Container } from "react-bootstrap";
-import { getBlockCodes } from "../../helpers/BlockCodeManagementHelper";
-import { BlockCode } from "../../interfaces/BlockCode";
-import { BlockCodeService } from "../../services/BlockCodeService";
-import { setMessage, setMessageVariant, StoreState } from "../../store";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import CModal from "../CModal";
-import Loading from "../Loading";
-import BlockCodeEntryForm from "./BlockCodeEntryForm";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
+import { getBlockCodes } from '../../helpers/BlockCodeManagementHelper';
+import { BlockCode } from '../../interfaces/BlockCode';
+import { BlockCodeService } from '../../services/BlockCodeService';
+import { setMessage, setMessageVariant, StoreState } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import CModal from '../CModal';
+import Loading from '../Loading';
+import BlockCodeEntryForm from './BlockCodeEntryForm';
 
 const BlockCodeManagement = () => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
   const [isBlockCodeData, setIsBlockCodeData] = useState<boolean>(true);
   const blockCodes = useAppSelector(
-    (state: StoreState) => state.app.blockCodes
+    (state: StoreState) => state.app.blockCodes,
   );
   const [blockCodeEntryForm, setBlockCodeEntryForm] = useState(false);
   const [updateBlockCodeData, setUpdateBlockCodeData] =
     useState<null | BlockCode>(null);
   const filteredBlockCodeHeadings = useAppSelector(
-    (state: StoreState) => state.app.filteredBlockCodeHeadings
+    (state: StoreState) => state.app.filteredBlockCodeHeadings,
   );
 
   const deleteBlockCode = async (id: string) => {
     setLoading(true);
     const res = await BlockCodeService.deleteBlockCode(id);
     console.log(res);
-    if (res === "This record has been deleted successfully") {
-      dispatch(setMessageVariant("success"));
-      dispatch(setMessage("BlockCode Deleted Successfully"));
+    if (res === 'This record has been deleted successfully') {
+      dispatch(setMessageVariant('success'));
+      dispatch(setMessage('BlockCode Deleted Successfully'));
     }
     getBlockCodes(dispatch, setLoading, setIsBlockCodeData);
   };
@@ -46,9 +46,9 @@ const BlockCodeManagement = () => {
     <>
       <Container
         className="mt-5 align-items-center justify-content-center"
-        style={{ minWidth: 1500 + "px !important" }}
+        style={{ minWidth: 1500 + 'px !important' }}
       >
-        <h4 className="text-center my-1">Block Code Management</h4>
+        <h4 className="text-center my-1 mb-4 fw-bold">Block Code Management</h4>
         {!isBlockCodeData && <h3 className="text-center">No BlockCode Data</h3>}
         <div className="d-flex flex-row-reverse m-2">
           <button
@@ -79,7 +79,7 @@ const BlockCodeManagement = () => {
                               >
                                 {heading}
                               </th>
-                            )
+                            ),
                           )}
                         </tr>
                       </thead>
@@ -133,10 +133,10 @@ const BlockCodeManagement = () => {
                                     className="btn btn-primary"
                                     onClick={() => {
                                       setUpdateBlockCodeData(
-                                        !blockCodeEntryForm ? blockCode : null
+                                        !blockCodeEntryForm ? blockCode : null,
                                       );
                                       setBlockCodeEntryForm(
-                                        !blockCodeEntryForm
+                                        !blockCodeEntryForm,
                                       );
                                     }}
                                   >
@@ -146,7 +146,7 @@ const BlockCodeManagement = () => {
                                 <td>
                                   <CModal
                                     heading={
-                                      "Are you sure you want to delete this Block Code?"
+                                      'Are you sure you want to delete this Block Code?'
                                     }
                                     triggerButtonContent="delete"
                                     triggerButtonVariant="danger"
@@ -157,7 +157,7 @@ const BlockCodeManagement = () => {
                                 </td>
                               </tr>
                             );
-                          }
+                          },
                         )}
                       </tbody>
                     </table>

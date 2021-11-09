@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { getUserProgressData } from "../../helpers/dashboardHelper";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import RejectedVotesModal from "./RejectedVotesModal";
@@ -15,19 +15,17 @@ const Dashboard = () => {
     (state: StoreState) => state.app.currentUser
   );
   const dispatch = useAppDispatch();
-  const [loading, setLoading] = useState(false);
-  const accuracy =
-    dashboardData &&
-    Math.floor(
-      (dashboardData.approved /
-        (dashboardData.approved + dashboardData.rejected)) *
-        100
-    );
+  const [loading, setLoading] = useState(true);
+  const accuracy = Math.floor(
+    (dashboardData.approved /
+      (dashboardData.approved + dashboardData.rejected)) *
+      100
+  );
 
   useEffect(() => {
     const source = axios.CancelToken.source();
+
     try {
-      setLoading(true);
       getUserProgressData(dispatch, source);
       setLoading(false);
     } catch (error) {
@@ -95,7 +93,7 @@ const Dashboard = () => {
                 <div>
                   <button
                     className="btn btn-danger"
-                    disabled={dashboardData?.rejected === 0}
+                    disabled={dashboardData.rejected === 0}
                     onClick={() => {
                       setRejectedVoteModal(true);
                     }}
@@ -160,4 +158,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default memo(Dashboard);

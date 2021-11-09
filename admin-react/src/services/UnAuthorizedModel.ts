@@ -60,4 +60,9 @@ export default interface UnAuthorizedModel {
     boulevardAvenue: boolean;
     otherArea: boolean;
   };
+  enteredBy?: {
+    email: string;
+    role: string;
+    username: string;
+  };
 }

@@ -2,38 +2,25 @@ import { logger } from '~/utils';
 import { status } from '~/constants';
 import { UserSchema } from '~/schemas/User';
 
-export const setDefaultBlockCode = async (req, res) => {
+export const getAllUsers = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
-
-  //Destructuring email, remember_me & password from body
-  const { _id, defaultBlockCode } = req.body;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   try {
     //Making sure that the user exists
-    const isExisting = await UserSchema.findOne({ _id });
-    if (!isExisting) {
+    const users = await UserSchema.find();
+    if (!users) {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
-          message: 'Wrong Credentials',
+          code: UNAUTHROIZED,
+          message: 'Not Allowed',
         },
       });
     }
-
-    const updatedUser = await UserSchema.findByIdAndUpdate(
-      { _id },
-      {
-        defaultBlockCode,
-      },
-      { new: true },
-    );
-
-    //Sending response in case everything went well!
     return res.json({
       success: true,
-      data: updatedUser,
+      data: users,
     });
   } catch (e) {
     //Log in case of any abnormal crash

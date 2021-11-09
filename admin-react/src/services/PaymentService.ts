@@ -4,11 +4,9 @@ import { ApiService } from "./ApiServices";
 export class PaymentService {
   static baseUrl = ["payment"];
 
-  static async getCurrentUserPayments(config?: any) {
+  static async getCurrentUserPayments() {
     try {
-      const res = await ApiService.get(`${PaymentService.baseUrl[0]}/current`, {
-        ...config,
-      });
+      const res = await ApiService.get(`${PaymentService.baseUrl[0]}/current`);
       return res;
     } catch (error) {
       console.log(error);

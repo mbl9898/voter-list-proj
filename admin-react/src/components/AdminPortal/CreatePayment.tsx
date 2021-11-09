@@ -122,7 +122,7 @@ const CreatePayment = ({
   }, [updatePaymentData]);
   return (
     <>
-      <Card className="m-4 p-4 card-shadow">
+      <Card className="m-4 p-4">
         <h4 className="text-center">
           {updatePaymentData ? "Update Payment" : "Create Payment"}
         </h4>

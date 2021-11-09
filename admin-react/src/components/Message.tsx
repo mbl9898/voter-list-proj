@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { memo, useEffect } from 'react';
 import { setMessage } from '../store';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { StoreState } from './../store/index';
@@ -27,25 +27,15 @@ const Message = (props: Props) => {
   }, [msg]);
   return (
     <>
-      {console.log(msg)}
-      {/* {msg && ( */}
       <div
         className={`alert alert-${variant} alert-dismissible fade show notify`}
-        role='alert'
+        role="alert"
         {...others}
       >
         {msg}
-        {/* <button
-            type="button"
-            className="btn-close"
-            data-bs-dismiss="alert"
-            aria-label="Close"
-          >
-          </button> */}
       </div>
-      {/* )} */}
     </>
   );
 };
 
-export default Message;
+export default memo(Message);

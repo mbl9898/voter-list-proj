@@ -1,3 +1,4 @@
+import { DataAccessParamsModel } from "./../components/AdminPortal/DataAccess";
 import { VotesModel } from "../interfaces/VotesModel";
 import { ApiService } from "./ApiServices";
 import UnAuthorizedModel from "./UnAuthorizedModel";
@@ -13,15 +14,10 @@ export default class AuthorizedService {
       console.log(error);
     }
   }
-  static async getAuthorizedPage(
-    pageNo: number,
-    voteLimit: number,
-    config?: any
-  ) {
+  static async getAuthorizedPage(pageNo: number, voteLimit: number) {
     try {
       const res = await ApiService.get(
-        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`,
-        { ...config }
+        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`
       );
       return res;
     } catch (error) {
@@ -37,6 +33,29 @@ export default class AuthorizedService {
     try {
       const res = await ApiService.get(
         `${AuthorizedService.baseUrl[0]}/search?search=${search}&searchField=${searchField}&page=${pageNo}&limit=${voteLimit}`
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async getUniqueAuthorizedDataSearch(reqData: DataAccessParamsModel) {
+    try {
+      const res = await ApiService.get(
+        `${AuthorizedService.baseUrl[0]}/unique?district=${reqData.district}
+        &city=${reqData.city}
+        &tehseel=${reqData.tehseel}
+        &constituency=${reqData.constituency}
+        &unionCouncil=${reqData.unionCouncil}
+        &constituencyName=${reqData.constituencyName}
+        &blockCode=${reqData.blockCode === null ? "" : reqData.blockCode}
+        &phase=${reqData.phase}
+        &sector=${reqData.sector}
+        &street=${reqData.street}
+        &gender=${reqData.gender}
+        &lane=${reqData.lane}
+        &boulevardAvenue=${reqData.boulevardAvenue}
+        `
       );
       return res;
     } catch (error) {

@@ -9,7 +9,12 @@ export const useForm = (callback: any, initialState: any) => {
         ? event.target.value.toUpperCase()
         : event.target.value,
     });
-    console.log(data);
+    console.log({
+      ...data,
+      [event.target.name]: data.blockCode
+        ? event.target.value.toUpperCase()
+        : event.target.value,
+    });
   };
 
   const onSubmit = (event: any) => {

@@ -4,7 +4,7 @@ import { UserSchema } from '~/schemas/User';
 
 export const updateUser = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
   //Destructuring email, remember_me & password from body
   const { _id, username, email, role, rate, assignedBlockCodes } = req.body;
@@ -16,7 +16,7 @@ export const updateUser = async (req, res) => {
       return res.json({
         success: false,
         error: {
-          code: UNAUTHORIZED,
+          code: UNAUTHROIZED,
           message: 'Wrong Credentials',
         },
       });
@@ -51,48 +51,79 @@ export const updateUser = async (req, res) => {
     });
   }
 };
-export const updateProfile = async (req, res) => {
+export const updatedUserDataAccess = async (req, res) => {
   //Codes that we might return coming from status
-  const { OK, SERVER_ERROR, UNAUTHORIZED } = status;
+  const { OK, SERVER_ERROR, UNAUTHROIZED } = status;
 
-  //Destructuring email, remember_me & password from body
-  const { _id } = req.user;
-  const { username, mobileNo } = req.body;
+  //Destructuring body
+  const { userId } = req.body;
+  const reqData = {
+    fullAccess: req.body.fullAccess,
+    district: req.body.district,
+    city: req.body.city,
+    tehseel: req.body.tehseel,
+    constituency: req.body.constituency,
+    unionCouncil: req.body.unionCouncil,
+    constituencyName: req.body.constituencyName,
+    blockCode: req.body.blockCode,
+    phase: req.body.phase,
+    sector: req.body.sector,
+    street: req.body.street,
+    gender: req.body.gender,
+    lane: req.body.lane,
+    boulevardAvenue: req.body.boulevardAvenue,
+  };
 
   try {
+    const dataAccess = {};
+    const createExistingFindData = () => {
+      for (const key in reqData) {
+        if (Object.hasOwnProperty.call(reqData, key)) {
+          const element = reqData[key];
+          if (key !== 'fullAccess' && element?.trim()) {
+            dataAccess[key] = element.trim();
+          }
+          if (key === 'fullAccess') {
+            dataAccess[key] = element;
+          }
+        }
+      }
+    };
+    createExistingFindData();
+
     //Making sure that the user exists
-    const isExisting = await UserSchema.findOne({ _id });
+    const isExisting = await UserSchema.findOne({ _id: userId });
     if (!isExisting) {
       return res.json({
         success: false,
-        errorCode: UNAUTHORIZED,
-        errorMessage: 'Wrong Credentials',
+        message: 'User Not Found',
+        error: {
+          code: UNAUTHROIZED,
+        },
       });
     }
 
     const updatedUser = await UserSchema.findByIdAndUpdate(
-      { _id },
-      {
-        username,
-        mobileNo,
-      },
+      { _id: userId },
+      { dataAccess },
       { new: true },
     );
 
     //Sending response in case everything went well!
     return res.json({
+      status: OK,
       success: true,
       data: updatedUser,
-      message: 'Profile Updated Successfully',
+      message: 'User Updated Successfully',
     });
   } catch (e) {
     //Log in case of any abnormal crash
     logger('error', 'Error:', e.message);
     return res.json({
       success: false,
+      message: 'Internal Server Error',
       error: {
         code: SERVER_ERROR,
-        message: 'Internal Server Error',
       },
     });
   }

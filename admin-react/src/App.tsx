@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import AppLoading from "./components/AppLoading";
 import NavLinks from "./components/NavLinks";
 import Navbar from "./components/Navbar";
@@ -55,4 +55,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default memo(App);

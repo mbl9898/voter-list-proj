@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from 'react';
 import {
   getUsers,
   userEntryFormInitial,
-} from "../../helpers/userManagementHelper";
-import { User } from "../../interfaces/User";
-import Loading from "../Loading";
-import UserDataTable from "./UserDataTable";
-import UserEntryForm from "./UserEntryForm";
+} from '../../helpers/userManagementHelper';
+import { User } from '../../interfaces/User';
+import Loading from '../Loading';
+import UserDataTable from './UserDataTable';
+import UserEntryForm from './UserEntryForm';
 
 const UserManagement = () => {
   const [users, setUsers] = useState<User[]>([]);
@@ -25,7 +25,8 @@ const UserManagement = () => {
   return (
     <>
       <div className="container">
-        <h4 className="text-center">User Management</h4>
+        <h4 className="text-center fw-bold">User Management</h4>
+
         {loading && <Loading />}
         {!loading && (
           <div>
@@ -52,4 +53,4 @@ const UserManagement = () => {
   );
 };
 
-export default UserManagement;
+export default memo(UserManagement);

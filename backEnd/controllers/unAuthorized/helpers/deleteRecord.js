@@ -8,15 +8,22 @@ export const deleteRecord = async (req, res) => {
   try {
     const data = await UnAuthorizedSchema.findById(id);
     if (!data) {
-      throw new Error('Invalid Id');
+      return res.json({
+        success: false,
+        message: 'Invalid Id',
+      });
     }
     const deleteRecord = await data.delete();
     if (!deleteRecord) {
-      throw new Error('Unxpected Error');
+      const error = new Error('Unexpected Error');
+      return res.json({
+        success: false,
+        message: 'Unexpected Error',
+      });
     }
     return res.json({
       success: true,
-      data: 'This record has been deleted successfully',
+      message: 'This record has been deleted successfully',
     });
   } catch (e) {
     logger('error', 'Error:', e.message);

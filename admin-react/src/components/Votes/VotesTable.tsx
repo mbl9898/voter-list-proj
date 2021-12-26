@@ -1,17 +1,15 @@
-import { Fragment, SetStateAction, useState } from "react";
-import { Dispatch } from "react";
-import { useEffect } from "react";
+import { Fragment, SetStateAction, useState, Dispatch, useEffect } from 'react';
 import {
   getAuthorizedVotesPage,
   getSearchedAuthorizedVotes,
   onVotesSearch,
-} from "../../helpers/votesHelper";
-import { VotesModel } from "../../interfaces/VotesModel";
-import AuthorizedService from "../../services/AuthorizedService";
-import { setMessage, setMessageVariant } from "../../store";
-import { useAppDispatch } from "../../store/hooks";
-import CModal from "../CModal";
-import Loading from "../Loading";
+} from '../../helpers/votesHelper';
+import { VotesModel } from '../../interfaces/VotesModel';
+import AuthorizedService from '../../services/AuthorizedService';
+import { setMessage, setMessageVariant } from '../../store';
+import { useAppDispatch } from '../../store/hooks';
+import CModal from '../CModal';
+import Loading from '../Loading';
 
 interface Props {
   setVoteUpdateData: Dispatch<SetStateAction<VotesModel | null>>;
@@ -29,8 +27,8 @@ const VotesTable = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageTemp, setCurrentPageTemp] = useState(1);
   const [searchOptions, setSearchOptions] = useState<string[] | null>(null);
-  const [currentSearchField, setCurrentSearchField] = useState("");
-  const [searchTerm, setSearchTerm] = useState("");
+  const [currentSearchField, setCurrentSearchField] = useState('');
+  const [searchTerm, setSearchTerm] = useState('');
   const [loading, setLoading] = useState(true);
   const [votesData, setVotesData] = useState<null | VotesModel[]>(null);
   const [voteRes, setVoteRes] = useState<any>({});
@@ -41,12 +39,12 @@ const VotesTable = ({
     const res = await AuthorizedService.deleteAuthorizedRecord(id);
 
     if (res && !res.success) {
-      dispatch(setMessageVariant("danger"));
+      dispatch(setMessageVariant('danger'));
       dispatch(setMessage(res.message));
       return;
     }
 
-    dispatch(setMessageVariant("success"));
+    dispatch(setMessageVariant('success'));
     dispatch(setMessage(res.message));
 
     getAuthorizedVotesPage(
@@ -55,7 +53,7 @@ const VotesTable = ({
       setVoteRes,
       currentPage,
       votesLimit,
-      setLoading
+      setLoading,
     );
   };
   const onSubmit = (vote: VotesModel) => {
@@ -72,8 +70,9 @@ const VotesTable = ({
         votesLimit,
         setLoading,
         setFilteredVotesHeadings,
-        setSearchOptions
+        setSearchOptions,
       );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [voteUpdateForm, currentPage]);
   return (
     <>
@@ -89,7 +88,7 @@ const VotesTable = ({
               <div className="input-group mb-3">
                 <select
                   className="form-select"
-                  style={{ maxWidth: 10 + "rem" }}
+                  style={{ maxWidth: 10 + 'rem' }}
                   value={currentSearchField}
                   onChange={(e: any) => {
                     setCurrentSearchField(e.target.value);
@@ -119,7 +118,7 @@ const VotesTable = ({
                       currentSearchField,
                       searchTerm,
                       votesLimit,
-                      setLoading
+                      setLoading,
                     );
                   }}
                 />
@@ -133,7 +132,7 @@ const VotesTable = ({
                           <th className="text-center" key={index} scope="col">
                             {heading}
                           </th>
-                        )
+                        ),
                       )}
                     </tr>
                   </thead>
@@ -194,7 +193,7 @@ const VotesTable = ({
                                 className="dropdown-item btn text-primary"
                                 onClick={() => {
                                   setVoteUpdateData(
-                                    !voteUpdateForm ? vote : null
+                                    !voteUpdateForm ? vote : null,
                                   );
                                   setVoteUpdateForm((prevV) => !prevV);
                                 }}
@@ -205,7 +204,7 @@ const VotesTable = ({
                             <li>
                               <CModal
                                 heading={
-                                  "Are you sure you want to delete this Vote?"
+                                  'Are you sure you want to delete this Vote?'
                                 }
                                 triggerButtonContent="delete"
                                 triggerButtonVariant="danger"
@@ -236,7 +235,7 @@ const VotesTable = ({
                             searchTerm,
                             1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         !searchTerm &&
                           getAuthorizedVotesPage(
@@ -245,7 +244,7 @@ const VotesTable = ({
                             setVoteRes,
                             1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         setCurrentPage(1);
                         setCurrentPageTemp(1);
@@ -268,7 +267,7 @@ const VotesTable = ({
                             searchTerm,
                             currentPage - 1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         !searchTerm &&
                           getAuthorizedVotesPage(
@@ -277,7 +276,7 @@ const VotesTable = ({
                             setVoteRes,
                             currentPage - 1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         setCurrentPage((prevValue) => {
                           setCurrentPageTemp(prevValue - 1);
@@ -290,12 +289,12 @@ const VotesTable = ({
                   )}
                   <input
                     className="form-control mx-2 my-3"
-                    style={{ width: 4 + "rem" }}
+                    style={{ width: 4 + 'rem' }}
                     type="number"
                     value={currentPageTemp}
                     onChange={(e: any) => setCurrentPageTemp(e.target.value)}
                     onKeyUp={(event) => {
-                      if (event.key === "Enter") {
+                      if (event.key === 'Enter') {
                         setLoading(true);
                         searchTerm &&
                           getSearchedAuthorizedVotes(
@@ -306,7 +305,7 @@ const VotesTable = ({
                             searchTerm,
                             currentPageTemp,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         !searchTerm &&
                           getAuthorizedVotesPage(
@@ -315,7 +314,7 @@ const VotesTable = ({
                             setVoteRes,
                             currentPageTemp,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         setCurrentPage(currentPageTemp);
                       }
@@ -335,7 +334,7 @@ const VotesTable = ({
                             searchTerm,
                             currentPage + 1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         !searchTerm &&
                           getAuthorizedVotesPage(
@@ -344,7 +343,7 @@ const VotesTable = ({
                             setVoteRes,
                             currentPage + 1,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         setCurrentPage((prevValue) => {
                           setCurrentPageTemp(prevValue + 1);
@@ -369,7 +368,7 @@ const VotesTable = ({
                             searchTerm,
                             voteRes.totalPages,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         !searchTerm &&
                           getAuthorizedVotesPage(
@@ -378,7 +377,7 @@ const VotesTable = ({
                             setVoteRes,
                             voteRes.totalPages,
                             votesLimit,
-                            setLoading
+                            setLoading,
                           );
                         setCurrentPage(voteRes.totalPages);
                         setCurrentPageTemp(voteRes.totalPages);

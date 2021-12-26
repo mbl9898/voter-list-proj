@@ -1,63 +1,63 @@
-import { Dispatch, SetStateAction } from "react";
-import { VotesModel } from "../interfaces/VotesModel";
-import AuthorizedService from "../services/AuthorizedService";
-import { setMessage, setMessageVariant } from "../store";
+import { Dispatch, SetStateAction } from 'react';
+import { VotesModel } from '../interfaces/VotesModel';
+import AuthorizedService from '../services/AuthorizedService';
+import { setMessage, setMessageVariant } from '../store';
 let headings = [
-  "blockCode",
-  "voteSNo",
-  "familyNo",
-  "gender",
-  "name",
-  "fatherHusbandName",
-  "maritalStatus",
-  "cnic",
-  "age",
-  "houseNo",
-  "street",
-  "phase",
-  "sector",
-  "lane",
-  "boulevardAvenue",
-  "otherArea",
-  "constituencyName",
-  "moza",
-  "dehya",
-  "city",
-  "patwarHalka",
-  "tapaydar",
-  "tehseel",
-  "talka",
-  "district",
-  "unionCouncil",
-  "bookNo",
-  "constituency",
+  'blockCode',
+  'voteSNo',
+  'familyNo',
+  'gender',
+  'name',
+  'fatherHusbandName',
+  'maritalStatus',
+  'cnic',
+  'age',
+  'houseNo',
+  'street',
+  'phase',
+  'sector',
+  'lane',
+  'boulevardAvenue',
+  'otherArea',
+  'constituencyName',
+  'moza',
+  'dehya',
+  'city',
+  'patwarHalka',
+  'tapaydar',
+  'tehseel',
+  'talka',
+  'district',
+  'unionCouncil',
+  'bookNo',
+  'constituency',
 ];
 
 const createFilteredVotesHeadings = async (
   setFilteredVotesHeadings: Dispatch<SetStateAction<string[] | null>>,
-  setSearchOptions: Dispatch<SetStateAction<string[] | null>>
+  setSearchOptions: Dispatch<SetStateAction<string[] | null>>,
 ) => {
   // let resHeadings = votesData[0] && Object.keys(votesData[0]);
   let sentenceCaseHeadings: string[] = [];
   if (headings) {
-    headings.unshift("Sr");
+    headings.unshift('Sr');
     headings = headings.filter(
       (heading: string) =>
-        heading !== "filePath" &&
-        heading !== "_id" &&
-        heading !== "enteredBy" &&
-        heading !== "createdAt" &&
-        heading !== "verifiedBy" &&
-        heading !== "__v"
+        heading !== 'filePath' &&
+        heading !== '_id' &&
+        heading !== 'enteredBy' &&
+        heading !== 'createdAt' &&
+        heading !== 'verifiedBy' &&
+        heading !== '__v',
     );
     headings.forEach((heading: string) => {
-      const result = heading.replace(/([A-Z])/g, " $1");
+      const result = heading.replace(/([A-Z])/g, ' $1');
       sentenceCaseHeadings.push(
-        result.charAt(0).toUpperCase() + result.slice(1)
+        result.charAt(0).toUpperCase() + result.slice(1),
       );
     });
     setFilteredVotesHeadings(sentenceCaseHeadings);
-    headings = headings.filter((heading: string) => heading !== "Sr");
+    headings = headings.filter((heading: string) => heading !== 'Sr');
     setSearchOptions(headings);
   }
 };
@@ -70,13 +70,12 @@ export const getAuthorizedVotesPage = async (
   limit: number,
   setLoading?: Dispatch<SetStateAction<boolean>>,
   setFilteredVotesHeadings?: Dispatch<SetStateAction<string[] | null>>,
-  setSearchOptions?: Dispatch<SetStateAction<string[] | null>>
+  setSearchOptions?: Dispatch<SetStateAction<string[] | null>>,
 ) => {
   const res = await AuthorizedService.getAuthorizedPage(pageNo, limit);
-  console.log(res);
 
   if (res && !res.success) {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
     dispatch(setMessage(res.message));
     setVotesData(null);
     return;
@@ -104,18 +103,17 @@ export const getSearchedAuthorizedVotes = async (
   searchTerm: string | number,
   pageNo: number,
   limit: number,
-  setLoading?: Dispatch<SetStateAction<boolean>>
+  setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => {
   const res = await AuthorizedService.getAuthorizedSearch(
     searchField,
     searchTerm,
     pageNo,
-    limit
+    limit,
   );
-  console.log(res);
 
   if (res && !res.success) {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
     dispatch(setMessage(res.message));
     setLoading && setLoading(false);
     // setVotesData(null);
@@ -142,16 +140,16 @@ export const onVotesSearch = (
   searchField: string,
   searchTerm: string | number,
   votesLimit: number,
-  setLoading?: Dispatch<SetStateAction<boolean>>
+  setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => {
   event.preventDefault();
-  if (event.key === "Enter") {
+  if (event.key === 'Enter') {
     if (!searchField) {
-      dispatch(setMessageVariant("danger"));
-      dispatch(setMessage("Search Field not Selected"));
+      dispatch(setMessageVariant('danger'));
+      dispatch(setMessage('Search Field not Selected'));
       return;
     }
-    console.log(searchField);
+
     setLoading && setLoading(true);
     getSearchedAuthorizedVotes(
       dispatch,
@@ -161,7 +159,7 @@ export const onVotesSearch = (
       searchTerm,
       1,
       votesLimit,
-      setLoading
+      setLoading,
     );
     setCurrentPage(1);
   }

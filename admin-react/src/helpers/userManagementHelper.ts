@@ -26,12 +26,7 @@ export const getUsers = async (
   setUsers: Dispatch<SetStateAction<User[]>>,
   setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => {
-  try {
-    const res = await UserService.allUsers();
-    console.log(res);
-    await setUsers(res);
-    setLoading && setLoading(false);
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await UserService.allUsers();
+  setUsers(res);
+  setLoading && setLoading(false);
 };

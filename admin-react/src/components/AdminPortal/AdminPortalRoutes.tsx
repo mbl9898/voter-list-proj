@@ -1,4 +1,4 @@
-import React, { Dispatch, memo, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction } from 'react';
 
 interface Props {
   setUserManagement: Dispatch<SetStateAction<boolean>>;
@@ -15,7 +15,6 @@ const AdminPortalRoutes = ({
   setPaymentManagement,
   setReports,
 }: Props) => {
-  console.log("Component Rendered");
   return (
     <div className="d-flex justify-content-center m-4">
       <button

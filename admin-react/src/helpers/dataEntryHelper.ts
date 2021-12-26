@@ -1,80 +1,71 @@
-import { Dispatch } from "react";
-import { VotesModel } from "../interfaces/VotesModel";
+import { Dispatch } from 'react';
+import { VotesModel } from '../interfaces/VotesModel';
 import {
   setCurrentRejectedVote,
   setDefaultBlockCodeData,
   setMessage,
   setMessageVariant,
   setRejectedVotes,
-} from "../store";
-import unAuthorizedService from "../services/unAuthorizedService";
-import { BlockCodeService } from "../services/BlockCodeService";
-import { UserService } from "../services/UserService";
+} from '../store';
+import unAuthorizedService from '../services/unAuthorizedService';
+import { BlockCodeService } from '../services/BlockCodeService';
+import { UserService } from '../services/UserService';
 
 export const dataEntryFormInitial: VotesModel = {
   blockCode: null,
   voteSNo: null,
   familyNo: null,
-  gender: "",
-  name: "",
-  fatherHusbandName: "",
-  maritalStatus: "",
-  cnic: "",
+  gender: '',
+  name: '',
+  fatherHusbandName: '',
+  maritalStatus: '',
+  cnic: '',
   age: null,
-  houseNo: "",
-  street: "",
-  phase: "",
-  sector: "",
-  lane: "",
-  boulevardAvenue: "",
-  otherArea: "",
-  constituencyName: "",
-  moza: "",
-  dehya: "",
-  city: "",
-  patwarHalka: "",
-  tapaydar: "",
-  tehseel: "",
-  talka: "",
-  district: "",
-  unionCouncil: "",
-  bookNo: "",
-  constituency: "",
+  houseNo: '',
+  street: '',
+  phase: '',
+  sector: '',
+  lane: '',
+  boulevardAvenue: '',
+  otherArea: '',
+  constituencyName: '',
+  moza: '',
+  dehya: '',
+  city: '',
+  patwarHalka: '',
+  tapaydar: '',
+  tehseel: '',
+  talka: '',
+  district: '',
+  unionCouncil: '',
+  bookNo: '',
+  constituency: '',
 };
 
 export const getRejectedVotes = async (
-  dispatch: Dispatch<{ payload: any; type: string }>
+  dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
-  try {
-    const res = await unAuthorizedService.getRejectedVotes();
-    dispatch(setRejectedVotes(res));
-    dispatch(setCurrentRejectedVote(res[0]));
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await unAuthorizedService.getRejectedVotes();
+  dispatch(setRejectedVotes(res));
+  dispatch(setCurrentRejectedVote(res[0]));
 };
 
 export const submitVote = async (
-  data: any
+  data: any,
   // setData: Dispatch<SetStateAction<VotesModel>>
 ) => {
-  try {
-    const res = await unAuthorizedService.addNewUnauthorizedData(data);
-    return res;
-    // setData(dataEntryFormInitial);
-  } catch (error) {
-    console.log(error);
-  }
+  const res = await unAuthorizedService.addNewUnauthorizedData(data);
+  return res;
+  // setData(dataEntryFormInitial);
 };
 
 export const getDefaultBlockCodeData = async (
   defaultBlockCode: number,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setData: any,
-  setLoading: any
+  setLoading: any,
 ) => {
   const res = await BlockCodeService.getBlockCodeByNumber(defaultBlockCode);
-  console.log(res);
   if (res.success) {
     await dispatch(setDefaultBlockCodeData(res.data));
     const data = res.data;
@@ -96,11 +87,11 @@ export const getDefaultBlockCodeData = async (
     });
     setLoading(false);
   } else {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
     dispatch(
       setMessage(
-        "Failed to load default Block Code | Set Default Block Code | Contact Admin"
-      )
+        'Failed to load default Block Code | Set Default Block Code | Contact Admin',
+      ),
     );
     setLoading(false);
   }
@@ -111,9 +102,9 @@ export const onBlockCodeSelect = async (
   defaultBlockCode: number,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setData: any,
-  setLoading: any
+  setLoading: any,
 ) => {
-  const res = await UserService.setDefaultBlockCode(userId, defaultBlockCode);
+  await UserService.setDefaultBlockCode(userId, defaultBlockCode);
   getDefaultBlockCodeData(defaultBlockCode, dispatch, setData, setLoading);
 };
 
@@ -122,29 +113,28 @@ export const submitNewVote = async (
   currentUser: any,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setData: any,
-  setLoading: any
+  setLoading: any,
 ) => {
   const res: any = await submitVote(data);
-  console.log(res);
   if (res.success) {
     getDefaultBlockCodeData(
       currentUser.defaultBlockCode,
       dispatch,
       setData,
-      setLoading
+      setLoading,
     );
-    dispatch(setMessageVariant("info"));
-    dispatch(setMessage("Vote Submitted SuccessFully"));
+    dispatch(setMessageVariant('info'));
+    dispatch(setMessage('Vote Submitted SuccessFully'));
     return;
   }
 
   if (res.error) {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
     dispatch(setMessage(res.error.message));
     return;
   }
   if (!res.success) {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
     dispatch(setMessage(res.message));
     return;
   }

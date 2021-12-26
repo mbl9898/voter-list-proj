@@ -24,6 +24,7 @@ const Message = (props: Props) => {
     setTimeout(() => {
       dispatch(setMessage(''));
     }, 5000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [msg]);
   return (
     <>

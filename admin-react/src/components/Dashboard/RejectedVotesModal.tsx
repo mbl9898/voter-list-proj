@@ -1,12 +1,12 @@
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { Button, Modal } from "react-bootstrap";
-import { getRejectedVotes } from "../../helpers/dataEntryHelper";
-import UnAuthorizedModel from "../../services/UnAuthorizedModel";
-import { setCurrentRejectedVote } from "../../store";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import DataEntryForm from "../DataEntryForm";
-import Loading from "../Loading";
-import { StoreState } from "../../store/index";
+import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Button, Modal } from 'react-bootstrap';
+import { getRejectedVotes } from '../../helpers/dataEntryHelper';
+import UnAuthorizedModel from '../../services/UnAuthorizedModel';
+import { setCurrentRejectedVote } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import DataEntryForm from '../DataEntryForm';
+import Loading from '../Loading';
+import { StoreState } from '../../store/index';
 
 interface Props {
   rejectedVoteModal: boolean;
@@ -21,13 +21,14 @@ const RejectedVotesModal = ({
   const [loading, setLoading] = useState(true);
   const [rejectedVoteIndex, setRejectedVoteIndex] = useState(0);
   const rejectedVotes: UnAuthorizedModel[] | [] = useAppSelector(
-    (state: StoreState) => state.app.rejectedVotes
+    (state: StoreState) => state.app.rejectedVotes,
   );
 
   useEffect(() => {
     setLoading(true);
     getRejectedVotes(dispatch);
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -65,12 +66,12 @@ const RejectedVotesModal = ({
               disabled={rejectedVoteIndex === 0}
               onClick={() => {
                 dispatch(
-                  setCurrentRejectedVote(rejectedVotes[rejectedVoteIndex - 1])
+                  setCurrentRejectedVote(rejectedVotes[rejectedVoteIndex - 1]),
                 );
                 setRejectedVoteIndex(rejectedVoteIndex - 1);
               }}
             >
-              {"< Prev"}
+              {'< Prev'}
             </Button>
             <Button
               variant="primary"
@@ -79,12 +80,12 @@ const RejectedVotesModal = ({
               }
               onClick={() => {
                 dispatch(
-                  setCurrentRejectedVote(rejectedVotes[rejectedVoteIndex + 1])
+                  setCurrentRejectedVote(rejectedVotes[rejectedVoteIndex + 1]),
                 );
                 setRejectedVoteIndex(rejectedVoteIndex + 1);
               }}
             >
-              {"Next >"}
+              {'Next >'}
             </Button>
             <Button
               variant="danger"

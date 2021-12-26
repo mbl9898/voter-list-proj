@@ -1,7 +1,7 @@
-import { useState } from "react";
-import Down from "../../assets/icons/down.svg";
+import { useState } from 'react';
+import Down from '../../assets/icons/down.svg';
 
-import "./multiselect.scss";
+import './multiselect.scss';
 
 interface Props {
   options: any[];
@@ -14,7 +14,6 @@ const MultiSelect = ({ options }: Props) => {
   const [modifiedOptions, setModifiedOptions] = useState([]);
 
   const muhammadCallKaro = (selectedField: any, index: number) => {
-    console.log(selectedField);
     selectedField.isOpen = true;
     const exist = arr.find((x) => x === selectedField);
     if (exist) {
@@ -22,7 +21,6 @@ const MultiSelect = ({ options }: Props) => {
     } else {
       arr.push(selectedField);
     }
-    console.log(arr);
   };
 
   return (

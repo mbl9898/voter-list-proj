@@ -1,15 +1,9 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 export const useForm = (callback: any, initialState: any) => {
   const [data, setData] = useState(initialState);
   const onChange = (event: any) => {
     setData({
-      ...data,
-      [event.target.name]: data.blockCode
-        ? event.target.value.toUpperCase()
-        : event.target.value,
-    });
-    console.log({
       ...data,
       [event.target.name]: data.blockCode
         ? event.target.value.toUpperCase()

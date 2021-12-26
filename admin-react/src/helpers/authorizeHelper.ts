@@ -55,7 +55,6 @@ export const handleDelete = async (
   dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
   const res = await UnAuthorizedService.deleteRecord(id);
-  console.log(res);
 
   if (res && res.success) {
     dispatch(setMessageVariant('info'));
@@ -75,20 +74,12 @@ export const readOnly: any = {
 export const getUnAuthorizedList = async (
   dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
-  try {
-    const res = await UnAuthorizedService.getUnAuthorized();
-    const rejected = res.filter((x: any) => x.status === 'rejected');
-    const pending = res.filter((x: any) => x.status === 'pending');
+  const res = await UnAuthorizedService.getUnAuthorized();
+  const rejected = res.filter((x: any) => x.status === 'rejected');
+  const pending = res.filter((x: any) => x.status === 'pending');
 
-    console.log(res);
-    console.log(rejected);
-    console.log(pending);
-
-    dispatch(setUnauthorizedRejectedVotes(rejected));
-    dispatch(setUnauthorizedData(pending));
-  } catch (error) {
-    console.log(error);
-  }
+  dispatch(setUnauthorizedRejectedVotes(rejected));
+  dispatch(setUnauthorizedData(pending));
 };
 
 export const approveVote = async (vote: UnAuthorizedModel) => {

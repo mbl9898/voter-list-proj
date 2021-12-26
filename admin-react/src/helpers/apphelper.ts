@@ -1,52 +1,41 @@
-import axios from "axios";
-import { Dispatch } from "react";
-import { ApiService } from "../services/ApiServices";
-// import { VotesModel } from "../interfaces/VotesModel";
-import {
-  setCurrentUser,
-  // setData,
-  setError,
-  // setHeadings,
-  setIsAccessDeniedDisplay,
-  // setIsDataLoading,
-  setIsSignUpFormDisplay,
-} from "../store";
-// import { auth, db } from "../firebase";
+import { Dispatch } from 'react';
+import { ApiService } from '../services/ApiServices';
+import { setCurrentUser, setError, setIsAccessDeniedDisplay } from '../store';
 
-export const uids = ["60fc2d09e269a2374ca5e82a"];
+export const uids = ['60fc2d09e269a2374ca5e82a'];
 
 export const heading = [
-  "sNo",
-  "blockCode",
-  "constituencyName",
-  "moza",
-  "dehya",
-  "city",
-  "patwarHalka",
-  "tapaydar",
-  "tehseel",
-  "talka",
-  "district",
-  "unionCouncil",
-  "bookNo",
-  "constituency",
-  "gender",
-  "voteSNo",
-  "familyNo",
-  "name",
-  "maritalStatus",
-  "fatherHusbandName",
-  "cnic",
-  "age",
-  "houseNo",
-  "street",
-  "phase",
-  "sector",
-  "lane",
-  "boulevardAvenue",
-  "otherArea",
-  "count",
-  "address",
+  'sNo',
+  'blockCode',
+  'constituencyName',
+  'moza',
+  'dehya',
+  'city',
+  'patwarHalka',
+  'tapaydar',
+  'tehseel',
+  'talka',
+  'district',
+  'unionCouncil',
+  'bookNo',
+  'constituency',
+  'gender',
+  'voteSNo',
+  'familyNo',
+  'name',
+  'maritalStatus',
+  'fatherHusbandName',
+  'cnic',
+  'age',
+  'houseNo',
+  'street',
+  'phase',
+  'sector',
+  'lane',
+  'boulevardAvenue',
+  'otherArea',
+  'count',
+  'address',
 ];
 
 export const signUp = async (
@@ -56,19 +45,19 @@ export const signUp = async (
   passwordConfirmRef: any,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setError: any,
-  history: any
+  history: any,
 ) => {
-  setError("");
+  setError('');
   const auth = ApiService.createAxios();
   if (passwordRef.current) {
     if (passwordConfirmRef.current) {
       if (passwordRef.current.value !== passwordConfirmRef.current.value) {
-        return setError("Passwords do not match");
+        return setError('Passwords do not match');
       }
     }
   }
   const authRes = await auth
-    .post("auth/register", {
+    .post('auth/register', {
       username: userNameRef.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
@@ -83,12 +72,11 @@ export const signUp = async (
             email: emailRef.current.value,
             uid: authRes.data.data._id,
             ...authRes.data.data,
-          })
+          }),
         );
-        localStorage.setItem("token", authRes.data.data.access_token);
-        history.push("/");
-        document.title = "Dashboard - Voter List App";
-        // console.log(true);
+        localStorage.setItem('token', authRes.data.data.access_token);
+        history.push('/');
+        document.title = 'Dashboard - Voter List App';
         // dispatch(setIsSignUpFormDisplay(false));
       }
       if (!authRes.data.success) {
@@ -105,31 +93,29 @@ export const signUp = async (
             }
           }
           setError(
-            `${emailExists !== undefined ? emailExists : ""} \n
-            ${invalidEmail !== undefined ? invalidEmail : ""} \n 
-            ${invalidPassword !== undefined ? invalidPassword : ""}`
+            `${emailExists !== undefined ? emailExists : ''} \n
+            ${invalidEmail !== undefined ? invalidEmail : ''} \n 
+            ${invalidPassword !== undefined ? invalidPassword : ''}`,
           );
         }
       }
     } catch (err) {
       console.log(err);
     }
-  } else {
-    console.log(authRes, "SignUp Res Error");
   }
 };
 
 export const logout = async (
   uid: string,
-  dispatch: Dispatch<{ payload: any; type: string }>
+  dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
-  const currentToken = localStorage.getItem("token");
+  const currentToken = localStorage.getItem('token');
   // return auth.signOut();
-  setError("");
+  setError('');
   const auth = ApiService.createAxios();
 
   try {
-    const authRes = await auth.post("logout/", {
+    const authRes = await auth.post('logout/', {
       userId: uid,
       accessToken: `bearer ${currentToken}`,
     });
@@ -138,6 +124,6 @@ export const logout = async (
       dispatch(setIsAccessDeniedDisplay(false));
     }
   } catch {
-    setError("Failed to log out");
+    setError('Failed to log out');
   }
 };

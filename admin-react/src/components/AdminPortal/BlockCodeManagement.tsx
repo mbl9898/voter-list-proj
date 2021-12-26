@@ -27,7 +27,6 @@ const BlockCodeManagement = () => {
   const deleteBlockCode = async (id: string) => {
     setLoading(true);
     const res = await BlockCodeService.deleteBlockCode(id);
-    console.log(res);
     if (res === 'This record has been deleted successfully') {
       dispatch(setMessageVariant('success'));
       dispatch(setMessage('BlockCode Deleted Successfully'));
@@ -40,6 +39,7 @@ const BlockCodeManagement = () => {
   };
   useEffect(() => {
     getBlockCodes(dispatch, setLoading, setIsBlockCodeData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

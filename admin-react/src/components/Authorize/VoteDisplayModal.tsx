@@ -46,6 +46,7 @@ const VoteDisplayModal = ({
 
   useEffect(() => {
     setShowModalProp && setShowModalProp(showModalProp);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [showModalProp, unauthorizedVotesLength]);
   return (
     <>
@@ -58,7 +59,6 @@ const VoteDisplayModal = ({
           }}
         >
           <Modal.Header closeButton>
-            {console.log(unauthorizedVote)}
             <Modal.Title>
               {heading
                 ? heading
@@ -435,16 +435,13 @@ const VoteDisplayModal = ({
                 const success = await approveVote(unauthorizedVote);
                 if (success) {
                   getUnAuthorizedList(dispatch);
-                  console.log(index);
                   if (setIndex) {
                     if (index === 0 && unauthorizedVotesLength > 0) {
-                      console.log(unauthorizedVotesLength);
                       setIndex(0);
                       return;
                     }
 
                     setIndex((prevValue) => {
-                      console.log(prevValue - 1);
                       return prevValue - 1;
                     });
                   }
@@ -473,7 +470,6 @@ const VoteDisplayModal = ({
               onClick={() => {
                 unauthorizedVote._id &&
                   handleDelete(unauthorizedVote._id, dispatch);
-                console.log(unauthorizedVotesLength);
                 unauthorizedVotesLength === 0 && handleClose(dispatch, history);
               }}
             >

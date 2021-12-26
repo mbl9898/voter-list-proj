@@ -1,21 +1,21 @@
-import { SetStateAction, useState } from "react";
-import { Dispatch } from "react";
-import { useEffect } from "react";
+import { SetStateAction } from 'react';
+import { Dispatch } from 'react';
+import { useEffect } from 'react';
 import {
   getAllPayments,
   getPaymentFile,
-} from "../../helpers/paymentManagementHelper";
-import { Payment } from "../../interfaces/PaymentModel";
-import { PaymentService } from "../../services/PaymentService";
+} from '../../helpers/paymentManagementHelper';
+import { Payment } from '../../interfaces/PaymentModel';
+import { PaymentService } from '../../services/PaymentService';
 import {
   setFilteredPaymentHeadings,
   setMessage,
   setMessageVariant,
   setPayments,
-} from "../../store";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import CModal from "../CModal";
-import { StoreState } from "./../../store/index";
+} from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import CModal from '../CModal';
+import { StoreState } from './../../store/index';
 
 interface Props {
   currentUserPayments?: Payment[];
@@ -32,7 +32,7 @@ const PaymentTable = ({
 }: Props) => {
   const dispatch = useAppDispatch();
   const filteredPaymentHeadings = useAppSelector(
-    (state: StoreState) => state.app.filteredPaymentHeadings
+    (state: StoreState) => state.app.filteredPaymentHeadings,
   );
   const payments = useAppSelector((state: StoreState) => state.app.payments);
   const getCurrentUserPaymentHeadings = (currentUserPayments: Payment[]) => {
@@ -41,21 +41,21 @@ const PaymentTable = ({
         currentUserPayments[0] && Object.keys(currentUserPayments[0]);
       let sentenceCaseHeadings: string[] = [];
       if (resHeadings) {
-        resHeadings.unshift("Sr");
+        resHeadings.unshift('Sr');
         resHeadings = resHeadings.filter(
           (heading: string) =>
-            heading !== "filePath" &&
-            heading !== "_id" &&
-            heading !== "email" &&
-            heading !== "fileName" &&
-            heading !== "enteredBy" &&
-            heading !== "createdAt" &&
-            heading !== "__v"
+            heading !== 'filePath' &&
+            heading !== '_id' &&
+            heading !== 'email' &&
+            heading !== 'fileName' &&
+            heading !== 'enteredBy' &&
+            heading !== 'createdAt' &&
+            heading !== '__v',
         );
         resHeadings.forEach((heading: string) => {
-          const result = heading.replace(/([A-Z])/g, " $1");
+          const result = heading.replace(/([A-Z])/g, ' $1');
           sentenceCaseHeadings.push(
-            result.charAt(0).toUpperCase() + result.slice(1)
+            result.charAt(0).toUpperCase() + result.slice(1),
           );
         });
         return sentenceCaseHeadings;
@@ -73,12 +73,12 @@ const PaymentTable = ({
     const res = await PaymentService.deletePayment(id);
 
     if (res && !res.success) {
-      dispatch(setMessageVariant("danger"));
+      dispatch(setMessageVariant('danger'));
       dispatch(setMessage(res.message));
       return;
     }
 
-    dispatch(setMessageVariant("success"));
+    dispatch(setMessageVariant('success'));
     dispatch(setMessage(res.message));
     getAllPayments(dispatch);
   };
@@ -89,6 +89,7 @@ const PaymentTable = ({
     currentUserPayments && dispatch(setFilteredPaymentHeadings([]));
     currentUserPayments && dispatch(setPayments([]));
     !currentUserPayments && getAllPayments(dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -134,16 +135,16 @@ const PaymentTable = ({
                             onClick={() => {
                               setUpdatePaymentData
                                 ? setUpdatePaymentData(
-                                    !paymentEntryForm ? payment : null
+                                    !paymentEntryForm ? payment : null,
                                   )
                                 : console.log(
-                                    new Error("setUpdatePaymentData issue")
+                                    new Error('setUpdatePaymentData issue'),
                                   );
 
                               setPaymentEntryForm
                                 ? setPaymentEntryForm((prevV) => !prevV)
                                 : console.log(
-                                    new Error("setPaymentEntryForm issue")
+                                    new Error('setPaymentEntryForm issue'),
                                   );
                             }}
                           >
@@ -168,7 +169,7 @@ const PaymentTable = ({
                         <td>
                           <CModal
                             heading={
-                              "Are you sure you want to delete this Payment?"
+                              'Are you sure you want to delete this Payment?'
                             }
                             triggerButtonContent="delete"
                             triggerButtonVariant="danger"

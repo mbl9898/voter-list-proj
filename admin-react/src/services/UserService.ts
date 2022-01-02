@@ -2,6 +2,7 @@ import { DataAccessParamsModel } from '../components/AdminPortal/DataAccess';
 import { User } from '../interfaces/User';
 import { ApiService } from './ApiServices';
 import UserModel from './UserModel';
+import { ResetPasswordModel } from '../components/ResetPassword';
 export class UserService {
   static baseUrl = ['auth', 'profile'];
 
@@ -51,6 +52,28 @@ export class UserService {
       ...accessData,
     });
     return res;
+  }
+  static async updateProfile(userData: { username: string; mobileNo: string }) {
+    try {
+      const res = await ApiService.put(
+        `${UserService.baseUrl[0]}/updateProfile`,
+        userData,
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  static async resetPassword(passwordData: ResetPasswordModel) {
+    try {
+      const res = await ApiService.put(
+        `${UserService.baseUrl[0]}/reset-password`,
+        passwordData,
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
   static async setDefaultBlockCode(_id: string, defaultBlockCode: number) {
     const res = await ApiService.put(

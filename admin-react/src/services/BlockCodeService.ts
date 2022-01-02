@@ -8,11 +8,16 @@ export class BlockCodeService {
     const res = await ApiService.get(`${BlockCodeService.baseUrl[0]}`);
     return res.data;
   }
-  static async getBlockCodeByNumber(blockCodeNumber: number) {
-    const res = await ApiService.get(
-      `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`,
-    );
-    return res;
+  static async getBlockCodeByNumber(blockCodeNumber: number, config?: any) {
+    try {
+      const res = await ApiService.get(
+        `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`,
+        { ...config },
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
   static async updateBlockCode(blockCodeData: BlockCode) {
     const res = await ApiService.put(

@@ -14,17 +14,25 @@ router.post(
       {
         username: req.body.username,
         email: req.body.email,
+        mobileNo: req.body.mobileNo,
         password: req.body.password,
         confirmPassword: req.body.confirmPassword,
       },
       {
-        username: 'required|string',
+        username: 'required|string|regex:/[a-zA-Z]{2,}/',
         email: 'required|string|email',
+        mobileNo: 'required|string|regex:/[0-9]{5}(?:-)[0-9]{7}/',
         password:
           'required|string|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
         confirmPassword: 'required|same:password',
       },
       {
+        'regex.username': `User Name.:
+        Must contains two or more characters
+        `,
+        'regex.mobileNo': `Mobile No. should have:
+        92300-1112233 Format
+        `,
         'regex.password': `Password should have:
         At least one upper case 
         At least one lower case
@@ -90,29 +98,6 @@ router.patch(
     );
   },
   auth.sendCodePasswordRecovery,
-);
-
-router.patch(
-  '/reset-password',
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        otp: req.body.otp,
-        password: req.body.password,
-        confirm_password: req.body.confirm_password,
-      },
-      {
-        otp: 'required|string',
-        password:
-          'required|string|regex:/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$/',
-        confirm_password: 'required|same:password',
-      },
-    );
-  },
-  auth.resetPassword,
 );
 
 router.get(

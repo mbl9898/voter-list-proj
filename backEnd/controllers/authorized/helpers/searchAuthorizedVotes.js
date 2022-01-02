@@ -31,39 +31,55 @@ export const searchAuthorizedVotes = async (req, res) => {
     //   ));
 
     if (searchTerm) {
-      filteredData.push(
-        ...data.filter((x) => {
-          return x[searchField]?.toString().toLowerCase().includes(searchTerm);
-          // ||
-          // x[voteKeys[1]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[2]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[3]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[4]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[5]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[6]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[7]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[8]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[9]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[10]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[11]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[12]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[13]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[14]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[15]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[16]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[17]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[18]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[19]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[20]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[21]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[22]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[23]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[24]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[25]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[26]]?.toString().toLowerCase().includes(searchTerm) ||
-          // x[voteKeys[27]]?.toString().toLowerCase().includes(searchTerm)
-        }),
-      );
+      if (
+        searchField === 'blockCode' ||
+        searchField === 'voteSNo' ||
+        searchField === 'familyNo' ||
+        searchField === 'age'
+      ) {
+        filteredData.push(
+          ...data.filter((x) => {
+            return x[searchField]?.toString().toLowerCase() === searchTerm;
+          }),
+        );
+      } else {
+        filteredData.push(
+          ...data.filter((x) => {
+            return x[searchField]
+              ?.toString()
+              .toLowerCase()
+              .includes(searchTerm);
+            // ||
+            // x[voteKeys[1]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[2]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[3]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[4]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[5]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[6]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[7]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[8]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[9]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[10]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[11]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[12]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[13]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[14]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[15]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[16]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[17]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[18]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[19]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[20]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[21]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[22]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[23]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[24]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[25]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[26]]?.toString().toLowerCase().includes(searchTerm) ||
+            // x[voteKeys[27]]?.toString().toLowerCase().includes(searchTerm)
+          }),
+        );
+      }
     } else {
       filteredData.push(...data);
     }
@@ -96,7 +112,7 @@ export const searchAuthorizedVotes = async (req, res) => {
         limit: limit,
       };
     }
-
+    results.totalRecords = filteredVotesCount;
     results.results = filteredData.slice(startIndex, limit + startIndex);
     results.totalPages = totalPages;
 

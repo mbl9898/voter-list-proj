@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import UnAuthorizedModel from '../../services/UnAuthorizedModel';
-import { useAppDispatch, useAppSelector } from '../../store/hooks';
-import VoteDisplayModal from './VoteDisplayModal';
-import { setDataVoteRejectToUnauthorizedDataIndex } from '../../store';
-import { StoreState } from '../../store/index';
-import { getUnAuthorizedList } from '../../helpers/authorizeHelper';
+import { useEffect, useState } from "react";
+import UnAuthorizedModel from "../../services/UnAuthorizedModel";
+import { useAppDispatch, useAppSelector } from "../../store/hooks";
+import VoteDisplayModal from "./VoteDisplayModal";
+import { setDataVoteRejectToUnauthorizedDataIndex } from "../../store";
+import { StoreState } from "../../store/index";
+import { getUnAuthorizedList } from "../../helpers/authorizeHelper";
 
 const Authorize = () => {
   const dispatch = useAppDispatch();
@@ -12,7 +12,7 @@ const Authorize = () => {
   const [unAuthorizedVote, setUnauthorizedVote] =
     useState<null | UnAuthorizedModel>(null);
   const unauthorizedData: UnAuthorizedModel[] | [] = useAppSelector(
-    (state: StoreState) => state.app.unauthorizedData,
+    (state: StoreState) => state.app.unauthorizedData
   );
 
   useEffect(() => {

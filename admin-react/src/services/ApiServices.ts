@@ -14,10 +14,10 @@ export class ApiService {
     });
   };
 
-  static async get(url: string): Promise<any> {
+  static async get(url: string, config?: any): Promise<any> {
     const axios = ApiService.createAxios();
     try {
-      const res = await axios.get(url);
+      const res = await axios.get(url, config);
       if (res) {
         return res.data;
       }
@@ -27,10 +27,10 @@ export class ApiService {
     }
   }
 
-  static async post(url: string, body?: object): Promise<any> {
+  static async post(url: string, body?: object, config?: any): Promise<any> {
     const axios = ApiService.createAxios();
     try {
-      const res = await axios.post(url, body);
+      const res = await axios.post(url, body, config);
       if (res) {
         return res.data;
       }
@@ -40,10 +40,10 @@ export class ApiService {
     }
   }
 
-  static async put(url: string, body: object): Promise<any> {
+  static async put(url: string, body: object, config?: any): Promise<any> {
     const axios = ApiService.createAxios();
     try {
-      const res = await axios.put(url, body);
+      const res = await axios.put(url, body, config);
       if (res) {
         return res.data;
       }
@@ -53,10 +53,10 @@ export class ApiService {
     }
   }
 
-  static async delete(url: string): Promise<any> {
+  static async delete(url: string, config?: any): Promise<any> {
     const axios = ApiService.createAxios();
     try {
-      const res = await axios.delete(url);
+      const res = await axios.delete(url, config);
       if (res) {
         return res.data;
       }

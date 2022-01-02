@@ -1,7 +1,15 @@
 import { Dispatch, SetStateAction } from 'react';
+import { VotesTableVoteRes } from '../components/Votes/VotesTable';
 import { VotesModel } from '../interfaces/VotesModel';
 import AuthorizedService from '../services/AuthorizedService';
 import { setMessage, setMessageVariant } from '../store';
+
+export const voteResInitial = {
+  next: { page: 0, limit: 0 },
+  prev: { page: 0, limit: 0 },
+  totalPages: 0,
+  totalRecords: 0,
+};
 let headings = [
   'blockCode',
   'voteSNo',
@@ -71,8 +79,12 @@ export const getAuthorizedVotesPage = async (
   setLoading?: Dispatch<SetStateAction<boolean>>,
   setFilteredVotesHeadings?: Dispatch<SetStateAction<string[] | null>>,
   setSearchOptions?: Dispatch<SetStateAction<string[] | null>>,
+  source?: any,
 ) => {
-  const res = await AuthorizedService.getAuthorizedPage(pageNo, limit);
+  const res = await AuthorizedService.getAuthorizedPage(pageNo, limit, {
+    cancelToken: source?.token,
+  });
+  console.log(res);
 
   if (res && !res.success) {
     dispatch(setMessageVariant('danger'));
@@ -81,7 +93,7 @@ export const getAuthorizedVotesPage = async (
     return;
   }
 
-  if (res.results.results[0]) {
+  if (res?.results.results[0]) {
     setFilteredVotesHeadings &&
       setSearchOptions &&
       createFilteredVotesHeadings(setFilteredVotesHeadings, setSearchOptions);
@@ -90,6 +102,7 @@ export const getAuthorizedVotesPage = async (
       next: res.results.next,
       prev: res.results.previous,
       totalPages: res.results.totalPages,
+      totalRecords: res.results.totalRecords,
     });
     setLoading && setLoading(false);
   }
@@ -98,7 +111,7 @@ export const getAuthorizedVotesPage = async (
 export const getSearchedAuthorizedVotes = async (
   dispatch: Dispatch<{ payload: any; type: string }>,
   setVotesData: Dispatch<SetStateAction<VotesModel[] | null>>,
-  setVoteRes: Dispatch<SetStateAction<any>>,
+  setVoteRes: Dispatch<SetStateAction<VotesTableVoteRes>>,
   searchField: string,
   searchTerm: string | number,
   pageNo: number,
@@ -126,6 +139,7 @@ export const getSearchedAuthorizedVotes = async (
       next: res.results.next,
       prev: res.results.previous,
       totalPages: res.results.totalPages,
+      totalRecords: res.results.totalRecords,
     });
     setLoading && setLoading(false);
   }
@@ -135,7 +149,7 @@ export const onVotesSearch = (
   event: any,
   dispatch: Dispatch<{ payload: any; type: string }>,
   setVotesData: Dispatch<SetStateAction<VotesModel[] | null>>,
-  setVoteRes: Dispatch<SetStateAction<any>>,
+  setVoteRes: Dispatch<SetStateAction<VotesTableVoteRes>>,
   setCurrentPage: Dispatch<SetStateAction<number>>,
   searchField: string,
   searchTerm: string | number,

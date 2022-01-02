@@ -16,6 +16,7 @@ export const userEntryFormInitial: User = {
   _id: '',
   email: '',
   username: '',
+  mobileNo: '',
   rate: 0,
   role: 'user',
   assignedBlockCodes: [],

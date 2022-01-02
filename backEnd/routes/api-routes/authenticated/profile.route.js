@@ -10,24 +10,6 @@ router.get('/', profile.userData);
 
 router.get('/allUsers', isAuthorized(roles.admin), profile.getAllUsers);
 
-router.get(
-  '/userData/:email',
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        email: req.params.email,
-      },
-      {
-        email: 'required|string',
-      },
-    );
-  },
-  isAuthorized(roles.admin),
-  profile.getUserDataByEmail,
-);
 router.put(
   '/dataAccess',
   (req, res, next) => {

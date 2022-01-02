@@ -1,22 +1,18 @@
-import { BlockCode } from "../interfaces/BlockCode";
-import { ApiService } from "./ApiServices";
+import { BlockCode } from '../interfaces/BlockCode';
+import { ApiService } from './ApiServices';
 
 export class BlockCodeService {
-  static baseUrl = ["blockCode"];
+  static baseUrl = ['blockCode'];
 
   static async getBlockCodes() {
-    try {
-      const res = await ApiService.get(`${BlockCodeService.baseUrl[0]}`);
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await ApiService.get(`${BlockCodeService.baseUrl[0]}`);
+    return res.data;
   }
   static async getBlockCodeByNumber(blockCodeNumber: number, config?: any) {
     try {
       const res = await ApiService.get(
         `${BlockCodeService.baseUrl[0]}/${blockCodeNumber}`,
-        { ...config }
+        { ...config },
       );
       return res;
     } catch (error) {
@@ -24,35 +20,21 @@ export class BlockCodeService {
     }
   }
   static async updateBlockCode(blockCodeData: BlockCode) {
-    try {
-      const res = await ApiService.put(
-        `${BlockCodeService.baseUrl[0]}`,
-        blockCodeData
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await ApiService.put(
+      `${BlockCodeService.baseUrl[0]}`,
+      blockCodeData,
+    );
+    return res;
   }
   static async postBlockCode(blockCodeData: BlockCode) {
-    try {
-      const res = await ApiService.post(
-        `${BlockCodeService.baseUrl[0]}`,
-        blockCodeData
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await ApiService.post(
+      `${BlockCodeService.baseUrl[0]}`,
+      blockCodeData,
+    );
+    return res;
   }
   static async deleteBlockCode(id: string) {
-    try {
-      const res = await ApiService.delete(
-        `${BlockCodeService.baseUrl[0]}/${id}`
-      );
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
+    const res = await ApiService.delete(`${BlockCodeService.baseUrl[0]}/${id}`);
+    return res.data;
   }
 }

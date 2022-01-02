@@ -124,7 +124,6 @@ export const getSearchedAuthorizedVotes = async (
     pageNo,
     limit,
   );
-  console.log(res);
 
   if (res && !res.success) {
     dispatch(setMessageVariant('danger'));
@@ -164,7 +163,7 @@ export const onVotesSearch = (
       dispatch(setMessage('Search Field not Selected'));
       return;
     }
-    console.log(searchField);
+
     setLoading && setLoading(true);
     getSearchedAuthorizedVotes(
       dispatch,

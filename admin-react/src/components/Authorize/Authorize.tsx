@@ -16,12 +16,12 @@ const Authorize = () => {
   );
 
   useEffect(() => {
-    console.log(unauthorizedData[unAuthorizedVoteIndex]);
     getUnAuthorizedList(dispatch);
     unAuthorizedVoteIndex >= 0
       ? setUnauthorizedVote(unauthorizedData[unAuthorizedVoteIndex])
       : setUnauthorizedVote(null);
     dispatch(setDataVoteRejectToUnauthorizedDataIndex(unAuthorizedVoteIndex));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [unAuthorizedVoteIndex]);
   return (
     <>

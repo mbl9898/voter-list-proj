@@ -3,7 +3,6 @@ import { Form } from 'react-bootstrap';
 import { useForm } from '../../helpers/useForm';
 import { getUsers } from '../../helpers/userManagementHelper';
 import { User } from '../../interfaces/User';
-import { VotesModel } from '../../interfaces/VotesModel';
 import AuthorizedService from '../../services/AuthorizedService';
 import { UserService } from '../../services/UserService';
 import { setMessage, setMessageVariant } from '../../store';
@@ -31,14 +30,14 @@ interface Props {
   setDataAccess: Dispatch<SetStateAction<boolean>>;
 }
 const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
-  type SetAccessParametersData =
-    | Dispatch<SetStateAction<number[]>>
-    | Dispatch<SetStateAction<string[]>>;
+  // type SetAccessParametersData =
+  //   | Dispatch<SetStateAction<number[]>>
+  //   | Dispatch<SetStateAction<string[]>>;
   type SelectEvent = React.ChangeEvent<HTMLSelectElement>;
   const dispatch = useAppDispatch();
-  const formOptionsMock = [
-    501021717, 501021718, 501021719, 501021720, 501021721, 501021722, 501021723,
-  ];
+  // const formOptionsMock = [
+  //   501021717, 501021718, 501021719, 501021720, 501021721, 501021722, 501021723,
+  // ];
   const [lastAccessParameter, setLastAccessParameter] = useState('');
   const [loading, setLoading] = useState(false);
   const [isFullAccess, setIsFullAccess] = useState(false);
@@ -86,9 +85,7 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
     eName?: string,
   ) => {
     if (!eName) {
-      console.log(field);
       const res = await AuthorizedService.getUniqueAuthorizedDataSearch(field);
-      console.log(res);
       if (res.success) {
         res.district && setResData({ district: res.district });
       }
@@ -96,9 +93,7 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
     if (eName) {
       const nextFieldNameIndex = accessParametersArr.indexOf(eName) + 1;
       const fieldName = accessParametersArr[nextFieldNameIndex];
-      console.log(field);
       const res = await AuthorizedService.getUniqueAuthorizedDataSearch(field);
-      console.log(res);
       if (res.success) {
         res.district && setResData({ district: res.district });
         const nextFieldDistinctData = res.data
@@ -107,8 +102,6 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
             (value: any, index: any, self: any) =>
               self.indexOf(value) === index,
           );
-        console.log(fieldName, nextFieldDistinctData);
-
         res.data &&
           setResData({ ...resData, [fieldName]: nextFieldDistinctData });
       }
@@ -122,7 +115,6 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
       [eName]: eValue,
     };
     setData(newData);
-    console.log(newData);
     getUniqueData(newData, eName);
   };
   async function submitDataAccessCallback() {
@@ -145,6 +137,7 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
   }
   useEffect(() => {
     getUniqueData(dataAccessFormInitial);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -170,7 +163,6 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
                   name="district"
                   value={lastAccessParameter}
                   onChange={(e: SelectEvent) => {
-                    console.log(accessParametersArr.indexOf(e.target.value));
                     setLastAccessParameter(e.target.value);
                     setLastAccessParameterIndex(
                       accessParametersArr.indexOf(e.target.value),

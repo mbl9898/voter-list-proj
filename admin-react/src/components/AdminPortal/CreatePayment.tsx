@@ -1,18 +1,18 @@
-import { SetStateAction, useEffect, useState, Dispatch, useRef } from "react";
-import { Button, Card, Form } from "react-bootstrap";
+import { SetStateAction, useEffect, useState, Dispatch, useRef } from 'react';
+import { Button, Card, Form } from 'react-bootstrap';
 import {
   getAllPayments,
   paymentFormInitial,
   paymentFormReset,
-} from "../../helpers/paymentManagementHelper";
-import { useForm } from "../../helpers/useForm";
-import { Payment } from "../../interfaces/PaymentModel";
-import { ApiService } from "../../services/ApiServices";
-import { UserService } from "../../services/UserService";
-import { setMessage, setMessageVariant } from "../../store";
-import { useAppDispatch } from "../../store/hooks";
-import Progress from "../Progress";
-import { User } from "./../../interfaces/User";
+} from '../../helpers/paymentManagementHelper';
+import { useForm } from '../../helpers/useForm';
+import { Payment } from '../../interfaces/PaymentModel';
+import { ApiService } from '../../services/ApiServices';
+import { UserService } from '../../services/UserService';
+import { setMessage, setMessageVariant } from '../../store';
+import { useAppDispatch } from '../../store/hooks';
+import Progress from '../Progress';
+import { User } from './../../interfaces/User';
 
 interface Props {
   users: User[];
@@ -28,7 +28,7 @@ const CreatePayment = ({
   paymentEntryForm,
 }: Props) => {
   const dispatch = useAppDispatch();
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState('');
   const [uploadPercentage, setUploadPercentage] = useState(0);
   const [estimatedWithdrawalAmount, setEstimatedWithdrawalAmount] = useState(0);
   const [isWithdrawalAmountVisible, setIsWithdrawalAmountVisible] =
@@ -36,7 +36,7 @@ const CreatePayment = ({
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { data, onChange, onSubmit, setData } = useForm(
     onPaymentSubmit,
-    paymentFormInitial
+    paymentFormInitial,
   );
 
   const onFileChange = (e: any) => {
@@ -46,20 +46,20 @@ const CreatePayment = ({
   async function onPaymentSubmit(e: any) {
     // e.preventDefault();
     const formData = new FormData();
-    formData.append("file", file);
-    formData.append("email", data.email ? data.email : "");
-    formData.append("title", data.title ? data.title : "");
-    formData.append("amount", data.amount ? data.amount : "");
-    formData.append("description", data.description ? data.description : "");
+    formData.append('file', file);
+    formData.append('email', data.email ? data.email : '');
+    formData.append('title', data.title ? data.title : '');
+    formData.append('amount', data.amount ? data.amount : '');
+    formData.append('description', data.description ? data.description : '');
 
     try {
       const axios = ApiService.createAxios();
       const resCreate: any =
         !updatePaymentData &&
-        (await axios.post("/payment", formData, {
+        (await axios.post('/payment', formData, {
           onUploadProgress: (progressEvent: any) => {
             setUploadPercentage(
-              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              Math.round((progressEvent.loaded * 100) / progressEvent.total),
             );
           },
         }));
@@ -69,22 +69,21 @@ const CreatePayment = ({
         (await axios.put(`/payment/${data._id}`, formData, {
           onUploadProgress: (progressEvent: any) => {
             setUploadPercentage(
-              Math.round((progressEvent.loaded * 100) / progressEvent.total)
+              Math.round((progressEvent.loaded * 100) / progressEvent.total),
             );
           },
         }));
-      console.log(resUpdate && resUpdate.data);
-      console.log(resCreate && resCreate.data);
+
       if (resCreate && !resCreate.data.success) {
         dispatch(setMessage(null));
-        resCreate && dispatch(setMessageVariant("danger"));
+        resCreate && dispatch(setMessageVariant('danger'));
         resCreate && dispatch(setMessage(`Error: ${resCreate.data.message}`));
-        document.getElementById("msg")?.scrollIntoView();
+        document.getElementById('msg')?.scrollIntoView();
       }
       if (resUpdate && !resUpdate.data.success) {
-        resUpdate && dispatch(setMessageVariant("danger"));
+        resUpdate && dispatch(setMessageVariant('danger'));
         resUpdate && dispatch(setMessage(`Error: ${resUpdate.data.message}`));
-        document.getElementById("msg")?.scrollIntoView();
+        document.getElementById('msg')?.scrollIntoView();
       }
       if (
         (resCreate && resCreate.data.success) ||
@@ -92,15 +91,15 @@ const CreatePayment = ({
       ) {
         // Clear percentage
         setTimeout(() => setUploadPercentage(0), 5000);
-        dispatch(setMessageVariant("info"));
-        setTimeout(() => setMessage(""), 3000);
-        resCreate && dispatch(setMessage("Payment Created SuccessFully"));
-        resUpdate && dispatch(setMessage("Payment Updated SuccessFully"));
+        dispatch(setMessageVariant('info'));
+        setTimeout(() => setMessage(''), 3000);
+        resCreate && dispatch(setMessage('Payment Created SuccessFully'));
+        resUpdate && dispatch(setMessage('Payment Updated SuccessFully'));
         setData(paymentFormReset);
-        fileInputRef.current && (fileInputRef.current.value = "");
-        setFile("");
+        fileInputRef.current && (fileInputRef.current.value = '');
+        setFile('');
         getAllPayments(dispatch);
-        document.getElementById("msg")?.scrollIntoView();
+        document.getElementById('msg')?.scrollIntoView();
         setIsWithdrawalAmountVisible(false);
         // setPaymentEntryForm(false);
       }
@@ -112,19 +111,19 @@ const CreatePayment = ({
     setIsWithdrawalAmountVisible(false);
     setEstimatedWithdrawalAmount(0);
     const res = await UserService.getUserDataByEmail(email);
-    console.log(res);
     res.success && setEstimatedWithdrawalAmount(res.data.withdrawalAmount);
     res.success && setIsWithdrawalAmountVisible(true);
   };
 
   useEffect(() => {
     updatePaymentData && setData(updatePaymentData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updatePaymentData]);
   return (
     <>
       <Card className="m-4 p-4 card-shadow">
         <h4 className="text-center">
-          {updatePaymentData ? "Update Payment" : "Create Payment"}
+          {updatePaymentData ? 'Update Payment' : 'Create Payment'}
         </h4>
 
         {isWithdrawalAmountVisible && (
@@ -204,7 +203,7 @@ const CreatePayment = ({
               type="submit"
               className="btn btn-primary btn-block w-50 mt-4"
             >
-              {updatePaymentData ? "Update Payment" : "Create Payment"}
+              {updatePaymentData ? 'Update Payment' : 'Create Payment'}
             </Button>
           </div>
         </Form>

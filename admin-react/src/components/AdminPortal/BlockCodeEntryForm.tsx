@@ -1,16 +1,16 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { useEffect } from "react";
-import { Alert, Button, Card, Form } from "react-bootstrap";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useEffect } from 'react';
+import { Alert, Button, Card, Form } from 'react-bootstrap';
 import {
   blockCodeFormInitial,
   getBlockCodes,
-} from "../../helpers/BlockCodeManagementHelper";
-import { useForm } from "../../helpers/useForm";
-import { BlockCode } from "../../interfaces/BlockCode";
-import { BlockCodeService } from "../../services/BlockCodeService";
-import { setMessage, setMessageVariant } from "../../store";
-import { useAppDispatch } from "../../store/hooks";
-import Loading from "../Loading";
+} from '../../helpers/BlockCodeManagementHelper';
+import { useForm } from '../../helpers/useForm';
+import { BlockCode } from '../../interfaces/BlockCode';
+import { BlockCodeService } from '../../services/BlockCodeService';
+import { setMessage, setMessageVariant } from '../../store';
+import { useAppDispatch } from '../../store/hooks';
+import Loading from '../Loading';
 
 interface Props {
   updateBlockCodeData: null | BlockCode;
@@ -24,38 +24,39 @@ const BlockCodeEntryForm = ({
   setBlockCodeEntryForm,
 }: Props) => {
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const [error, setError] = useState('');
   const dispatch = useAppDispatch();
 
   const { onChange, onSubmit, data, setData } = useForm(
     submitBlockCodeCallback,
-    blockCodeFormInitial
+    blockCodeFormInitial,
   );
 
   async function submitBlockCodeCallback(data: any) {
     setLoading(true);
-    setError("");
+    setError('');
     if (!updateBlockCodeData) {
       const res = await BlockCodeService.postBlockCode(data);
       res.error &&
         setError(`${res.error.message}
     `);
       res.success && (await setData(blockCodeFormInitial));
-      dispatch(setMessageVariant("success"));
-      dispatch(setMessage("BlockCode Created Successfully..."));
+      dispatch(setMessageVariant('success'));
+      dispatch(setMessage('BlockCode Created Successfully...'));
     }
     if (updateBlockCodeData) {
       const res = await BlockCodeService.updateBlockCode(data);
       res.success && setData(blockCodeFormInitial);
       await getBlockCodes(dispatch);
-      dispatch(setMessageVariant("success"));
-      dispatch(setMessage("BlockCode Updated Successfully..."));
+      dispatch(setMessageVariant('success'));
+      dispatch(setMessage('BlockCode Updated Successfully...'));
       setBlockCodeEntryForm(false);
     }
     setLoading(false);
   }
   useEffect(() => {
     updateBlockCodeData && setData(updateBlockCodeData);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div>
@@ -63,12 +64,12 @@ const BlockCodeEntryForm = ({
         <Card className="card-shadow">
           <Card.Body>
             <h4 className="text-center mb-4">
-              {updateBlockCodeData ? "Update Block Code" : "Create Block Code"}
+              {updateBlockCodeData ? 'Update Block Code' : 'Create Block Code'}
             </h4>
             {error && (
               <div className="d-flex justify-content-center">
                 <Alert
-                  style={{ width: 300 + "px" }}
+                  style={{ width: 300 + 'px' }}
                   className="text-center"
                   variant="danger"
                 >
@@ -84,7 +85,7 @@ const BlockCodeEntryForm = ({
                     <Form.Control
                       type="number"
                       name="blockCode"
-                      value={data.blockCode ? data.blockCode : ""}
+                      value={data.blockCode ? data.blockCode : ''}
                       onChange={onChange}
                       required
                     />

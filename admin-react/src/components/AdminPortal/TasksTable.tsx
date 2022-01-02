@@ -1,14 +1,14 @@
-import { SetStateAction, useState } from "react";
-import { Dispatch } from "react";
-import { useEffect } from "react";
-import { getAllTasks, getTaskFile } from "../../helpers/taskManagementHelper";
-import { Task } from "../../interfaces/TaskModel";
-import { TaskService } from "../../services/TaskService";
-import { setMessage, setMessageVariant } from "../../store";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import CModal from "../CModal";
-import Loading from "../Loading";
-import { StoreState } from "./../../store/index";
+import { SetStateAction, useState } from 'react';
+import { Dispatch } from 'react';
+import { useEffect } from 'react';
+import { getAllTasks, getTaskFile } from '../../helpers/taskManagementHelper';
+import { Task } from '../../interfaces/TaskModel';
+import { TaskService } from '../../services/TaskService';
+import { setMessage, setMessageVariant } from '../../store';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import CModal from '../CModal';
+import Loading from '../Loading';
+import { StoreState } from './../../store/index';
 
 interface Props {
   setUpdateTaskData: Dispatch<SetStateAction<Task | null>>;
@@ -24,19 +24,19 @@ const TasksTable = ({
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState(false);
   const filteredTaskHeadings = useAppSelector(
-    (state: StoreState) => state.app.filteredTaskHeadings
+    (state: StoreState) => state.app.filteredTaskHeadings,
   );
   const tasks = useAppSelector((state: StoreState) => state.app.tasks);
   const deleteTask = async (id: string) => {
     const res = await TaskService.deleteTask(id);
 
     if (res && !res.success) {
-      dispatch(setMessageVariant("danger"));
+      dispatch(setMessageVariant('danger'));
       dispatch(setMessage(res.message));
       return;
     }
 
-    dispatch(setMessageVariant("success"));
+    dispatch(setMessageVariant('success'));
     dispatch(setMessage(res.message));
 
     getAllTasks(dispatch, setLoading);
@@ -46,6 +46,7 @@ const TasksTable = ({
   };
   useEffect(() => {
     getAllTasks(dispatch, setLoading);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>
@@ -64,7 +65,7 @@ const TasksTable = ({
                           <th className="text-center" key={index} scope="col">
                             {heading}
                           </th>
-                        )
+                        ),
                       )}
                     </tr>
                   </thead>
@@ -103,7 +104,7 @@ const TasksTable = ({
                           <td>
                             <CModal
                               heading={
-                                "Are you sure you want to delete this Task?"
+                                'Are you sure you want to delete this Task?'
                               }
                               triggerButtonContent="delete"
                               triggerButtonVariant="danger"

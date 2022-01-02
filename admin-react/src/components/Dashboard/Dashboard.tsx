@@ -36,6 +36,7 @@ const Dashboard = () => {
     return () => {
       source.cancel('axios request cancelled');
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

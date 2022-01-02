@@ -1,15 +1,15 @@
-import { Dispatch } from "react";
+import { Dispatch } from 'react';
 import {
   setMessage,
   setMessageVariant,
   setNavLinkActive,
   setUnauthorizedData,
   setUnauthorizedRejectedVotes,
-} from "../store";
-import UnAuthorizedService from "../services/unAuthorizedService";
-import UnAuthorizedModel from "../services/UnAuthorizedModel";
-import { VoteRejection } from "../interfaces/VoteRejection";
-import AuthorizedService from "../services/AuthorizedService";
+} from '../store';
+import UnAuthorizedService from '../services/unAuthorizedService';
+import UnAuthorizedModel from '../services/UnAuthorizedModel';
+import { VoteRejection } from '../interfaces/VoteRejection';
+import AuthorizedService from '../services/AuthorizedService';
 
 export const voteRejectInitial: VoteRejection = {
   blockCode: false,
@@ -44,51 +44,42 @@ export const voteRejectInitial: VoteRejection = {
 
 export const handleClose = (
   dispatch: Dispatch<{ payload: any; type: string }>,
-  history: any
+  history: any,
 ) => {
   dispatch(setNavLinkActive(0));
-  history.push("/");
-  document.title = "Dashboard - Voter List App";
+  history.push('/');
+  document.title = 'Dashboard - Voter List App';
 };
 export const handleDelete = async (
   id: string,
-  dispatch: Dispatch<{ payload: any; type: string }>
+  dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
   const res = await UnAuthorizedService.deleteRecord(id);
-  console.log(res);
 
   if (res && res.success) {
-    dispatch(setMessageVariant("info"));
+    dispatch(setMessageVariant('info'));
     getUnAuthorizedList(dispatch);
   } else {
-    dispatch(setMessageVariant("danger"));
+    dispatch(setMessageVariant('danger'));
   }
   res && dispatch(setMessage(res.message));
 };
 export const readOnly: any = {
-  WebkitUserSelect: "none",
-  MozUserSelect: "none",
-  msUserSelect: "none",
-  userSelect: "none",
+  WebkitUserSelect: 'none',
+  MozUserSelect: 'none',
+  msUserSelect: 'none',
+  userSelect: 'none',
 };
 
 export const getUnAuthorizedList = async (
-  dispatch: Dispatch<{ payload: any; type: string }>
+  dispatch: Dispatch<{ payload: any; type: string }>,
 ) => {
-  try {
-    const res = await UnAuthorizedService.getUnAuthorized();
-    const rejected = res.filter((x: any) => x.status === "rejected");
-    const pending = res.filter((x: any) => x.status === "pending");
+  const res = await UnAuthorizedService.getUnAuthorized();
+  const rejected = res.filter((x: any) => x.status === 'rejected');
+  const pending = res.filter((x: any) => x.status === 'pending');
 
-    console.log(res);
-    console.log(rejected);
-    console.log(pending);
-
-    dispatch(setUnauthorizedRejectedVotes(rejected));
-    dispatch(setUnauthorizedData(pending));
-  } catch (error) {
-    console.log(error);
-  }
+  dispatch(setUnauthorizedRejectedVotes(rejected));
+  dispatch(setUnauthorizedData(pending));
 };
 
 export const approveVote = async (vote: UnAuthorizedModel) => {

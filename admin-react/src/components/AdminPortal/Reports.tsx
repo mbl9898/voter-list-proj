@@ -1,7 +1,6 @@
-import { useState } from 'react';
 import { Form } from 'react-bootstrap';
 import { useForm } from '../../helpers/useForm';
-import MultiSelect from '../MultiSelect/MultiSelect';
+// import MultiSelect from '../MultiSelect/MultiSelect';
 
 const Reports = () => {
   const formOptionsMock = [
@@ -10,24 +9,19 @@ const Reports = () => {
   const reportsFormInitial = {
     city: '',
   };
-  const { onChange, onSubmit, data, setData } = useForm(
-    submitVoteCallback,
-    reportsFormInitial,
-  );
+  const { onChange, data } = useForm(submitVoteCallback, reportsFormInitial);
 
-  const [abc, setAbc] = useState([]);
-
-  const fields = [
-    'abc',
-    'def',
-    'ghi',
-    'jkl',
-    'mno',
-    'pqr',
-    'stu',
-    'vwx',
-    'yzA',
-  ];
+  // const fields = [
+  //   'abc',
+  //   'def',
+  //   'ghi',
+  //   'jkl',
+  //   'mno',
+  //   'pqr',
+  //   'stu',
+  //   'vwx',
+  //   'yzA',
+  // ];
 
   async function submitVoteCallback(data: any) {}
   return (

@@ -1,16 +1,16 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Card } from "react-bootstrap";
-import { getPaymentFile } from "../../helpers/paymentManagementHelper";
-import { Payment } from "../../interfaces/PaymentModel";
-import { PaymentService } from "../../services/PaymentService";
-import { useAppSelector } from "../../store/hooks";
-import PaymentTable from "../AdminPortal/PaymentTable";
-import Loading from "../Loading";
-import { StoreState } from "../../store/index";
-import PaymentsSummaryTable from "./PaymentsSummaryTable";
-import PaymentSwitches from "./PaymentSwitches";
-import axios from "axios";
+import { useState } from 'react';
+import { useEffect } from 'react';
+import { Card } from 'react-bootstrap';
+import { getPaymentFile } from '../../helpers/paymentManagementHelper';
+import { Payment } from '../../interfaces/PaymentModel';
+import { PaymentService } from '../../services/PaymentService';
+import { useAppSelector } from '../../store/hooks';
+import PaymentTable from '../AdminPortal/PaymentTable';
+import Loading from '../Loading';
+import { StoreState } from '../../store/index';
+import PaymentsSummaryTable from './PaymentsSummaryTable';
+import PaymentSwitches from './PaymentSwitches';
+import axios from 'axios';
 
 const Payments = () => {
   const source = axios.CancelToken.source();
@@ -19,10 +19,10 @@ const Payments = () => {
   const [isGridView, setIsGridView] = useState(true);
   const [arePaymentsHidden, setArePaymentsHidden] = useState(true);
   const dashboardData = useAppSelector(
-    (state: StoreState) => state.app.dashboardData
+    (state: StoreState) => state.app.dashboardData,
   );
   const currentUser = useAppSelector(
-    (state: StoreState) => state.app.currentUser
+    (state: StoreState) => state.app.currentUser,
   );
   const [totalEarningsRecieved, setTotalEarningsRecieved] = useState(0);
   const [totalWithdrawableAmount, setTotalWithdrawableAmount] = useState(0);
@@ -39,7 +39,7 @@ const Payments = () => {
       (accumulator: number, currentValue: number) => {
         return accumulator + currentValue;
       },
-      0
+      0,
     );
     setTotalEarningsRecieved(amountsRecieved);
     totalEarnings &&
@@ -61,6 +61,7 @@ const Payments = () => {
 
   useEffect(() => {
     getPayments();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <>

@@ -1,15 +1,20 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { voteRejectInitial } from "../helpers/authorizeHelper";
-import { BlockCode } from "../interfaces/BlockCode";
-import { Payment } from "../interfaces/PaymentModel";
-import { Task } from "../interfaces/TaskModel";
-import { User } from "../interfaces/User";
-import UnAuthorizedModel from "../services/UnAuthorizedModel";
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { voteRejectInitial } from '../helpers/authorizeHelper';
+import { BlockCode } from '../interfaces/BlockCode';
+import { Payment } from '../interfaces/PaymentModel';
+import { Task } from '../interfaces/TaskModel';
+import { User } from '../interfaces/User';
+import UnAuthorizedModel from '../services/UnAuthorizedModel';
 
 export interface StoreInitialState {
   navLinkActive: number;
   currentUser: User | null;
-  dashboardData: { withdrawalAmount: number; pending: number; rejected: number; approved: number };
+  dashboardData: {
+    withdrawalAmount: number;
+    pending: number;
+    rejected: number;
+    approved: number;
+  };
   unauthorizedData: UnAuthorizedModel[];
   unauthorizedRejectedVotes: UnAuthorizedModel[];
   pendingUnauthorizedData: UnAuthorizedModel[];
@@ -30,14 +35,14 @@ export interface StoreInitialState {
   error: string;
   message: string;
   messageVariant:
-  | "primary"
-  | "secondary"
-  | "success"
-  | "danger"
-  | "warning"
-  | "info"
-  | "light"
-  | "dark";
+    | 'primary'
+    | 'secondary'
+    | 'success'
+    | 'danger'
+    | 'warning'
+    | 'info'
+    | 'light'
+    | 'dark';
 }
 
 const initialState: StoreInitialState = {
@@ -61,13 +66,13 @@ const initialState: StoreInitialState = {
   isSignUpFormDisplay: false,
   isLogInFormDisplay: true,
   isAccessDeniedDisplay: false,
-  error: "",
-  message: "",
-  messageVariant: "info",
+  error: '',
+  message: '',
+  messageVariant: 'info',
 };
 
 export const appSlice = createSlice({
-  name: "app",
+  name: 'app',
   initialState,
   reducers: {
     setNavLinkActive(state, action: PayloadAction<any>) {
@@ -96,9 +101,8 @@ export const appSlice = createSlice({
     },
     setDataVoteRejectToUnauthorizedDataIndex(
       state,
-      action: PayloadAction<any>
+      action: PayloadAction<any>,
     ) {
-      console.log(action.payload, "index");
       if (state.unauthorizedData[action.payload]) {
         state.dataVoteReject = {
           ...state.dataVoteReject,

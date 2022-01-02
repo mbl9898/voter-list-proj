@@ -51,6 +51,7 @@ const UserEntryForm = ({
   useEffect(() => {
     updateUserData && setData({ ...data, ...updateUserData });
     getBlockCodes(dispatch);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [updateUserData]);
   return (
     <div>

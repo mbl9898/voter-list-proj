@@ -1,11 +1,12 @@
-import { roles } from 'constants/roles';
 import express from 'express';
+import { auth } from '~/controllers';
+import { roles } from 'constants/roles';
+import { isAuthorized } from 'middlewares/roles';
+import { validate as validation } from '~/middlewares';
 
 const router = express.Router();
 
-<<<<<<< HEAD
-=======
-router.get('/allUsers', isAuthorized(roles.admin), auth.getAllUsers);
+// router.get('/allUsers', isAuthorized(roles.admin), auth.getAllUsers);
 
 router.put(
   '/',
@@ -87,25 +88,24 @@ router.put(
   auth.resetPassword,
 );
 
-router.put(
-  '/setDefaultBlockCode',
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        userId: req.body._id,
-        defaultBlockCode: req.body.defaultBlockCode,
-      },
-      {
-        userId: 'required|string',
-        defaultBlockCode: 'required|string',
-      },
-    );
-  },
-  auth.setDefaultBlockCode,
-);
+// router.put(
+//   '/setDefaultBlockCode',
+//   (req, res, next) => {
+//     validation(
+//       req,
+//       res,
+//       next,
+//       {
+//         userId: req.body._id,
+//         defaultBlockCode: req.body.defaultBlockCode,
+//       },
+//       {
+//         userId: 'required|string',
+//         defaultBlockCode: 'required|string',
+//       },
+//     );
+//   },
+//   auth.setDefaultBlockCode,
+// );
 
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 module.exports = router;

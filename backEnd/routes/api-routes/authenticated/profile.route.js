@@ -7,34 +7,9 @@ import { validate as validation } from '~/middlewares';
 const router = express.Router();
 
 router.get('/', profile.userData);
-<<<<<<< HEAD
 
 router.get('/allUsers', isAuthorized(roles.admin), profile.getAllUsers);
 
-router.get(
-  '/userData/:email',
-=======
-//Patch route to password change
-//Validation middleware will validate old_password,new_password,confirm_password field before proceeding further
-router.patch(
-  '/change-password',
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
-  (req, res, next) => {
-    validation(
-      req,
-      res,
-      next,
-      {
-        email: req.params.email,
-      },
-      {
-        email: 'required|string',
-      },
-    );
-  },
-  isAuthorized(roles.admin),
-  profile.getUserDataByEmail,
-);
 router.put(
   '/dataAccess',
   (req, res, next) => {
@@ -130,7 +105,6 @@ router.put(
   profile.updateUser,
 );
 
-<<<<<<< HEAD
 //Patch route to password change
 //Validation middleware will validate old_password,new_password,confirm_password field before proceeding further
 router.patch(
@@ -156,6 +130,4 @@ router.patch(
   profile.changePassword,
 );
 
-=======
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 module.exports = router;

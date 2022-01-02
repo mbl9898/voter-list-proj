@@ -13,16 +13,10 @@ export const headings = [
 ];
 
 export const userEntryFormInitial: User = {
-<<<<<<< HEAD
   _id: '',
   email: '',
   username: '',
-=======
-  _id: "",
-  email: "",
-  username: "",
-  mobileNo: "",
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
+  mobileNo: '',
   rate: 0,
   role: 'user',
   assignedBlockCodes: [],

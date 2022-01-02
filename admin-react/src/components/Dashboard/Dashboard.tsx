@@ -1,38 +1,29 @@
-import axios from "axios";
-import { memo, useEffect, useState } from "react";
-import { getUserProgressData } from "../../helpers/dashboardHelper";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import RejectedVotesModal from "./RejectedVotesModal";
-import { StoreState } from "../../store/index";
-import CountUp from "react-countup";
-import { getUnAuthorizedList } from "../../helpers/authorizeHelper";
+import axios from 'axios';
+import { memo, useEffect, useState } from 'react';
+import { getUserProgressData } from '../../helpers/dashboardHelper';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import RejectedVotesModal from './RejectedVotesModal';
+import { StoreState } from '../../store/index';
+import CountUp from 'react-countup';
+import { getUnAuthorizedList } from '../../helpers/authorizeHelper';
 
 const Dashboard = () => {
   const [rejectedVoteModal, setRejectedVoteModal] = useState(false);
   const dashboardData = useAppSelector(
-    (state: StoreState) => state.app.dashboardData
+    (state: StoreState) => state.app.dashboardData,
   );
   const currentUser = useAppSelector(
-    (state: StoreState) => state.app.currentUser
+    (state: StoreState) => state.app.currentUser,
   );
   const dispatch = useAppDispatch();
-<<<<<<< HEAD
-  const [loading, setLoading] = useState(true);
-  const accuracy = Math.floor(
-    (dashboardData.approved /
-      (dashboardData.approved + dashboardData.rejected)) *
-      100
-  );
-=======
   const [loading, setLoading] = useState(false);
   const accuracy =
     dashboardData &&
     Math.floor(
       (dashboardData.approved /
         (dashboardData.approved + dashboardData.rejected)) *
-        100
+        100,
     );
->>>>>>> a5f13d918e53134174a4fbd9aef5272882f704dd
 
   useEffect(() => {
     const source = axios.CancelToken.source();
@@ -43,7 +34,7 @@ const Dashboard = () => {
       console.log(error);
     }
     return () => {
-      source.cancel("axios request cancelled");
+      source.cancel('axios request cancelled');
     };
   }, []);
   return (
@@ -57,12 +48,12 @@ const Dashboard = () => {
 
       {!loading && (
         <div className="container">
-          {(currentUser && currentUser.role === "dataEntry") ||
-          (currentUser && currentUser.role === "admin") ? (
+          {(currentUser && currentUser.role === 'dataEntry') ||
+          (currentUser && currentUser.role === 'admin') ? (
             <>
               <div className="d-flex justify-content-center">
                 <h5 className="mt-3">
-                  Accuracy Rate:{" "}
+                  Accuracy Rate:{' '}
                   {accuracy ? (
                     <CountUp delay={0.5} duration={2} end={accuracy} />
                   ) : (
@@ -75,7 +66,7 @@ const Dashboard = () => {
               <div className="d-flex justify-content-evenly">
                 <div>
                   <button className="btn btn-primary">
-                    Unapproved -{" "}
+                    Unapproved -{' '}
                     {dashboardData ? (
                       <CountUp
                         delay={0.5}
@@ -89,7 +80,7 @@ const Dashboard = () => {
                 </div>
                 <div>
                   <button className="btn btn-primary">
-                    Approved -{" "}
+                    Approved -{' '}
                     {dashboardData ? (
                       <CountUp
                         delay={0.5}
@@ -109,7 +100,7 @@ const Dashboard = () => {
                       setRejectedVoteModal(true);
                     }}
                   >
-                    Rejected -{" "}
+                    Rejected -{' '}
                     {dashboardData ? (
                       <CountUp
                         delay={0.5}
@@ -147,7 +138,7 @@ const Dashboard = () => {
           ) : (
             <div
               className="d-flex flex-column justify-content-center"
-              style={{ height: 100 + "vh" }}
+              style={{ height: 100 + 'vh' }}
             >
               <h1 className="text-center align-middle">
                 Your Account Is Not Approved:

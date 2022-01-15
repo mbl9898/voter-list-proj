@@ -53,28 +53,7 @@ export class UserService {
     });
     return res;
   }
-  static async updateProfile(userData: { username: string; mobileNo: string }) {
-    try {
-      const res = await ApiService.put(
-        `${UserService.baseUrl[0]}/updateProfile`,
-        userData,
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  static async resetPassword(passwordData: ResetPasswordModel) {
-    try {
-      const res = await ApiService.put(
-        `${UserService.baseUrl[0]}/reset-password`,
-        passwordData,
-      );
-      return res;
-    } catch (error) {
-      console.log(error);
-    }
-  }
+
   static async setDefaultBlockCode(_id: string, defaultBlockCode: number) {
     const res = await ApiService.put(
       `${UserService.baseUrl[1]}/setDefaultBlockCode`,

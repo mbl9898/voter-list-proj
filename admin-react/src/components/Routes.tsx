@@ -1,20 +1,21 @@
-import { Redirect, Route, Switch } from "react-router-dom";
-import { useAppSelector } from "../store/hooks";
-import AdminPortal from "./AdminPortal/AdminPortal";
-import Authorize from "./Authorize/Authorize";
-import Dashboard from "./Dashboard/Dashboard";
-import DataEntry from "./DataEntry/DataEntry";
-import Login from "./Login";
-import Payments from "./Payments/Payments";
-import SignUp from "./SignUp";
-import Tasks from "./Tasks/Tasks";
-import { StoreState } from "./../store/index";
-import Votes from "./Votes/Votes";
-import InvalidRoute from "./InvalidRoute";
+import { Redirect, Route, Switch } from 'react-router-dom';
+import { useAppSelector } from '../store/hooks';
+import AdminPortal from './AdminPortal/AdminPortal';
+import Authorize from './Authorize/Authorize';
+import Dashboard from './Dashboard/Dashboard';
+import DataEntry from './DataEntry/DataEntry';
+import Login from './Login';
+import Payments from './Payments/Payments';
+import SignUp from './SignUp';
+import Tasks from './Tasks/Tasks';
+import { StoreState } from './../store/index';
+import Votes from './Votes/Votes';
+import InvalidRoute from './InvalidRoute';
+import Profile from './Profile';
 
 const Routes = () => {
   const currentUser = useAppSelector(
-    (state: StoreState) => state.app.currentUser
+    (state: StoreState) => state.app.currentUser,
   );
   return (
     <>
@@ -25,7 +26,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -36,7 +37,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -47,7 +48,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -58,7 +59,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -69,7 +70,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -80,7 +81,7 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
@@ -91,11 +92,23 @@ const Routes = () => {
           ) : (
             <Redirect
               to={{
-                pathname: "/login",
+                pathname: '/login',
               }}
             />
           )}
         </Route>
+        <Route path="/profile" exact>
+          {currentUser ? (
+            <Profile />
+          ) : (
+            <Redirect
+              to={{
+                pathname: '/login',
+              }}
+            />
+          )}
+        </Route>
+
         <Route path="/signup" exact>
           <SignUp />
         </Route>

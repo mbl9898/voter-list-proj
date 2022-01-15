@@ -36,28 +36,28 @@ import { dataArr } from "../App";
 // ];
 
 const columnsHiddenWhilePrinting = [
-  "Constituency Name",
-  "Moza",
-  "Dehya",
-  "City",
-  "Patwar Halka",
-  "Tapaydar",
-  "Tehseel",
-  "Talka",
-  "District",
-  "Union Council",
-  "Book No",
-  "Constituency",
-  "Gender",
-  "Marital Status",
-  "House No",
-  "Street",
-  "Phase",
-  "Sector",
-  "Lane",
-  "Boulevard|Avenue",
-  "Other Area",
-  "Count"
+  "constituencyName",
+  "moza",
+  "dehya",
+  "city",
+  "patwarHalka",
+  "tapaydar",
+  "tehseel",
+  "talka",
+  "district",
+  "unionCouncil",
+  "bookNo",
+  "constituency",
+  "gender",
+  "maritalStatus",
+  "house No",
+  "street",
+  "phase",
+  "sector",
+  "lane",
+  "boulevardAvenue",
+  "otherArea",
+  "count",
 ];
 
 const onActionBegin = (args: any) => {
@@ -70,7 +70,7 @@ const onActionBegin = (args: any) => {
 
 const filterSettings: FilterSettingsModel = {
   ignoreAccent: true,
-  type: "Excel"
+  type: "Excel",
 };
 
 const toolbarClick = (): void => {
@@ -121,7 +121,7 @@ const getUniqueData = (options: any, unFilteredData: any) => {
     filteredData !== undefined ? filteredData : "filtered is undefined"
   );
   // console.log(
-  //   filteredData.length >= 1 ?  : 
+  //   filteredData.length >= 1 ?  :
   // )
   // console.log(filteredData !== [] : "filtered is ");
   console.log(filteredData, "FilteredData");
@@ -159,5 +159,5 @@ export {
   toolbarClick,
   getUniqueData,
   filterSettings,
-  onActionBegin
+  onActionBegin,
 };

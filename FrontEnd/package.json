@@ -5,8 +5,8 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
     "@restart/hooks": "^0.4.0",
-    "@syncfusion/ej2-base": "^19.3.0.43",
-    "@syncfusion/ej2-react-grids": "^19.3.0.43",
+    "@syncfusion/ej2-base": "^19.4.42",
+    "@syncfusion/ej2-react-grids": "^19.4.42",
     "@types/node": "^12.20.15",
     "@types/react": "^17.0.12",
     "@types/react-dom": "^17.0.8",

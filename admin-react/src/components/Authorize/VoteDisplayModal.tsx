@@ -350,7 +350,7 @@ const VoteDisplayModal = ({
                   }}
                   onClick={onChangeVoteReject}
                 >
-                  {`Phase: ${unauthorizedVote.phase}`}
+                  {`Phase|Town: ${unauthorizedVote.phase}`}
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${
@@ -360,7 +360,7 @@ const VoteDisplayModal = ({
                   style={{ ...readOnly }}
                   onClick={onChangeVoteReject}
                 >
-                  {`Sector: ${unauthorizedVote.sector}`}
+                  {`Sector|Block: ${unauthorizedVote.sector}`}
                 </div>
                 <div
                   className={`col col-xs-12 col-sm-4 p-2 ${

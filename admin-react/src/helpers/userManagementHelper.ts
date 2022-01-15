@@ -16,6 +16,7 @@ export const userEntryFormInitial: User = {
   _id: '',
   email: '',
   username: '',
+  mobileNo: '',
   rate: 0,
   role: 'user',
   assignedBlockCodes: [],
@@ -26,7 +27,12 @@ export const getUsers = async (
   setUsers: Dispatch<SetStateAction<User[]>>,
   setLoading?: Dispatch<SetStateAction<boolean>>,
 ) => {
-  const res = await UserService.allUsers();
-  setUsers(res);
-  setLoading && setLoading(false);
+  try {
+    const res = await UserService.allUsers();
+    console.log(res);
+    await setUsers(res);
+    setLoading && setLoading(false);
+  } catch (error) {
+    console.log(error);
+  }
 };

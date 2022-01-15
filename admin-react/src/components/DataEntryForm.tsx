@@ -504,7 +504,7 @@ const DataEntryForm = ({
               }`}
             >
               <Form.Group id="phase">
-                <Form.Label>Phase</Form.Label>
+                <Form.Label>Phase|Town</Form.Label>
                 <Form.Control
                   name="phase"
                   value={data.phase ? data.phase : ''}
@@ -518,7 +518,7 @@ const DataEntryForm = ({
               }`}
             >
               <Form.Group id="sector">
-                <Form.Label>Sector</Form.Label>
+                <Form.Label>Sector|Block</Form.Label>
                 <Form.Control
                   name="sector"
                   value={data.sector ? data.sector : ''}

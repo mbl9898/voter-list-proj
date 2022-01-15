@@ -1,41 +1,35 @@
-import { useHistory } from "react-router-dom";
-import { setIsLogInFormDisplay, setIsSignUpFormDisplay } from "../store";
-import { useAppDispatch, useAppSelector } from "../store/hooks";
-import ProfileDropDown from "./ProfileDropDown";
-import { StoreState } from "./../store/index";
-import CountUp from "react-countup";
+import { useHistory } from 'react-router-dom';
+import { setIsLogInFormDisplay, setIsSignUpFormDisplay } from '../store';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import ProfileDropDown from './ProfileDropDown';
+import { StoreState } from './../store/index';
+import CountUp from 'react-countup';
 
 const Navbar = () => {
   const dispatch = useAppDispatch();
   const history = useHistory();
   const dashboardData = useAppSelector(
-    (state: StoreState) => state.app.dashboardData
+    (state: StoreState) => state.app.dashboardData,
   );
   const currentUser = useAppSelector(
-    (state: StoreState) => state.app.currentUser
+    (state: StoreState) => state.app.currentUser,
   );
   const isLogInFormDisplay = useAppSelector(
-    (state: StoreState) => state.app.isLogInFormDisplay
+    (state: StoreState) => state.app.isLogInFormDisplay,
   );
 
   const openSignUpForm = () => {
     dispatch(setIsLogInFormDisplay(false));
-    history.push("/signup");
-    document.title = "SignUp - Voter List App";
+    history.push('/signup');
+    document.title = 'SignUp - Voter List App';
     dispatch(setIsSignUpFormDisplay(true));
   };
   const openLogInForm = () => {
     dispatch(setIsSignUpFormDisplay(false));
-    history.push("/login");
-    document.title = "Login - Voter List App";
+    history.push('/login');
+    document.title = 'Login - Voter List App';
     dispatch(setIsLogInFormDisplay(true));
   };
-  // const handleLogoutOpenLogInForm = async () => {
-  //   dispatch(setCurrentUser(null));
-  //   // history.push("/login")
-  //   // await logout(currentUser.uid, dispatch);
-  //   await dispatch(setIsLogInFormDisplay(true));
-  // };
   return (
     <>
       <nav className="navbar navbar-dark bg-dark">
@@ -46,8 +40,8 @@ const Navbar = () => {
           <div className="d-flex">
             {currentUser !== null && (
               <>
-                {(currentUser.role === "admin" ||
-                  currentUser.role === "dataEntry") && (
+                {(currentUser.role === 'admin' ||
+                  currentUser.role === 'dataEntry') && (
                   <>
                     <button className="mx-1 btn btn-primary position-relative">
                       <svg
@@ -115,7 +109,7 @@ const Navbar = () => {
                   isLogInFormDisplay ? openSignUpForm() : openLogInForm();
                 }}
               >
-                {isLogInFormDisplay ? "Sign Up" : "Login"}
+                {isLogInFormDisplay ? 'Sign Up' : 'Login'}
               </button>
             )}
           </div>

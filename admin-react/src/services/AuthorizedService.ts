@@ -10,11 +10,20 @@ export default class AuthorizedService {
     const res = await ApiService.get(AuthorizedService.baseUrl[0]);
     return res;
   }
-  static async getAuthorizedPage(pageNo: number, voteLimit: number) {
-    const res = await ApiService.get(
-      `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`,
-    );
-    return res;
+  static async getAuthorizedPage(
+    pageNo: number,
+    voteLimit: number,
+    config?: any,
+  ) {
+    try {
+      const res = await ApiService.get(
+        `${AuthorizedService.baseUrl[0]}/page?page=${pageNo}&limit=${voteLimit}`,
+        { ...config },
+      );
+      return res;
+    } catch (error) {
+      console.log(error);
+    }
   }
   static async getAuthorizedSearch(
     searchField: string,

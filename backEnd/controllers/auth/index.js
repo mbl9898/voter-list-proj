@@ -5,6 +5,8 @@ import { refreshSession } from './helpers/refreshSession';
 import { sendCodePasswordRecovery } from './helpers/sendCodePasswordRecovery';
 import { resetPassword } from './helpers/resetPassword';
 import { validatorToken } from './helpers/tokenValidator';
+import { updateUser, updateProfile } from './helpers/updateUser';
+// import { getAllUsers } from './helpers/getAllUsers';
 
 export const auth = {
   registerUser,
@@ -14,4 +16,7 @@ export const auth = {
   sendCodePasswordRecovery,
   resetPassword,
   validatorToken,
+  // getAllUsers,
+  updateUser,
+  updateProfile,
 };

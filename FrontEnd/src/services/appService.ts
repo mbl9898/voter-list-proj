@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Dispatch } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { VotesModel } from "../interfaces/VotesModel";
 import {
   setAlert,
@@ -14,7 +14,7 @@ import {
 } from "../store";
 
 const apiBaseUrl =
-  process.env.REACT_APP_API_IS_DEV && +process.env.REACT_APP_API_IS_DEV
+  process.env.REACT_APP_API_IS_DEV === "true"
     ? process.env.REACT_APP_API_BASE_URL_DEV
     : process.env.REACT_APP_API_BASE_URL_STAGING;
 
@@ -88,7 +88,8 @@ const createAddress = (d: any) => {
 
 export const getSortedFilteredVotes = async (
   dispatch: Dispatch<{ payload: any; type: string }>,
-  currentUser: any
+  currentUser: any,
+  setNoData: Dispatch<SetStateAction<boolean>>
 ) => {
   const currentToken = localStorage.getItem("token");
 
@@ -102,7 +103,7 @@ export const getSortedFilteredVotes = async (
   });
   if (currentUser.role === "dataViewer" || currentUser.role === "admin") {
     await vote.get("/").then(async (voteRes: any) => {
-      console.log(voteRes, "voteRes");
+      console.log(voteRes.data.success, "voteRes");
       if (voteRes.data.success) {
         const dataSnap = voteRes.data.votesData;
         console.log(dataSnap);
@@ -152,6 +153,10 @@ export const getSortedFilteredVotes = async (
           dispatch(setHeadings(filteredHeadings));
           dispatch(setIsDataLoading(false));
         }
+      } else {
+        console.log("else");
+        setNoData(true);
+        dispatch(setIsDataLoading(false));
       }
     });
   } else {
@@ -164,6 +169,7 @@ export const getSortedFilteredVotes = async (
 
 export const signUp = async (
   userNameRef: any,
+  mobileNo: any,
   emailRef: any,
   passwordRef: any,
   passwordConfirmRef: any,
@@ -187,6 +193,7 @@ export const signUp = async (
   const authRes = await auth
     .post("register", {
       username: userNameRef.current.value,
+      mobileNo: mobileNo.current.value,
       email: emailRef.current.value,
       password: passwordRef.current.value,
       confirmPassword: passwordConfirmRef.current.value,

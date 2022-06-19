@@ -35,7 +35,7 @@ import {
 
 let headingsArr: string[];
 let grid: Grid | null = null;
-const DataGrid = () => {
+const DataGrid = ({ noData }: any) => {
   const data = useAppSelector((state) => state.app.data);
   const [uniqueBlockcodes, setUniqueBlockcodes] = useState([]);
   const headings = useAppSelector((state) => state.app.headings);
@@ -81,99 +81,110 @@ const DataGrid = () => {
     <>
       {isDataLoading && <Loading />}
       {!isDataLoading && (
-        <div
-          style={{
-            margin: "3%",
-            marginTop: "2%",
-          }}
-        >
-          <div className="d-flex ">
-            <button
-              className="btn btn-primary m-2"
-              onClick={async () => {
-                if (grid) {
-                  const uniqueBlockcodesArr: any = await getUniqueData(
-                    { uniqueBlockcodes: true },
-                    data
-                  );
-                  setUniqueBlockcodes(uniqueBlockcodesArr);
-                  toolbarClick();
-                  grid.print();
-                }
+        <>
+          {noData ? (
+            <div
+              className="d-flex justify-content-center align-items-center"
+              style={{ height: "calc(100vh - 96px - 56px)" }}
+            >
+              <h1>No Data Available</h1>
+            </div>
+          ) : (
+            <div
+              style={{
+                margin: "3%",
+                marginTop: "2%",
               }}
             >
-              <svg
-                width="20px"
-                height="20px"
-                viewBox="0 0 512 512"
-                className="svg-inline--fa fa-print fa-w-16 fa-7x me-2"
+              <div className="d-flex ">
+                <button
+                  className="btn btn-primary m-2"
+                  onClick={async () => {
+                    if (grid) {
+                      const uniqueBlockcodesArr: any = await getUniqueData(
+                        { uniqueBlockcodes: true },
+                        data
+                      );
+                      setUniqueBlockcodes(uniqueBlockcodesArr);
+                      toolbarClick();
+                      grid.print();
+                    }
+                  }}
+                >
+                  <svg
+                    width="20px"
+                    height="20px"
+                    viewBox="0 0 512 512"
+                    className="svg-inline--fa fa-print fa-w-16 fa-7x me-2"
+                  >
+                    <path
+                      fill="currentColor"
+                      d="M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z"
+                      className=""
+                    ></path>
+                  </svg>
+                  Print
+                </button>
+              </div>
+              <GridComponent
+                ref={(g) => (grid = g)}
+                actionBegin={onActionBegin}
+                beforePrint={beforePrint}
+                dataSource={data}
+                printMode="CurrentPage"
+                allowResizing={true}
+                allowPaging={true}
+                // beforeBatchSave={() => {
+                //   console.log('beforeBatchSave');
+                // }}
+                allowFiltering
+                filterSettings={filterSettings}
+                dataBound={dataBound}
+                pageSettings={{ pageSize: 180 }}
+                toolbarClick={toolbarClick}
+                printComplete={printComplete}
+                // editSettings={editOptions}
+                // toolbar={toolbarOptions}
               >
-                <path
-                  fill="currentColor"
-                  d="M400 264c-13.25 0-24 10.74-24 24 0 13.25 10.75 24 24 24s24-10.75 24-24c0-13.26-10.75-24-24-24zm32-88V99.88c0-12.73-5.06-24.94-14.06-33.94l-51.88-51.88c-9-9-21.21-14.06-33.94-14.06H110.48C93.64 0 80 14.33 80 32v144c-44.18 0-80 35.82-80 80v128c0 8.84 7.16 16 16 16h64v96c0 8.84 7.16 16 16 16h320c8.84 0 16-7.16 16-16v-96h64c8.84 0 16-7.16 16-16V256c0-44.18-35.82-80-80-80zM128 48h192v48c0 8.84 7.16 16 16 16h48v64H128V48zm256 416H128v-64h256v64zm80-112H48v-96c0-17.64 14.36-32 32-32h352c17.64 0 32 14.36 32 32v96z"
-                  className=""
-                ></path>
-              </svg>
-              Print
-            </button>
-          </div>
-          <GridComponent
-            ref={(g) => (grid = g)}
-            actionBegin={onActionBegin}
-            beforePrint={beforePrint}
-            dataSource={data}
-            printMode="CurrentPage"
-            allowResizing={true}
-            allowPaging={true}
-            // beforeBatchSave={() => {
-            //   console.log('beforeBatchSave');
-            // }}
-            allowFiltering
-            filterSettings={filterSettings}
-            dataBound={dataBound}
-            pageSettings={{ pageSize: 180 }}
-            toolbarClick={toolbarClick}
-            printComplete={printComplete}
-            // editSettings={editOptions}
-            // toolbar={toolbarOptions}
-          >
-            <ColumnsDirective>
-              {data[0]
-                ? data[0]["S No"] && (
+                <ColumnsDirective>
+                  {data[0]
+                    ? data[0]["S No"] && (
+                        <ColumnDirective
+                          field="S No"
+                          headerText="S No"
+                          textAlign="Left"
+                          width="45"
+                          isPrimaryKey={true}
+                        />
+                      )
+                    : ""}
+                  {headings.map((heading: string, index: number) => (
                     <ColumnDirective
-                      field="S No"
-                      headerText="S No"
+                      key={index}
+                      field={heading}
+                      headerText={heading}
                       textAlign="Left"
-                      width="45"
-                      isPrimaryKey={true}
+                      width="25"
                     />
-                  )
-                : ""}
-              {headings.map((heading: string, index: number) => (
-                <ColumnDirective
-                  key={index}
-                  field={heading}
-                  headerText={heading}
-                  textAlign="Left"
-                  width="25"
+                  ))}
+                </ColumnsDirective>
+                <Inject
+                  services={[
+                    // Edit,
+                    Page,
+                    Filter,
+                    Resize,
+                    Freeze,
+                    Toolbar,
+                    VirtualScroll,
+                    Resize,
+                    // Search,
+                  ]}
                 />
-              ))}
-            </ColumnsDirective>
-            <Inject
-              services={[
-                // Edit,
-                Page,
-                Filter,
-                Resize,
-                Freeze,
-                Toolbar,
-                VirtualScroll,
-                Resize,
-                // Search,
-              ]}
-            />
-          </GridComponent>
-        </div>
+              </GridComponent>
+            </div>
+          )}
+        </>
       )}
     </>
   );

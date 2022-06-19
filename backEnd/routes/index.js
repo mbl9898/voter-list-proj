@@ -8,6 +8,7 @@ const router = express.Router();
 
 //API version
 const version = `/${process.env.BASE_URL}/${process.env.VERSION}`;
+console.log(version);
 
 //Registering the routes with the router (Public Routes)
 publicRoutes.forEach((route) => {

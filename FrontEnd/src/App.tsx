@@ -22,6 +22,7 @@ let dataArr: any[] = [];
 let errorSetter: any;
 const App = () => {
   const [loading, setLoading] = useState(true);
+  const [noData, setNoData] = useState(false);
   const data = useAppSelector((state) => state.app.data);
   const currentUser = useAppSelector((state) => state.app.currentUser);
   const isListDisplay = useAppSelector((state) => state.app.isListDisplay);
@@ -46,7 +47,7 @@ const App = () => {
     if (currentUser !== null) {
       dispatch(setIsListDisplay(true));
       dispatch(setIsDataLoading(true));
-      getSortedFilteredVotes(dispatch, currentUser);
+      getSortedFilteredVotes(dispatch, currentUser, setNoData);
       dispatch(setIsLogInFormDisplay(false));
     }
     setLoading(false);
@@ -78,7 +79,7 @@ const App = () => {
                 <>
                   {isListDisplay && (
                     <>
-                      <DataGrid />
+                      <DataGrid noData={noData} />
                     </>
                   )}
                 </>

@@ -13,6 +13,7 @@ import Loading from "./Loading";
 const SignUp2 = () => {
   const userNameRef = useRef<any>();
   const emailRef = useRef<any>();
+  const mobileNo = useRef<any>();
   const passwordRef = useRef<any>();
   const passwordConfirmRef = useRef<any>();
   const [error, setError] = useState("");
@@ -24,6 +25,7 @@ const SignUp2 = () => {
     setLoading(true);
     await signUp(
       userNameRef,
+      mobileNo,
       emailRef,
       passwordRef,
       passwordConfirmRef,
@@ -52,6 +54,10 @@ const SignUp2 = () => {
                 <Form.Group id="email">
                   <Form.Label>Email</Form.Label>
                   <Form.Control type="email" ref={emailRef} required />
+                </Form.Group>
+                <Form.Group id="mobileNo">
+                  <Form.Label>Mobile Number</Form.Label>
+                  <Form.Control type="text" ref={mobileNo} required />
                 </Form.Group>
                 <Form.Group id="password">
                   <Form.Label>Password</Form.Label>

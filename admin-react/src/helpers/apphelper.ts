@@ -34,6 +34,7 @@ export const heading = [
   'otherArea',
   'count',
   'address',
+  'updateNo',
 ];
 
 export const signUp = async (

@@ -1,17 +1,17 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { useEffect } from "react";
-import { Form } from "react-bootstrap";
-import InputMask from "react-input-mask";
-import { useForm } from "../../helpers/useForm";
-import { User } from "../../interfaces/User";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import CModal from "../CModal";
-import { setMessage, setMessageVariant } from "../../store";
-import { dataEntryFormInitial } from "../../helpers/dataEntryHelper";
-import Loading from "../Loading";
-import { StoreState } from "../../store/index";
-import { VotesModel } from "../../interfaces/VotesModel";
-import AuthorizedService from "../../services/AuthorizedService";
+import { Dispatch, SetStateAction, useState } from 'react';
+import { useEffect } from 'react';
+import { Form } from 'react-bootstrap';
+import InputMask from 'react-input-mask';
+import { useForm } from '../../helpers/useForm';
+import { User } from '../../interfaces/User';
+import { useAppDispatch, useAppSelector } from '../../store/hooks';
+import CModal from '../CModal';
+import { setMessage, setMessageVariant } from '../../store';
+import { dataEntryFormInitial } from '../../helpers/dataEntryHelper';
+import Loading from '../Loading';
+import { StoreState } from '../../store/index';
+import { VotesModel } from '../../interfaces/VotesModel';
+import AuthorizedService from '../../services/AuthorizedService';
 
 interface Props {
   voteUpdateData: VotesModel | null;
@@ -22,11 +22,11 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
   const dispatch = useAppDispatch();
   const [loading, setLoading] = useState<boolean>(true);
   const currentUser: User | null = useAppSelector(
-    (state: StoreState) => state.app.currentUser
+    (state: StoreState) => state.app.currentUser,
   );
   const { onChange, onSubmit, data, setData } = useForm(
     submitVoteCallback,
-    voteUpdateData
+    voteUpdateData,
   );
 
   async function submitVoteCallback(data: any) {
@@ -35,8 +35,8 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
 
     if (res && res.success) {
       setData(dataEntryFormInitial);
-      dispatch(setMessageVariant("info"));
-      dispatch(setMessage("Vote Updated SuccessFully"));
+      dispatch(setMessageVariant('info'));
+      dispatch(setMessage('Vote Updated SuccessFully'));
       setVoteUpdateForm(false);
     }
   }
@@ -59,14 +59,14 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Block Code</Form.Label>
                 <Form.Select
                   name="blockCode"
-                  value={data.blockCode ? data.blockCode : ""}
+                  value={data.blockCode ? data.blockCode : ''}
                   onChange={onChange}
                   required
                 >
                   <option>
                     {data.blockCode
                       ? `Current: ${data.blockCode}`
-                      : "Select Block Code"}
+                      : 'Select Block Code'}
                   </option>
                   {currentUser &&
                     currentUser.assignedBlockCodes.map((blockCode) => (
@@ -213,7 +213,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Gender</Form.Label>
                 <Form.Select
                   name="gender"
-                  value={data.gender ? data.gender : ""}
+                  value={data.gender ? data.gender : ''}
                   onChange={onChange}
                   required
                 >
@@ -233,7 +233,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Vote S No</Form.Label>
                 <Form.Control
                   name="voteSNo"
-                  value={data.voteSNo ? data.voteSNo : ""}
+                  value={data.voteSNo ? data.voteSNo : ''}
                   onChange={onChange}
                   required
                 />
@@ -244,7 +244,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Family No</Form.Label>
                 <Form.Control
                   name="familyNo"
-                  value={data.familyNo ? data.familyNo : ""}
+                  value={data.familyNo ? data.familyNo : ''}
                   onChange={onChange}
                   required
                 />
@@ -255,7 +255,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Name</Form.Label>
                 <Form.Control
                   name="name"
-                  value={data.name ? data.name : ""}
+                  value={data.name ? data.name : ''}
                   onChange={onChange}
                   required
                 />
@@ -266,7 +266,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Marital Status</Form.Label>
                 <Form.Select
                   name="maritalStatus"
-                  value={data.maritalStatus ? data.maritalStatus : ""}
+                  value={data.maritalStatus ? data.maritalStatus : ''}
                   onChange={onChange}
                   required
                 >
@@ -291,7 +291,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Father|Husband Name</Form.Label>
                 <Form.Control
                   name="fatherHusbandName"
-                  value={data.fatherHusbandName ? data.fatherHusbandName : ""}
+                  value={data.fatherHusbandName ? data.fatherHusbandName : ''}
                   onChange={onChange}
                   required
                 />
@@ -304,7 +304,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                   className="form-control"
                   mask="99999-9999999-9"
                   name="cnic"
-                  value={data.cnic ? data.cnic : ""}
+                  value={data.cnic ? data.cnic : ''}
                   onChange={onChange}
                   required
                 />
@@ -315,7 +315,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Age</Form.Label>
                 <Form.Control
                   name="age"
-                  value={data.age ? data.age : ""}
+                  value={data.age ? data.age : ''}
                   onChange={onChange}
                   required
                 />
@@ -326,7 +326,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>House No</Form.Label>
                 <Form.Control
                   name="houseNo"
-                  value={data.houseNo ? data.houseNo : ""}
+                  value={data.houseNo ? data.houseNo : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -336,7 +336,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Street</Form.Label>
                 <Form.Control
                   name="street"
-                  value={data.street ? data.street : ""}
+                  value={data.street ? data.street : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -346,7 +346,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Phase</Form.Label>
                 <Form.Control
                   name="phase"
-                  value={data.phase ? data.phase : ""}
+                  value={data.phase ? data.phase : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -356,7 +356,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Sector</Form.Label>
                 <Form.Control
                   name="sector"
-                  value={data.sector ? data.sector : ""}
+                  value={data.sector ? data.sector : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -366,7 +366,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Lane</Form.Label>
                 <Form.Control
                   name="lane"
-                  value={data.lane ? data.lane : ""}
+                  value={data.lane ? data.lane : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -376,7 +376,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Boulevard|Avenue</Form.Label>
                 <Form.Control
                   name="boulevardAvenue"
-                  value={data.boulevardAvenue ? data.boulevardAvenue : ""}
+                  value={data.boulevardAvenue ? data.boulevardAvenue : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -386,7 +386,17 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
                 <Form.Label>Other Area</Form.Label>
                 <Form.Control
                   name="otherArea"
-                  value={data.otherArea ? data.otherArea : ""}
+                  value={data.otherArea ? data.otherArea : ''}
+                  onChange={onChange}
+                />
+              </Form.Group>
+            </div>
+            <div className={`col col-xs-12 col-sm-4 p-1 br-5`}>
+              <Form.Group id="updateNo">
+                <Form.Label>Update Number</Form.Label>
+                <Form.Control
+                  name="updateNo"
+                  value={data.updateNo ? data.updateNo : ''}
                   onChange={onChange}
                 />
               </Form.Group>
@@ -394,7 +404,7 @@ const VotesUpdateForm = ({ voteUpdateData, setVoteUpdateForm }: Props) => {
           </div>
           <div className="d-flex justify-content-center">
             <CModal
-              heading={"I Have Reviewed All Entries"}
+              heading={'I Have Reviewed All Entries'}
               triggerButtonContent="Update"
               onSubmit={onSubmit}
             />

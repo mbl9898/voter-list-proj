@@ -46,6 +46,7 @@ export const getVoteData = (req) => {
     bookNo,
     constituency,
     address,
+    updateNo,
   } = req.body;
   return {
     blockCode,
@@ -77,6 +78,7 @@ export const getVoteData = (req) => {
     bookNo,
     constituency,
     address,
+    updateNo,
   };
 };
 export const getVoteTypes = () => {
@@ -111,6 +113,7 @@ export const getVoteTypes = () => {
     constituency: 'required|string',
     address: 'string',
     status: 'string',
+    updateNo: 'integer',
   };
   return voteType;
 };

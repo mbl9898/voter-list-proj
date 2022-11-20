@@ -392,6 +392,16 @@ const VoteDisplayModal = ({
                 >
                   {`Other Area: ${unauthorizedVote.otherArea}`}
                 </div>
+                <div
+                  className={`col col-xs-12 col-sm-4 p-2 ${
+                    dataVoteReject['updateNo'] && 'bg-danger'
+                  }`}
+                  id="updateNo"
+                  style={{ ...readOnly }}
+                  onClick={onChangeVoteReject}
+                >
+                  {`Update No: ${unauthorizedVote.updateNo}`}
+                </div>
               </div>
             )}
           </Modal.Body>

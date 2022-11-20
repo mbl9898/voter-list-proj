@@ -23,6 +23,7 @@ export interface DataAccessParamsModel {
   gender: string;
   lane: string;
   boulevardAvenue: string;
+  updateNo: number | null;
 }
 interface Props {
   userId: string;
@@ -59,6 +60,7 @@ const DataAccess = ({ userId, setUsers, setDataAccess }: Props) => {
     gender: '',
     lane: '',
     boulevardAvenue: '',
+    updateNo: null,
   };
   const accessParametersArr = [
     'district',

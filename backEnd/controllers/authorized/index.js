@@ -51,6 +51,7 @@ export const getAuthorizedVoteFields = (req) => {
     enteredBy,
     verifiedBy,
     createdAt,
+    updateNo,
   } = req.body;
   return {
     blockCode,
@@ -86,6 +87,7 @@ export const getAuthorizedVoteFields = (req) => {
     enteredBy,
     verifiedBy,
     createdAt,
+    updateNo,
   };
 };
 
@@ -119,6 +121,7 @@ export const getAuthorizedVoteTypes = () => {
     unionCouncil: 'required|string',
     bookNo: 'required|string',
     constituency: 'required|string',
+    updateNo: 'integer',
     // status: 'required|string',
     // address: 'required|string',
     // enteredBy: 'required',

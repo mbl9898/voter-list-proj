@@ -566,6 +566,27 @@ const DataEntryForm = ({
                 />
               </Form.Group>
             </div>
+            <div
+              className={`col col-xs-12 col-sm-4 p-1 br-5 ${
+                dataVoteReject.updateNo && 'bg-danger'
+              }`}
+            >
+              <Form.Group id="updateNo">
+                <Form.Label>Update No</Form.Label>
+                <Form.Select
+                  name="updateNo"
+                  value={data.updateNo ? data.updateNo : ''}
+                  onChange={onChange}
+                  required
+                >
+                  <option value="" disabled selected hidden>
+                    Select Update Number
+                  </option>
+                  <option value={1}>1</option>
+                  <option value={2}>2</option>
+                </Form.Select>
+              </Form.Group>
+            </div>
           </div>
           <div className="d-flex justify-content-center">
             <CModal

@@ -13,6 +13,7 @@ import { UserService } from '../services/UserService';
 
 export const dataEntryFormInitial: VotesModel = {
   blockCode: null,
+  updateNo: null,
   voteSNo: null,
   familyNo: null,
   gender: '',

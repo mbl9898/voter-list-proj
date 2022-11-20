@@ -12,6 +12,7 @@ export const voteResInitial = {
 };
 let headings = [
   'blockCode',
+  'updateNo',
   'voteSNo',
   'familyNo',
   'gender',

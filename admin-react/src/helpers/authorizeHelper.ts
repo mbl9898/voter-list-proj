@@ -40,6 +40,7 @@ export const voteRejectInitial: VoteRejection = {
   lane: false,
   boulevardAvenue: false,
   otherArea: false,
+  updateNo: false,
 };
 
 export const handleClose = (

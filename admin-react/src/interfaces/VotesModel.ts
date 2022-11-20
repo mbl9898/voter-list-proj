@@ -28,4 +28,5 @@ export interface VotesModel {
   lane: string;
   boulevardAvenue: string;
   otherArea: string;
+  updateNo: number | null;
 }

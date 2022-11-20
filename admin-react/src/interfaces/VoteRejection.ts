@@ -27,4 +27,5 @@ export interface VoteRejection {
   lane: boolean;
   boulevardAvenue: boolean;
   otherArea: boolean;
+  updateNo: boolean;
 }

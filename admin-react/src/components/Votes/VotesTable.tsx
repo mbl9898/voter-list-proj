@@ -167,6 +167,7 @@ const VotesTable = ({
                                 : (currentPage - 1) * votesLimit + index + 1}
                             </th>
                             <td className="text-center">{vote.blockCode}</td>
+                            <td className="text-center">{vote.updateNo}</td>
                             <td className="text-center">{vote.voteSNo}</td>
                             <td className="text-center">{vote.familyNo}</td>
                             <td className="text-center">{vote.gender}</td>

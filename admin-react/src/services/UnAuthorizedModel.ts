@@ -28,6 +28,7 @@ export default interface UnAuthorizedModel {
   lane: string;
   boulevardAvenue: string;
   otherArea: string;
+  updateNo: number;
   address: string;
   status: string;
   rejections: {
@@ -59,6 +60,7 @@ export default interface UnAuthorizedModel {
     lane: boolean;
     boulevardAvenue: boolean;
     otherArea: boolean;
+    updateNo: boolean;
   };
   enteredBy?: {
     email: string;

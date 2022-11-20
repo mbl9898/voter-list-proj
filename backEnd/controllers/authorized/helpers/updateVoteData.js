@@ -40,6 +40,7 @@ export const updateVoteData = async (req, res) => {
       constituency,
       address,
       enteredBy,
+      updateNo,
     } = req.body;
 
     const verifiedBy = req.user;
@@ -76,6 +77,7 @@ export const updateVoteData = async (req, res) => {
         bookNo,
         constituency,
         address,
+        updateNo,
         enteredBy,
         verifiedBy: {
           username: verifiedBy.username,

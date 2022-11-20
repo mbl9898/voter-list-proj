@@ -51,6 +51,7 @@ export default class AuthorizedService {
         &gender=${reqData.gender}
         &lane=${reqData.lane}
         &boulevardAvenue=${reqData.boulevardAvenue}
+        &updateNo=${reqData.updateNo}
         `,
     );
     return res;

@@ -48,6 +48,7 @@ export const uploadData = async (req, res) => {
       lane,
       boulevardAvenue,
       otherArea,
+      updateNo,
     } = req.body;
 
     const user = req.user;
@@ -81,6 +82,7 @@ export const uploadData = async (req, res) => {
       lane,
       boulevardAvenue,
       otherArea,
+      updateNo,
       enteredBy: {
         username: user.username,
         email: user.email,

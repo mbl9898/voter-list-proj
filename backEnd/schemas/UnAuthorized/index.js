@@ -85,6 +85,7 @@ const UnAuthorized = new mongoose.Schema({
   constituency: {
     type: String,
   },
+  updateNo: Number,
   status: {
     type: String,
     default: 'pending',

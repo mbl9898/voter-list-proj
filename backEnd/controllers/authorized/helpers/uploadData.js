@@ -38,6 +38,7 @@ export const uploadData = async (req, res) => {
       bookNo,
       constituency,
       address,
+      updateNo,
       enteredBy,
     } = req.body;
 
@@ -73,6 +74,7 @@ export const uploadData = async (req, res) => {
       bookNo,
       constituency,
       address,
+      updateNo,
       enteredBy: enteredBy,
       verifiedBy: {
         username: verifiedBy.username,
